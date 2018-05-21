@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2><i class="fa fa-globe"></i> Activiteit: {{ activity.name }}</h2>
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-map-signs"></i> Rit</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Afstand: {{ (activity.distance / 1000)|number_format(2, ',', '.') }} km<br>
+                        Hoogte: {{ activity.total_elevation_gain|number_format(1, ',', '.') }} m<br>
+                        Tijd bewogen: {{
+                            (activity.moving_time % 60 / 60)|number_format }}:{{
+                            "%02d"|format(activity.moving_time / 60 % 60) }}:{{
+                            "%02d"|format(activity.moving_time % 60)
+                        }}<br>
+                        Tijd totaal: {{
+                            (activity.elapsed_time % 60 / 60)|number_format }}:{{
+                            "%02d"|format(activity.elapsed_time / 60 % 60) }}:{{
+                            "%02d"|format(activity.elapsed_time % 60)
+                        }}<br>
+                        Starttijd: {{ activity.start_date_local|date("Y-m-d H:i") }}<br>
+                    </p>
+                </div>
+            </div>
+        </div><div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-info"></i> Statistieken:</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Gemiddelde snelheid: {{ (activity.average_speed * 3.6)|number_format(2, ',', '.') }} km/h<br>
+                        Max snelheid: {{ (activity.max_speed * 3.6)|number_format(2, ',', '.') }} km/h<br>
+                        Gemiddelde Cadans: {{ activity.average_cadence|number_format }} rpm<br>
+                        Gemiddeld vermogen: {{ activity.average_watts|number_format }} W<br>
+                        Gemiddelde hartslag: {{ activity.has_heartrate ? activity.average_heartrate|number_format : '-' }}<br>
+                        Max hartslag: {{ activity.has_heartrate ? activity.max_heartrate|number_format : '-' }}<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3><i class="fa fa-map-pin"></i> Segmenten:</h3>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm" id="segmentsTable">
+            <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Afstand</th>
+                <th>Afstand</th>
+                <th>Tijd</th>
+                <th>Tijd</th>
+                <th>Snelheid</th>
+                <th>Snelheid</th>
+                <th>Cadans</th>
+                <th>Avg <i class="fa fa-heart"></i></th>
+                <th>Max <i class="fa fa-heart"></i></th>
+                <th>Datum/Tijd</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for effort in activity.segment_efforts %}
+                <tr>
+                    <td><a href="/view/segments/{{ effort.segment.id }}">{{ effort.name }}</a></td>
+                    <td class="text-right">{{ (effort.distance / 1000)|number_format(2, ',', '.') }} km</td>
+                    <td>{{ (effort.distance / 1000) }}</td>
+                    <td class="text-right">{{ (effort.elapsed_time / 60)|number_format }}:{{ "%02d"|format(effort.elapsed_time % 60) }}</td>
+                    <td>{{ effort.elapsed_time }}</td>
+                    <td class="text-right">{{ (effort.distance / effort.elapsed_time * 3.6)|number_format(1, ',', '.') }} km/h</td>
+                    <td>{{ (effort.distance / effort.elapsed_time * 3.6) }}</td>
+                    <td class="text-right">{{ effort.average_cadence|number_format }}</td>
+                    <td class="text-right">{{ activity.has_heartrate ? effort.average_heartrate|number_format : '-' }}</td>
+                    <td class="text-right">{{ activity.has_heartrate ? effort.max_heartrate|number_format : '-' }}</td>
+                    <td>{{ effort.start_date_local|date("Y-m-d H:i") }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('#segmentsTable').DataTable({
+                columns: [
+                    { data: "name" },
+                    { data: "distance", orderData: 2 },
+                    { data: "distanceRaw", visible: false },
+                    { data: "time", orderData: 4 },
+                    { data: "timeSeconds", visible: false },
+                    { data: "speed", orderData: 6 },
+                    { data: "speedRaw", visible: false },
+                    { data: "cadence" },
+                    { data: "heartbeat_avg" },
+                    { data: "heartbeat_max" },
+                    { data: "datetime" }
+                ]
+            });
+        } );
+    </script>
+{% endblock %}

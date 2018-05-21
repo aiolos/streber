@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2><i class="fa fa-map-signs"></i> Segment: {{ segment.name }}</h2>
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-info"></i> Gegevens:</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Type: {{ segment.activity_type }}<br>
+                        Afstand: {{ (segment.distance / 1000)|number_format(2, ',', '.') }} km<br>
+                        Hoogste punt: {{ segment.elevation_high|number_format(1, ',', '.') }} m<br>
+                        Laagste punt: {{ segment.elevation_low|number_format(1, ',', '.') }} m<br>
+                        Hoogte: {{ segment.total_elevation_gain|number_format(1, ',', '.') }} m<br>
+                        Max stijging: {{ segment.maximum_grade|number_format(1, ',', '.') }}%<br>
+                        Gem stijging: {{ segment.average_grade|number_format(1, ',', '.') }}%<br>
+
+                        Gemaakt: {{ segment.created_at|date("Y-m-d H:i") }}<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-users"></i> Deelnemers:</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Totaal pogingen: {{ segment.effort_count }}<br>
+                        Aantal deelnemers: {{ segment.athlete_count }}<br>
+                        Favoriet: {{ segment.star_count }}<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-user-clock"></i> Pogingen:</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Eigen pogingen: {{ segment.athlete_segment_stats.effort_count }}<br>
+                        PR: {{
+                            (segment.athlete_segment_stats.pr_elapsed_time / 60)|number_format }}:{{
+                            "%02d"|format(segment.athlete_segment_stats.pr_elapsed_time % 60)
+                        }}<br>
+                        PR-datum: {{ segment.athlete_segment_stats.pr_date }}<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

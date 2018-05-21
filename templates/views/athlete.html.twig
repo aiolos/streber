@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2"><i class="fa fa-user"></i> Atleet: {{ athlete.firstname }} {{ athlete.lastname }}</h1>
+    </div>
+
+    <div class="row">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fa fa-map-marker-alt"></i> Locatie</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <address>
+                        {{ athlete.city }}<br>
+                        {{ athlete.state }}<br>
+                        {{ athlete.country }}<br>
+                    </address>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fa fa-info"></i> Profiel</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Aangemaakt: {{ athlete.created_at|date('Y-m-d H:i') }}<br>
+                    Gewijzigd: {{ athlete.updated_at|date('Y-m-d H:i') }}<br>
+                    Geslacht: {{ athlete.sex }}<br>
+                    Premium: {{ athlete.premium ? 'Ja' : 'Nee' }}<br>
+                    Email: {{ athlete.email }}<br>
+                    Friend: {{ athlete.friend_count }}<br>
+                    Follower: {{ athlete.follower_count }}<br>
+                    Weight: {{ athlete.weight }} kg<br>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fa fa-image"></i> Afbeelding</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                        <img src="{{ athlete.profile }}">
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-bicycle"></i> Fietsen</h5>
+                </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Afstand</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for bike in athlete.bikes %}
+                            <tr><td>{{ bike.name }}</td><td>{{ (bike.distance / 1000)|number_format(2, ',', '.') }} km</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

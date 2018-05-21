@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Streber!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/dashboard.css">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"><i class="fa fa-bicycle"></i> Streber</a>
+            {#<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">#}
+            <ul class="navbar-nav px-3">
+                {#<li class="nav-item text-nowrap">#}
+                    {#<a class="nav-link" href="#">Sign out</a>#}
+                {#</li>#}
+            </ul>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/view/athlete">
+                                    <span data-feather="home"></span>
+                                    <i class="fa fa-user"></i> Atleet <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/view/activities">
+                                    <span data-feather="file"></span>
+                                    <i class="fa fa-globe"></i> Activiteiten
+                                </a>
+                            </li>
+                            {#<li class="nav-item">#}
+                                {#<a class="nav-link" href="#">#}
+                                    {#<span data-feather="shopping-cart"></span>#}
+                                    {#<i class="fa fa-map-marker"></i> Segmenten#}
+                                {#</a>#}
+                            {#</li>#}
+                        </ul>
+
+                        {#<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">#}
+                            {#<span><i class="fa fa-chart-line"></i> Grafieken</span>#}
+                            {#<a class="d-flex align-items-center text-muted" href="#">#}
+                                {#<span data-feather="plus-circle"></span>#}
+                            {#</a>#}
+                        {#</h6>#}
+                        {#<ul class="nav flex-column mb-2">#}
+                            {#<li class="nav-item">#}
+                                {#<a class="nav-link" href="#">#}
+                                    {#<span data-feather="file-text"></span>#}
+                                    {#Laatste rit#}
+                                {#</a>#}
+                            {#</li>#}
+                            {#<li class="nav-item">#}
+                                {#<a class="nav-link" href="#">#}
+                                    {#<span data-feather="file-text"></span>#}
+                                    {#Laatste 4 weken#}
+                                {#</a>#}
+                            {#</li>#}
+                        {#</ul>#}
+                    </div>
+                </nav>
+
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                    {% block body %}{% endblock %}
+                </main>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container text-center">
+                <span class="text-muted"><i class="fa fa-copyright"></i> <a href="https://enri.nl">Enri.nl</a> </span>
+            </div>
+        </footer>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
