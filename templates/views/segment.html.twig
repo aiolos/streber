@@ -48,10 +48,7 @@
                 <div class="card-body">
                     <p class="card-text">
                         Eigen pogingen: {{ segment.athlete_segment_stats.effort_count }}<br>
-                        PR: {{
-                            (segment.athlete_segment_stats.pr_elapsed_time / 60)|number_format }}:{{
-                            "%02d"|format(segment.athlete_segment_stats.pr_elapsed_time % 60)
-                        }}<br>
+                        PR: {{ segment.athlete_segment_stats.pr_elapsed_time|time_format_long }}<br>
                         PR-datum: {{ segment.athlete_segment_stats.pr_date }}<br>
                     </p>
                 </div>
@@ -78,6 +75,7 @@
                 <th>Vermogen</th>
                 <th>Avg <i class="fa fa-heart"></i></th>
                 <th>Max <i class="fa fa-heart"></i></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -87,7 +85,7 @@
                     <td>{{ effort.start_date_local|date("Y-m-d H:i") }}</td>
                     <td class="text-right">{{ (effort.distance / 1000)|number_format(2, ',', '.') }} km</td>
                     <td>{{ (effort.distance / 1000) }}</td>
-                    <td class="text-right">{{ (effort.elapsed_time / 60)|number_format }}:{{ "%02d"|format(effort.elapsed_time % 60) }}</td>
+                    <td class="text-right">{{ effort.elapsed_time|time_format_short }}</td>
                     <td>{{ effort.elapsed_time }}</td>
                     <td class="text-right">{{ (effort.distance / effort.elapsed_time * 3.6)|number_format(1, ',', '.') }} km/h</td>
                     <td>{{ (effort.distance / effort.elapsed_time * 3.6) }}</td>
@@ -95,6 +93,7 @@
                     <td class="text-right">{{ effort.average_watts|number_format }}</td>
                     <td class="text-right">{{ effort.average_heartrate is defined ? effort.average_heartrate|number_format : '-' }}</td>
                     <td class="text-right">{{ effort.max_heartrate is defined ? effort.max_heartrate|number_format : '-' }}</td>
+                    <td><a href="/view/activities/{{ effort.activity.id }}"><i class="fa fa-globe"></i></a></td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -119,7 +118,8 @@
                     { data: "cadence" },
                     { data: "power" },
                     { data: "heartbeat_avg" },
-                    { data: "heartbeat_max" }
+                    { data: "heartbeat_max" },
+                    { data: "activity", sortable: false, searchable: false }
                 ]
             });
         } );

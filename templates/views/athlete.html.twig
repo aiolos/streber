@@ -16,8 +16,8 @@
                     Afstand: {{ (athleteStats.recent_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} km<br>
                     Aantal: {{ (athleteStats.recent_ride_totals.count) }}<br>
                     Hoogtemeters: {{ (athleteStats.recent_ride_totals.elevation_gain)|number_format(0, ',', '.') }} m<br>
-                    Bewogen tijd: {{ (athleteStats.recent_ride_totals.moving_time / 60)|number_format(0, ',', '.') }} minuten<br>
-                    Verstreken tijd: {{ (athleteStats.recent_ride_totals.elapsed_time / 60)|number_format(0, ',', '.') }} minuten<br>
+                    Bewogen tijd: {{ athleteStats.recent_ride_totals.moving_time|time_format_long }}<br>
+                    Verstreken tijd: {{ athleteStats.recent_ride_totals.elapsed_time|time_format_long }}<br>
                     Prestaties: {{ (athleteStats.recent_ride_totals.achievement_count) }}<br>
                 </p>
             </div>
@@ -33,8 +33,8 @@
                     Afstand: {{ (athleteStats.ytd_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} km<br>
                     Aantal: {{ (athleteStats.ytd_ride_totals.count) }}<br>
                     Hoogtemeters: {{ (athleteStats.ytd_ride_totals.elevation_gain)|number_format(0, ',', '.') }} m<br>
-                    Bewogen tijd: {{ (athleteStats.ytd_ride_totals.moving_time / 60)|number_format(0, ',', '.') }} minuten<br>
-                    Verstreken tijd: {{ (athleteStats.ytd_ride_totals.elapsed_time / 60)|number_format(0, ',', '.') }} minuten<br>
+                    Bewogen tijd: {{ (athleteStats.ytd_ride_totals.moving_time)|time_format_long }}<br>
+                    Verstreken tijd: {{ athleteStats.ytd_ride_totals.elapsed_time|time_format_long }}<br>
                 </p>
             </div>
         </div>
@@ -47,12 +47,12 @@
             <div class="card-body">
                 <p class="card-text">
                     Verste Afstand: {{ (athleteStats.biggest_ride_distance / 1000)|number_format(1, ',', '.') }} km<br>
-                    Grootste beklimming: {{ (athleteStats.recent_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} km<br>
-                    Afstand: {{ (athleteStats.all_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} km<br>
-                    Aantal: {{ (athleteStats.all_ride_totals.count) }}<br>
+                    Grootste beklimming: {{ (athleteStats.recent_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} m<br>
+                    Totale Afstand: {{ (athleteStats.all_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} km<br>
+                    Aantal ritten: {{ (athleteStats.all_ride_totals.count) }}<br>
                     Hoogtemeters: {{ (athleteStats.all_ride_totals.elevation_gain)|number_format(0, ',', '.') }} m<br>
-                    Bewogen tijd: {{ (athleteStats.all_ride_totals.moving_time / 60)|number_format(0, ',', '.') }} minuten<br>
-                    Verstreken tijd: {{ (athleteStats.all_ride_totals.elapsed_time / 60)|number_format(0, ',', '.') }} minuten<br>
+                    Bewogen tijd: {{ athleteStats.all_ride_totals.moving_time|time_format_long }}<br>
+                    Verstreken tijd: {{ athleteStats.all_ride_totals.elapsed_time|time_format_long }}<br>
                 </p>
             </div>
         </div>
