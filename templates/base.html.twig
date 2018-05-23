@@ -27,13 +27,13 @@
                     <div class="sidebar-sticky">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link active" href="/view/athlete">
+                                <a class="nav-link {% if app.request.attributes.get('_route') == 'app_athlete_athlete' %}active{% endif %}" href="/view/athlete">
                                     <span data-feather="home"></span>
                                     <i class="fa fa-user"></i> Atleet <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/view/activities">
+                                <a class="nav-link {% if app.request.attributes.get('_route') == 'app_activity_activities' %}active{% endif %}" href="/view/activities">
                                     <span data-feather="file"></span>
                                     <i class="fa fa-globe"></i> Activiteiten
                                 </a>

@@ -25,7 +25,7 @@ class AbstractController extends Controller
         $options = [
             'clientId'     => getenv('CLIENT_ID'),
             'clientSecret' => getenv('CLIENT_SECRET'),
-            'redirectUri'  => 'http://localhost:8085/connect'
+            'redirectUri'  => getenv('REDIRECT_URI'),
         ];
         return new OAuth($options);
     }
@@ -34,7 +34,7 @@ class AbstractController extends Controller
     {
         if (is_null($this->client)) {
             $adapter = new Pest('https://www.strava.com/api/v3');
-            $service = new REST($this->session->get('strava_token'), $adapter);
+            $service = new REST($this->session->get('strava_token')->getToken(), $adapter);
             $this->client = new Client($service);
         }
         return $this->client;

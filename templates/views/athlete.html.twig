@@ -1,28 +1,63 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2"><i class="fa fa-user"></i> Atleet: {{ athlete.firstname }} {{ athlete.lastname }}</h1>
-    </div>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="fa fa-user"></i> Atleet: {{ athlete.firstname }} {{ athlete.lastname }}</h1>
+</div>
 
-    <div class="row">
+<div class="row">
     <div class="col-4">
         <div class="card">
             <div class="card-header">
-                <h5><i class="fa fa-map-marker-alt"></i> Locatie</h5>
+                <h5><i class="fa fa-graph"></i> Afgelopen 4 weken</h5>
             </div>
             <div class="card-body">
                 <p class="card-text">
-                    <address>
-                        {{ athlete.city }}<br>
-                        {{ athlete.state }}<br>
-                        {{ athlete.country }}<br>
-                    </address>
+                    Afstand: {{ (athleteStats.recent_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} km<br>
+                    Aantal: {{ (athleteStats.recent_ride_totals.count) }}<br>
+                    Hoogtemeters: {{ (athleteStats.recent_ride_totals.elevation_gain)|number_format(0, ',', '.') }} m<br>
+                    Bewogen tijd: {{ (athleteStats.recent_ride_totals.moving_time / 60)|number_format(0, ',', '.') }} minuten<br>
+                    Verstreken tijd: {{ (athleteStats.recent_ride_totals.elapsed_time / 60)|number_format(0, ',', '.') }} minuten<br>
+                    Prestaties: {{ (athleteStats.recent_ride_totals.achievement_count) }}<br>
                 </p>
             </div>
         </div>
     </div>
-
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fa fa-graph"></i> Dit jaar</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Afstand: {{ (athleteStats.ytd_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} km<br>
+                    Aantal: {{ (athleteStats.ytd_ride_totals.count) }}<br>
+                    Hoogtemeters: {{ (athleteStats.ytd_ride_totals.elevation_gain)|number_format(0, ',', '.') }} m<br>
+                    Bewogen tijd: {{ (athleteStats.ytd_ride_totals.moving_time / 60)|number_format(0, ',', '.') }} minuten<br>
+                    Verstreken tijd: {{ (athleteStats.ytd_ride_totals.elapsed_time / 60)|number_format(0, ',', '.') }} minuten<br>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fa fa-graph"></i> Totaal</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Verste Afstand: {{ (athleteStats.biggest_ride_distance / 1000)|number_format(1, ',', '.') }} km<br>
+                    Grootste beklimming: {{ (athleteStats.recent_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} km<br>
+                    Afstand: {{ (athleteStats.all_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} km<br>
+                    Aantal: {{ (athleteStats.all_ride_totals.count) }}<br>
+                    Hoogtemeters: {{ (athleteStats.all_ride_totals.elevation_gain)|number_format(0, ',', '.') }} m<br>
+                    Bewogen tijd: {{ (athleteStats.all_ride_totals.moving_time / 60)|number_format(0, ',', '.') }} minuten<br>
+                    Verstreken tijd: {{ (athleteStats.all_ride_totals.elapsed_time / 60)|number_format(0, ',', '.') }} minuten<br>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="clear-fix"></div>
     <div class="col-4">
         <div class="card">
             <div class="card-header">
@@ -46,37 +81,52 @@
     <div class="col-4">
         <div class="card">
             <div class="card-header">
+                <h5><i class="fa fa-bicycle"></i> Fietsen</h5>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Afstand</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for bike in athlete.bikes %}
+                    <tr><td>{{ bike.name }}</td><td class="text-right">{{ (bike.distance / 1000)|number_format(2, ',', '.') }} km</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
                 <h5><i class="fa fa-image"></i> Afbeelding</h5>
             </div>
             <div class="card-body">
                 <p class="card-text">
-                        <img src="{{ athlete.profile }}">
+                    <img src="{{ athlete.profile }}">
                 </p>
             </div>
         </div>
     </div>
-    </div>
 
-    <div class="row">
-        <div class="col-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5><i class="fa fa-bicycle"></i> Fietsen</h5>
-                </div>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Naam</th>
-                            <th>Afstand</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for bike in athlete.bikes %}
-                            <tr><td>{{ bike.name }}</td><td>{{ (bike.distance / 1000)|number_format(2, ',', '.') }} km</td></tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fa fa-map-marker-alt"></i> Locatie</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                <address>
+                    {{ athlete.city }}<br>
+                    {{ athlete.state }}<br>
+                    {{ athlete.country }}<br>
+                </address>
+                </p>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

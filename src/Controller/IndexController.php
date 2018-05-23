@@ -47,8 +47,11 @@ class IndexController extends AbstractController
         try {
             $athlete = $this->getStravaClient()->getAthlete($athleteId);
 
+            $athleteStats = $this->getStravaClient()->getAthleteStats($athlete['id']);
+
             return new JsonResponse([
                 'athlete' => $athlete,
+                'athleteStats' => $athleteStats
             ]);
         } catch(Exception $e) {
             print $e->getMessage();
@@ -129,6 +132,7 @@ class IndexController extends AbstractController
 
             return new JsonResponse([
                 'segment' => $segment,
+                'efforts' => $this->getStravaClient()->getSegmentEffort($segmentId),
             ]);
         } catch(Exception $e) {
             print $e->getMessage();

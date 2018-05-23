@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2><i class="fa fa-globe"></i> Activiteit: {{ activity.name }}</h2>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2"><i class="fa fa-globe"></i> Activiteit: {{ activity.name }}</h1>
+    </div>
     <div class="row">
         <div class="col-4">
             <div class="card">
@@ -87,6 +89,7 @@
     <script>
         $(document).ready( function () {
             $('#segmentsTable').DataTable({
+                order: [[ 10, 'asc' ]],
                 columns: [
                     { data: "name" },
                     { data: "distance", orderData: 2 },

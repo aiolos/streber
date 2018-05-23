@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="row">
-    <div class="col-12">
-        <h2><i class="fa fa-globe"></i> Activiteiten</h2>
-    </div>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2"><i class="fa fa-globe"></i> Activiteiten</h1>
 </div>
+
 <div class="row">
     <div class="table-responsive col-12">
         <table class="table table-striped table-sm" id="activitiesTable">
@@ -31,7 +30,7 @@
                     <td class="text-right">{{ (activity.total_elevation_gain)|number_format(0, ',', '.') }} m</td>
                     <td>{{ (activity.total_elevation_gain) }}</td>
                     <td>{{ activity.type }}</td>
-                    <td class="text-right">{{ activity.start_date|date('Y-m-d H:i') }}</td>
+                    <td class="text-right">{{ activity.start_date_local|date('Y-m-d H:i') }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -44,6 +43,7 @@
     <script>
         $(document).ready( function () {
             $('#activitiesTable').DataTable({
+                order: [[ 7, 'desc' ]],
                 columns: [
                     { data: "name" },
                     { data: "distance", orderData: 2 },

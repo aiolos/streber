@@ -27,6 +27,7 @@ class SegmentController extends AbstractController
 
         return $this->render('views/segment.html.twig', [
             'segment' => $segment,
+            'efforts' => $this->getStravaClient()->getSegmentEffort($segmentId),
         ]);
     }
 }

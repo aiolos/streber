@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2><i class="fa fa-map-signs"></i> Segment: {{ segment.name }}</h2>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2"><i class="fa fa-map-signs"></i> Segment: {{ segment.name }}</h1>
+    </div>
+
     <div class="row">
         <div class="col-4">
             <div class="card">
@@ -55,4 +58,70 @@
             </div>
         </div>
     </div>
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h3><i class="fa fa-stopwatch"></i> Pogingen:</h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm" id="effortsTable">
+            <thead>
+            <tr>
+                <th>Positie</th>
+                <th>Datum/Tijd</th>
+                <th>Afstand</th>
+                <th>Afstand</th>
+                <th>Tijd</th>
+                <th>Tijd</th>
+                <th>Snelheid</th>
+                <th>Snelheid</th>
+                <th>Cadans</th>
+                <th>Vermogen</th>
+                <th>Avg <i class="fa fa-heart"></i></th>
+                <th>Max <i class="fa fa-heart"></i></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for effort in efforts %}
+                <tr>
+                    <td>{{ effort.pr_rank }}</td>
+                    <td>{{ effort.start_date_local|date("Y-m-d H:i") }}</td>
+                    <td class="text-right">{{ (effort.distance / 1000)|number_format(2, ',', '.') }} km</td>
+                    <td>{{ (effort.distance / 1000) }}</td>
+                    <td class="text-right">{{ (effort.elapsed_time / 60)|number_format }}:{{ "%02d"|format(effort.elapsed_time % 60) }}</td>
+                    <td>{{ effort.elapsed_time }}</td>
+                    <td class="text-right">{{ (effort.distance / effort.elapsed_time * 3.6)|number_format(1, ',', '.') }} km/h</td>
+                    <td>{{ (effort.distance / effort.elapsed_time * 3.6) }}</td>
+                    <td class="text-right">{{ effort.average_cadence|number_format }}</td>
+                    <td class="text-right">{{ effort.average_watts|number_format }}</td>
+                    <td class="text-right">{{ effort.average_heartrate is defined ? effort.average_heartrate|number_format : '-' }}</td>
+                    <td class="text-right">{{ effort.max_heartrate is defined ? effort.max_heartrate|number_format : '-' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('#effortsTable').DataTable({
+                order: [[ 5, 'asc'], [0, 'asc']],
+                columns: [
+                    { data: "pr_rank" },
+                    { data: "datetime" },
+                    { data: "distance", orderData: 3 },
+                    { data: "distanceRaw", visible: false },
+                    { data: "time", orderData: 5 },
+                    { data: "timeSeconds", visible: false },
+                    { data: "speed", orderData: 7 },
+                    { data: "speedRaw", visible: false },
+                    { data: "cadence" },
+                    { data: "power" },
+                    { data: "heartbeat_avg" },
+                    { data: "heartbeat_max" }
+                ]
+            });
+        } );
+    </script>
 {% endblock %}
