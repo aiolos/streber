@@ -116,6 +116,7 @@ class IndexController extends AbstractController
 
             return new JsonResponse([
                 'activity' => $activity,
+                'kudos' => $this->getStravaClient()->getActivityKudos($activityId),
             ]);
         } catch(Exception $e) {
             print $e->getMessage();

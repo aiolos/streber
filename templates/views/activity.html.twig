@@ -28,7 +28,8 @@
                     </p>
                 </div>
             </div>
-        </div><div class="col-4">
+        </div>
+        <div class="col-4">
             <div class="card">
                 <div class="card-header">
                     <h5><i class="fa fa-info"></i> Statistieken:</h5>
@@ -41,6 +42,20 @@
                         Gemiddeld vermogen: {{ activity.average_watts|number_format }} W<br>
                         Gemiddelde hartslag: {{ activity.has_heartrate ? activity.average_heartrate|number_format : '-' }}<br>
                         Max hartslag: {{ activity.has_heartrate ? activity.max_heartrate|number_format : '-' }}<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-thumbs-up"></i> Kudos van:</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                    {% for kudo in kudos %}
+                        <span class="badge badge-secondary">{{ kudo.firstname }} {{ kudo.lastname }}</span>
+                    {% endfor %}
                     </p>
                 </div>
             </div>

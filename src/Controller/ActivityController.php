@@ -27,6 +27,7 @@ class ActivityController extends AbstractController
 
         return $this->render('views/activity.html.twig', [
             'activity' => $activity,
+            'kudos' => $this->getStravaClient()->getActivityKudos($activityId),
         ]);
     }
 }
