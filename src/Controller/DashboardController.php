@@ -41,7 +41,6 @@ class DashboardController extends AbstractController
                 $this->session->set('strava_token', $token);
 
                 return $this->render('views/dashboard/success.html.twig');
-//                return new Response($token->getToken());
             }
         } catch(Exception $e) {
             return new Response($e->getMessage());

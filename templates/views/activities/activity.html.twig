@@ -3,7 +3,16 @@
 {% block body %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <h1 class="h2">
-            <i class="fa fa-globe"></i> Activiteit: {{ activity.name }}<br>
+            {% if activity.type == "Ride" %}
+                <i class="fa fa-bicycle"></i>
+            {% elseif activity.type == "Snowboard" %}
+                <i class="fa fa-snowflake"></i>
+            {% elseif activity.type == "Walk" %}
+                <i class="fa fa-walking"></i>
+            {% else %}
+                <i class="fa fa-globe"></i>
+            {% endif %}
+             Activiteit: {{ activity.name }}<br>
             <small>{{ activity.start_date_local|date("Y-m-d H:i") }}</small>
         </h1>
     </div>
@@ -25,7 +34,7 @@
                         Gemiddelde snelheid: {{ (activity.average_speed * 3.6)|number_format(2, ',', '.') }} km/h<br>
                         Max snelheid: {{ (activity.max_speed * 3.6)|number_format(2, ',', '.') }} km/h<br>
                         Gemiddelde Cadans: {{ activity.average_cadence is defined ? activity.average_cadence|number_format : '-' }} rpm<br>
-                        Gemiddeld vermogen: {{ activity.average_watts|number_format }} W<br>
+                        Gemiddeld vermogen: {{ activity.average_watts is defined ? activity.average_watts|number_format : '-' }} W<br>
                         Gemiddelde hartslag: {{ activity.has_heartrate ? activity.average_heartrate|number_format : '-' }}<br>
                         Max hartslag: {{ activity.has_heartrate ? activity.max_heartrate|number_format : '-' }}<br>
                     </p>

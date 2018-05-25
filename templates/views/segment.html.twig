@@ -90,7 +90,7 @@
                     <td class="text-right">{{ (effort.distance / effort.elapsed_time * 3.6)|number_format(1, ',', '.') }} km/h</td>
                     <td>{{ (effort.distance / effort.elapsed_time * 3.6) }}</td>
                     <td class="text-right">{{ effort.average_cadence is defined ? effort.average_cadence|number_format }}</td>
-                    <td class="text-right">{{ effort.average_watts|number_format }}</td>
+                    <td class="text-right">{{ effort.average_watts is defined ? effort.average_watts|number_format : '-' }}</td>
                     <td class="text-right">{{ effort.average_heartrate is defined ? effort.average_heartrate|number_format : '-' }}</td>
                     <td class="text-right">{{ effort.max_heartrate is defined ? effort.max_heartrate|number_format : '-' }}</td>
                     <td><a href="/view/activities/{{ effort.activity.id }}"><i class="fa fa-globe"></i></a></td>

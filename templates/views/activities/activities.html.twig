@@ -18,7 +18,7 @@
                 <th><i class="fa fa-thumbs-up"></i></th>
                 <th>Hoogte</th>
                 <th>Hoogte</th>
-                <th>Type</th>
+                <th></th>
                 <th>Datum</th>
                 <th></th>
             </tr>
@@ -59,7 +59,18 @@
                     { data: "kudos" },
                     { data: "height", orderData: 7 },
                     { data: "heightRaw", visible: false },
-                    { data: "type" },
+                    { data: "type", render: function (data) {
+                        switch (data) {
+                            case 'Ride':
+                                return '<i class="fa fa-bicycle" title="' + data + '"></i>';
+                            case 'Walk':
+                                return '<i class="fa fa-walking" title="' + data + '"></i>';
+                            case 'Snowboard':
+                                return '<i class="fa fa-snowflake" title="' + data + '"></i>';
+                            default:
+                                return data;
+                        };
+                    } },
                     { data: "datetime" },
                     { data: "", sortable: false }
                 ]
