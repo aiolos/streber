@@ -13,7 +13,7 @@ class ActivityController extends AbstractController
     {
         $activities = $this->getStravaClient()->getAthleteActivities();
 
-        return $this->render('views/activities.html.twig', [
+        return $this->render('views/activities/activities.html.twig', [
             'activities' => $activities,
         ]);
     }
@@ -25,9 +25,22 @@ class ActivityController extends AbstractController
     {
         $activity = $this->getStravaClient()->getActivity($activityId);
 
-        return $this->render('views/activity.html.twig', [
+        return $this->render('views/activities/activity.html.twig', [
             'activity' => $activity,
             'kudos' => $this->getStravaClient()->getActivityKudos($activityId),
+        ]);
+    }
+
+    /**
+     * @Route("/view/activities/{activityId}/map")
+     */
+    public function map($activityId)
+    {
+        $activity = $this->getStravaClient()->getActivity($activityId);
+
+        return $this->render('views/activities/map.html.twig', [
+            'activity' => $activity,
+//            'map' => $activity['map']['polyline'],
         ]);
     }
 }

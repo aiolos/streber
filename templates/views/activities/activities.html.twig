@@ -20,6 +20,7 @@
                 <th>Hoogte</th>
                 <th>Type</th>
                 <th>Datum</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -35,6 +36,7 @@
                     <td>{{ (activity.total_elevation_gain) }}</td>
                     <td>{{ activity.type }}</td>
                     <td class="text-right">{{ activity.start_date_local|date('Y-m-d H:i') }}</td>
+                    <td class="text-right"><a href="/view/activities/{{ activity.id }}/map"><i class="fa fa-map"></i></a></td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -58,7 +60,8 @@
                     { data: "height", orderData: 7 },
                     { data: "heightRaw", visible: false },
                     { data: "type" },
-                    { data: "datetime" }
+                    { data: "datetime" },
+                    { data: "", sortable: false }
                 ]
             });
         } );
