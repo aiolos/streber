@@ -11,35 +11,6 @@ class IndexController extends AbstractController
 {
 
     /**
-     * @Route("/connect")
-     */
-    public function connect()
-    {
-        try {
-            if (!isset($_GET['code'])) {
-                return new Response('<a href="' . $this->getOAuth()->getAuthorizationUrl([
-                        // Uncomment required scopes.
-                        'scope' => [
-                            'public',
-                            // 'write',
-                            // 'view_private',
-                        ]
-                    ]) . '">Connect</a>');
-            } else {
-                $token = $this->getOAuth()->getAccessToken('authorization_code', [
-                    'code' => $_GET['code']
-                ]);
-                $this->session->set('strava_code', $_GET['code']);
-                $this->session->set('strava_token', $token);
-
-                return new Response($token->getToken());
-            }
-        } catch(Exception $e) {
-            return new Response($e->getMessage());
-        }
-    }
-
-    /**
      * @Route("/athlete/{athleteId}")
      */
     public function athlete($athleteId = null)
