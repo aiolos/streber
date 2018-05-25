@@ -2,6 +2,18 @@
     "basvandorst/stravaphp": {
         "version": "1.1.0"
     },
+    "cache/adapter-common": {
+        "version": "1.0.0"
+    },
+    "cache/array-adapter": {
+        "version": "1.0.1"
+    },
+    "cache/hierarchical-cache": {
+        "version": "1.0.0"
+    },
+    "cache/tag-interop": {
+        "version": "1.0.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -62,6 +74,9 @@
     "educoder/pest": {
         "version": "1.0.0"
     },
+    "emcconville/google-map-polyline-encoding-tool": {
+        "version": "v1.3"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3.3"
     },
@@ -82,6 +97,9 @@
     },
     "jean85/pretty-package-versions": {
         "version": "1.1"
+    },
+    "league/geotools": {
+        "version": "0.8.0"
     },
     "league/oauth2-client": {
         "version": "1.4.2"
@@ -119,6 +137,9 @@
     "paragonie/random_compat": {
         "version": "v2.0.11"
     },
+    "php-http/discovery": {
+        "version": "1.4.0"
+    },
     "phpstan/phpdoc-parser": {
         "version": "0.2"
     },
@@ -142,6 +163,12 @@
     },
     "ramsey/uuid": {
         "version": "3.7.3"
+    },
+    "react/event-loop": {
+        "version": "v0.4.3"
+    },
+    "react/promise": {
+        "version": "v2.5.1"
     },
     "sensio/framework-extra-bundle": {
         "version": "4.0",
@@ -215,6 +242,9 @@
     "symfony/http-kernel": {
         "version": "v4.0.3"
     },
+    "symfony/inflector": {
+        "version": "v4.0.11"
+    },
     "symfony/lts": {
         "version": "4-dev"
     },
@@ -239,8 +269,14 @@
             "ref": "41416370e732d1c8e7a0953a5ce815b641cfba0f"
         }
     },
+    "symfony/polyfill-ctype": {
+        "version": "v1.8.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"
+    },
+    "symfony/property-access": {
+        "version": "v4.0.11"
     },
     "symfony/routing": {
         "version": "4.0",
@@ -250,6 +286,9 @@
             "version": "4.0",
             "ref": "cda8b550123383d25827705d05a42acf6819fe4e"
         }
+    },
+    "symfony/serializer": {
+        "version": "v4.0.11"
     },
     "symfony/twig-bridge": {
         "version": "v4.0.9"
@@ -268,6 +307,9 @@
     },
     "twig/twig": {
         "version": "v2.4.8"
+    },
+    "willdurand/geocoder": {
+        "version": "4.2.0"
     },
     "zendframework/zend-code": {
         "version": "3.3.0"

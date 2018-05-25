@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Helpers\SVGEncoder;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ActivityController extends AbstractController
@@ -40,7 +42,21 @@ class ActivityController extends AbstractController
 
         return $this->render('views/activities/map.html.twig', [
             'activity' => $activity,
-//            'map' => $activity['map']['polyline'],
         ]);
+    }
+
+    /**
+     * @Route("/view/activities/{activityId}/svg")
+     */
+    public function svg($activityId)
+    {
+        $activity = $this->getStravaClient()->getActivity($activityId);
+
+        $svg = SVGEncoder::decodeToSVG($activity['map']['polyline'], '#445000', '#FFFFFF');
+
+        $response = new Response($svg);
+        $response->headers->set('Content-Type', 'image/svg+xml');
+
+        return $response;
     }
 }
