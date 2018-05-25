@@ -19,12 +19,12 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+    <link rel="stylesheet" href="/public/assets/css/leaflet.css" />
 {% endblock %}
 
 {% block javascripts %}
-    <script src="//cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-    <script type="text/javascript" src="//rawgit.com/jieter/Leaflet.encoded/master/Polyline.encoded.js"></script>
+    <script src="/public/assets/js/leaflet.js"></script>
+    <script type="text/javascript" src="/public/assets/js/polyline.encoded.js"></script>
     <script>
         var encoded = "{{ activity.map.polyline|replace({'\\': '\\\\'}) }}";
         var coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();

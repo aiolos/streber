@@ -89,7 +89,7 @@
                     <td>{{ effort.elapsed_time }}</td>
                     <td class="text-right">{{ (effort.distance / effort.elapsed_time * 3.6)|number_format(1, ',', '.') }} km/h</td>
                     <td>{{ (effort.distance / effort.elapsed_time * 3.6) }}</td>
-                    <td class="text-right">{{ effort.average_cadence|number_format }}</td>
+                    <td class="text-right">{{ effort.average_cadence is defined ? effort.average_cadence|number_format }}</td>
                     <td class="text-right">{{ effort.average_watts|number_format }}</td>
                     <td class="text-right">{{ effort.average_heartrate is defined ? effort.average_heartrate|number_format : '-' }}</td>
                     <td class="text-right">{{ effort.max_heartrate is defined ? effort.max_heartrate|number_format : '-' }}</td>
@@ -102,12 +102,12 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+    <link rel="stylesheet" href="/public/assets/css/leaflet.css" />
 {% endblock %}
 
 {% block javascripts %}
-    <script src="//cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-    <script type="text/javascript" src="//rawgit.com/jieter/Leaflet.encoded/master/Polyline.encoded.js"></script>
+    <script src="/public/assets/js/leaflet.js"></script>
+    <script type="text/javascript" src="/public/assets/js/polyline.encoded.js"></script>
     <script>
         $(document).ready( function () {
             $('#effortsTable').DataTable({

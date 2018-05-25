@@ -24,7 +24,7 @@
                         Tijd totaal: {{ activity.elapsed_time|time_format_long }}<br>
                         Gemiddelde snelheid: {{ (activity.average_speed * 3.6)|number_format(2, ',', '.') }} km/h<br>
                         Max snelheid: {{ (activity.max_speed * 3.6)|number_format(2, ',', '.') }} km/h<br>
-                        Gemiddelde Cadans: {{ activity.average_cadence|number_format }} rpm<br>
+                        Gemiddelde Cadans: {{ activity.average_cadence is defined ? activity.average_cadence|number_format : '-' }} rpm<br>
                         Gemiddeld vermogen: {{ activity.average_watts|number_format }} W<br>
                         Gemiddelde hartslag: {{ activity.has_heartrate ? activity.average_heartrate|number_format : '-' }}<br>
                         Max hartslag: {{ activity.has_heartrate ? activity.max_heartrate|number_format : '-' }}<br>
@@ -94,7 +94,7 @@
                     <td>{{ effort.elapsed_time }}</td>
                     <td class="text-right">{{ (effort.distance / effort.elapsed_time * 3.6)|number_format(1, ',', '.') }} km/h</td>
                     <td>{{ (effort.distance / effort.elapsed_time * 3.6) }}</td>
-                    <td class="text-right">{{ effort.average_cadence|number_format }}</td>
+                    <td class="text-right">{{ effort.average_cadence is defined ? effort.average_cadence|number_format : '-' }}</td>
                     <td class="text-right">{{ activity.has_heartrate ? effort.average_heartrate|number_format : '-' }}</td>
                     <td class="text-right">{{ activity.has_heartrate ? effort.max_heartrate|number_format : '-' }}</td>
                     <td>{{ effort.start_date_local|date("Y-m-d H:i") }}</td>
@@ -106,12 +106,12 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+    <link rel="stylesheet" href="/public/assets/css/leaflet.css" />
 {% endblock %}
 
 {% block javascripts %}
-    <script src="//cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-    <script type="text/javascript" src="//rawgit.com/jieter/Leaflet.encoded/master/Polyline.encoded.js"></script>
+    <script src="/public/assets/js/leaflet.js"></script>
+    <script type="text/javascript" src="/public/assets/js/polyline.encoded.js"></script>
     <script>
         $(document).ready( function () {
             $('#segmentsTable').DataTable({
