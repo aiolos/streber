@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Helpers\SVGEncoder;
+use DateTime;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,6 +24,45 @@ class MapsController extends AbstractController
     {
         $activities = $this->getStravaClient()->getAthleteActivities(null, null, null, $count);
 
+        return $this->createSvg($activities);
+    }
+
+    /**
+     * @Route("/view/year/{year}")
+     */
+    public function year($year = null)
+    {
+        if (is_null($year)) {
+            $year = date('Y');
+        }
+
+        return $this->render('views/activities/year.html.twig', ['year' => $year]);
+    }
+
+    /**
+     * @Route("/view/svg/year/{year}")
+     */
+    public function yearSvg($year= null)
+    {
+        if (is_null($year)) {
+            $year = date('Y');
+        }
+
+        $beginYearTimestamp = DateTime::createFromFormat('Y-m-d', $year . '-01-01');
+        $endYearTimestamp = DateTime::createFromFormat('Y-m-d', $year + 1 . '-01-01');
+        $activities = $this->getStravaClient()->getAthleteActivities(
+            $endYearTimestamp->getTimestamp(),
+            $beginYearTimestamp->getTimestamp(),
+            1,
+            200
+        );
+        $activities = array_reverse($activities);
+
+        return $this->createSvg($activities);
+    }
+
+    private function createSvg($activities)
+    {
         $svgEncoder = new SVGEncoder('#445000', 'beige');
 
         foreach ($activities as $activity) {
