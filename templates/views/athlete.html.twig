@@ -49,7 +49,7 @@
             <div class="card-body">
                 <p class="card-text">
                     Verste Afstand: {{ (athleteStats.biggest_ride_distance / 1000)|number_format(1, ',', '.') }} km<br>
-                    Grootste beklimming: {{ (athleteStats.recent_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} m<br>
+                    Grootste beklimming: {{ (athleteStats.biggest_climb_elevation_gain)|number_format(1, ',', '.') }} m<br>
                     Totale Afstand: {{ (athleteStats.all_ride_totals.distance/ 1000)|number_format(1, ',', '.') }} km<br>
                     Aantal ritten: {{ (athleteStats.all_ride_totals.count) }}<br>
                     Hoogtemeters: {{ (athleteStats.all_ride_totals.elevation_gain)|number_format(0, ',', '.') }} m<br>

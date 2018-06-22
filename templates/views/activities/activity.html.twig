@@ -74,6 +74,17 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-arrow-up"></i> Hoogte:
+                    </h5>
+                </div>
+                <div class="h-100">
+                    <div id="altitudeDiv"></div>
+                </div>
+            </div>
+        </div>
     </div>
     <h3><i class="fa fa-map-pin"></i> Segmenten:</h3>
     <div class="table-responsive">
@@ -121,6 +132,7 @@
 {% block javascripts %}
     <script src="/assets/js/leaflet.js"></script>
     <script type="text/javascript" src="/assets/js/polyline.encoded.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
         $(document).ready( function () {
             $('#segmentsTable').DataTable({
@@ -139,6 +151,14 @@
                     { data: "datetime" }
                 ]
             });
+
+            var trace1 = {
+                x: {{ altitude.x }},
+                y: {{ altitude.y }},
+                type: 'scatter'
+            };
+            var data = [trace1];
+            Plotly.newPlot('altitudeDiv', data);
         } );
 
         var encoded = "{{ activity.map.summary_polyline|replace({'\\': '\\\\'}) }}";

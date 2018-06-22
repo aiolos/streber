@@ -11,6 +11,13 @@ Functionality is limited and not thoroughly tested.
 - `docker-compose up`
 - Enter the docker container:
   - Run `composer install`
-- Access application on [http://localhost:8085/`]()
+- Access application on [http://localhost:8085/]()
 - Connect with Strava
 - View you statistics, activities and segments
+
+## Todo:
+- Use database to save information
+- Keep Strava authentication token stored at user
+- Add user to database
+- Create year in Strava with full polyline (not summary)
+- Add D3js for graphs
