@@ -11,59 +11,8 @@
     </head>
 
     <body>
+        {{ include('navigation.html.twig') }}
 
-    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark flex-sm-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 col-3 mr-0" href="#"><i class="fa fa-bicycle"></i> Strebertje!</a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarsExample03">
-            <ul class="navbar-nav mr-auto">
-                {#<li class="nav-item {% if app.request.attributes.get('_route') == 'app_dashboard_index' %}active{% endif %}">#}
-                    {#<a class="nav-link {% if app.request.attributes.get('_route') == 'app_dashboard_index' %}active{% endif %}" href="/">#}
-                        {#<span data-feather="home"></span>#}
-                        {#<i class="fa fa-tachometer-alt"></i> Dashboard <span class="sr-only">(current)</span>#}
-                    {#</a>#}
-                {#</li>#}
-                <li class="nav-item {% if app.request.attributes.get('_route') == 'app_athlete_athlete' %}active{% endif %}">
-                    <a class="nav-link {% if app.request.attributes.get('_route') == 'app_athlete_athlete' %}active{% endif %}" href="/view/athlete">
-                        <span data-feather="home"></span>
-                        <i class="fa fa-user"></i> Atleet <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item {% if app.request.attributes.get('_route') == 'app_activity_activities' %}active{% endif %}">
-                    <a class="nav-link {% if app.request.attributes.get('_route') == 'app_activity_activities' %}active{% endif %}" href="/view/activities">
-                        <span data-feather="file"></span>
-                        <i class="fa fa-globe"></i> Activiteiten
-                    </a>
-                </li>
-                <li class="nav-item {% if app.request.attributes.get('_route') == 'app_maps_maps' %}active{% endif %}">
-                    <a class="nav-link {% if app.request.attributes.get('_route') == 'app_maps_maps' %}active{% endif %}" href="/view/maps/10">
-                        <span data-feather="file"></span>
-                        <i class="fa fa-map"></i> Kaarten
-                    </a>
-                </li>
-                <li class="nav-item {% if app.request.attributes.get('_route') == 'app_maps_year' %}active{% endif %}">
-                    <a class="nav-link {% if app.request.attributes.get('_route') == 'app_maps_year' %}active{% endif %}" href="/view/year">
-                        <span data-feather="file"></span>
-                        <i class="fa fa-map"></i> Mijn Jaar
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <span class="navbar-text">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                Username: {{ app.user.email }}
-
-                <a class="" href="/logout">
-                    <i class="fa fa-lock"></i> Uitloggen
-                </a>
-            {% endif %}
-        </span>
-    </nav>
         <div class="container-fluid">
             <div class="row">
                 <main role="main" class="col-12">

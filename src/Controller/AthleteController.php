@@ -23,4 +23,16 @@ class AthleteController extends AbstractController
             'athleteStats' => $athleteStats
         ]);
     }
+
+    /**
+     * @Route("/view/profile")
+     */
+    public function profile($athleteId = null)
+    {
+        $athlete = $this->getStravaClient()->getAthlete($athleteId);
+
+        return $this->render('views/profile.html.twig', [
+            'athlete' => $athlete,
+        ]);
+    }
 }

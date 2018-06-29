@@ -63,26 +63,6 @@
     <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h5><i class="fa fa-info"></i> Profiel</h5>
-            </div>
-            <div class="card-body">
-                <p class="card-text">
-                    Aangemaakt: {{ athlete.created_at|date('Y-m-d H:i') }}<br>
-                    Gewijzigd: {{ athlete.updated_at|date('Y-m-d H:i') }}<br>
-                    Geslacht: {{ athlete.sex }}<br>
-                    Premium: {{ athlete.premium ? 'Ja' : 'Nee' }}<br>
-                    Email: {{ athlete.email }}<br>
-                    Friend: {{ athlete.friend_count }}<br>
-                    Follower: {{ athlete.follower_count }}<br>
-                    Weight: {{ athlete.weight }} kg<br>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="card">
-            <div class="card-header">
                 <h5><i class="fa fa-bicycle"></i> Fietsen</h5>
             </div>
             <table class="table">
@@ -98,36 +78,6 @@
                 {% endfor %}
                 </tbody>
             </table>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="card">
-            <div class="card-header">
-                <h5><i class="fa fa-image"></i> Afbeelding</h5>
-            </div>
-            <div class="card-body">
-                <p class="card-text">
-                    <img src="{{ athlete.profile }}">
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="card">
-            <div class="card-header">
-                <h5><i class="fa fa-map-marker-alt"></i> Locatie</h5>
-            </div>
-            <div class="card-body">
-                <p class="card-text">
-                <address>
-                    {{ athlete.city }}<br>
-                    {{ athlete.state }}<br>
-                    {{ athlete.country }}<br>
-                </address>
-                </p>
-            </div>
         </div>
     </div>
 </div>
