@@ -45,7 +45,7 @@ class User implements UserInterface, \Serializable
     /**
      * The strava token to connect
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $stravaToken;
 

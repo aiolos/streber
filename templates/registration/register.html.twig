@@ -1,13 +1,51 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="row">
+    <div class="offset-lg-3 col-lg-6 col-md-6 col-sm-12">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">
+                <i class="fa fa-lock"></i> Registreer:
+            </h1>
+        </div>
 
-    {{ form_start(form) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.plainPassword.first) }}
-        {{ form_row(form.plainPassword.second) }}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 m-10">
+                <div class="card">
+                    {#<div class="card-header">#}
+                    {#<h5><i class="fa fa-lock"></i> Login</h5>#}
+                    {#</div>#}
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.plainPassword.first) }}
+                            {{ form_row(form.plainPassword.second) }}
 
-        <button type="submit">Register!</button>
-    {{ form_end(form) }}
-
+                        <button type="submit" class="btn btn-primary">Registreer</button>
+                        <a href="/login">Login</a>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <p>
+                        Met het registreren op deze site ga je akkoord met de voorwaarden. Die zijn vrij simpel: Deze site is
+                        opgezet om met de API van Strava te spelen. Om het niet voor mezelf te houden is deze functionaliteit
+                        ook beschikbaar gesteld voor anderen met een Strava account.
+                        </p><p>
+                        Functionaliteit is nu nog beperkt en behalve e-mailadres, wachtwoord (gehashed opgeslagen) en
+                        Strava Access Token wordt er niks opgeslagen. In de toekomst zal dit veranderen omdat het gebruik
+                        van de Strava API gelimiteerd is en voor het leuker inzichtelijk maken van gegevens het handiger is
+                        om activiteiten, segmenten, etc. lokaal op te slaan.
+                        </p><p>
+                        Wil je van je account af, stuur dan een mailtje naar
+                            <a href="mailto:&#115;&#116;&#114;&#101;&#98;&#101;&#114;&#116;&#106;&#101;&#64;&#101;&#110;&#114;&#105;&#46;&#110;&#108;">
+                                &#115;&#116;&#114;&#101;&#98;&#101;&#114;&#116;&#106;&#101;&#64;&#101;&#110;&#114;&#105;&#46;&#110;&#108;
+                            </a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -34,7 +34,7 @@ class AbstractController extends Controller
     {
         if (is_null($this->client)) {
             $adapter = new Pest('https://www.strava.com/api/v3');
-            $service = new REST($this->session->get('strava_token')->getToken(), $adapter);
+            $service = new REST($this->getUser()->getStravaToken(), $adapter);
             $this->client = new Client($service);
         }
         return $this->client;

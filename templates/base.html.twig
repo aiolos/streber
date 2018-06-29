@@ -21,12 +21,12 @@
 
         <div class="collapse navbar-collapse" id="navbarsExample03">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item {% if app.request.attributes.get('_route') == 'app_dashboard_index' %}active{% endif %}">
-                    <a class="nav-link {% if app.request.attributes.get('_route') == 'app_dashboard_index' %}active{% endif %}" href="/">
-                        <span data-feather="home"></span>
-                        <i class="fa fa-tachometer-alt"></i> Dashboard <span class="sr-only">(current)</span>
-                    </a>
-                </li>
+                {#<li class="nav-item {% if app.request.attributes.get('_route') == 'app_dashboard_index' %}active{% endif %}">#}
+                    {#<a class="nav-link {% if app.request.attributes.get('_route') == 'app_dashboard_index' %}active{% endif %}" href="/">#}
+                        {#<span data-feather="home"></span>#}
+                        {#<i class="fa fa-tachometer-alt"></i> Dashboard <span class="sr-only">(current)</span>#}
+                    {#</a>#}
+                {#</li>#}
                 <li class="nav-item {% if app.request.attributes.get('_route') == 'app_athlete_athlete' %}active{% endif %}">
                     <a class="nav-link {% if app.request.attributes.get('_route') == 'app_athlete_athlete' %}active{% endif %}" href="/view/athlete">
                         <span data-feather="home"></span>
@@ -57,6 +57,10 @@
         <span class="navbar-text">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 Username: {{ app.user.email }}
+
+                <a class="" href="/logout">
+                    <i class="fa fa-lock"></i> Uitloggen
+                </a>
             {% endif %}
         </span>
     </nav>

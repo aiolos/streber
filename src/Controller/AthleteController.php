@@ -11,6 +11,9 @@ class AthleteController extends AbstractController
      */
     public function athlete($athleteId = null)
     {
+        if (strlen($this->getUser()->getStravaToken()) === 0) {
+            return $this->redirect('/connect');
+        }
         $athlete = $this->getStravaClient()->getAthlete($athleteId);
 
         $athleteStats = $this->getStravaClient()->getAthleteStats($athlete['id']);

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Strebertje!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/cover.css" >
+    </head>
+
+    <body class="text-center">
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand"><a href="./">Strebertje!</a></h3>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover">
+            <a href="/register" class="btn btn-primary">Registreer</a><br><br>
+            of <a href="/view/athlete" class="btn btn-secondary">Login</a>
+        </main>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <p>
+                    <i class="fa fa-envelope"></i> <a href="mailto:&#115;&#116;&#114;&#101;&#98;&#101;&#114;&#116;&#106;&#101;&#64;&#101;&#110;&#114;&#105;&#46;&#110;&#108;">&#115;&#116;&#114;&#101;&#98;&#101;&#114;&#116;&#106;&#101;&#64;&#101;&#110;&#114;&#105;&#46;&#110;&#108;</a>
+                    -
+                    <i class="fa fa-copyright"></i> <a href="https://enri.nl">Enri.nl</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
