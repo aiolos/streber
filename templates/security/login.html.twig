@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="row">
-    <div class="offset-lg-4 col-lg-4 col-md-6 col-sm-12">
+    <div class="offset-lg-4 offset-md-3 col-lg-4 col-md-6 col-sm-12">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">
                 <i class="fa fa-lock"></i> Login:
@@ -23,11 +23,11 @@
                         <form action="{{ path('login') }}" method="post">
                             <div class="form-group">
                                 <label for="username">Email:</label>
-                                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
+                                <input type="text" class="form-control" id="username" name="_username" required="required" value="{{ last_username }}" />
                             </div>
                             <div class="form-group">
                                 <label for="password">Password:</label>
-                                <input type="password" class="form-control" id="password" name="_password" />
+                                <input type="password" class="form-control" id="password" name="_password" required="required"/>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Login</button>
