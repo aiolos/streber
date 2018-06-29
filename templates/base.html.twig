@@ -53,6 +53,12 @@
                 </li>
             </ul>
         </div>
+
+        <span class="navbar-text">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                Username: {{ app.user.email }}
+            {% endif %}
+        </span>
     </nav>
         <div class="container-fluid">
             <div class="row">
