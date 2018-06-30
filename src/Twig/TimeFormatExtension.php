@@ -17,10 +17,12 @@ class TimeFormatExtension extends AbstractExtension
 
     public function timeFormatFilter($inputSeconds)
     {
-        $hours = floor($inputSeconds / 3600);
+        $days = floor($inputSeconds / (3600 * 24));
+        $hours = floor(($inputSeconds % (3600 * 24)) / 3600);
         $minutes = floor(($inputSeconds % 3600) / 60);
         $seconds = $inputSeconds % 60;
-        return ($hours ? $hours . 'u ' : '')
+        return ($days ? $days . 'd ' : '')
+            . ($days || $hours ? $hours . 'u ' : '')
             . str_pad($minutes, 2, '0', STR_PAD_LEFT) . 'm '
             . str_pad($seconds, 2, '0', STR_PAD_LEFT) . 's';
     }
