@@ -17,10 +17,12 @@ class AthleteController extends AbstractController
         $athlete = $this->getStravaClient()->getAthlete($athleteId);
 
         $athleteStats = $this->getStravaClient()->getAthleteStats($athlete['id']);
+        $activities = $this->getStravaClient()->getAthleteActivities(null, null, null, 1);
 
         return $this->render('views/athlete.html.twig', [
             'athlete' => $athlete,
-            'athleteStats' => $athleteStats
+            'athleteStats' => $athleteStats,
+            'lastActivity' => $activities[0],
         ]);
     }
 
