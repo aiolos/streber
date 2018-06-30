@@ -23,13 +23,15 @@ class MapsController extends AbstractController
     public function multi($count = 10)
     {
         $activities = [];
+        $page = 1;
         while ($count > 0) {
-            $fetchCount = min(200, $count);
-            $count = $count - $fetchCount;
-            $activities = array_merge(
-                $activities,
-                $this->getStravaClient()->getAthleteActivities(null, null, null, $fetchCount)
-            );
+            $count = $count - 200;
+            $newActivities = $this->getStravaClient()->getAthleteActivities(null, null, $page, 200);
+            if ($count < 0) {
+                $newActivities = array_slice($newActivities, 0, 200 + $count);
+            }
+            $activities = array_merge($activities, $newActivities);
+            $page++;
         }
 
         return $this->createSvg($activities);
