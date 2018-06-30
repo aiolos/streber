@@ -24,15 +24,31 @@ class SegmentController extends AbstractController
     public function segment($segmentId)
     {
         $segment = $this->getStravaClient()->getSegment($segmentId);
-        $altitude = $this->getStravaClient()->getStreamsSegment($segmentId, 'altitude', 'medium', 'distance');
+        $streams = $this->getStreams('segment', $segmentId);
 
         return $this->render('views/segment.html.twig', [
             'segment' => $segment,
             'efforts' => $this->getStravaClient()->getSegmentEffort($segmentId),
-            'altitude' => [
-                'x' => "[" . implode(",", $altitude[0]['data']) . "]",
-                'y' => "[" . implode(",", $altitude[1]['data']) . "]"
-            ],
+            'streams' => $streams,
+        ]);
+    }
+
+    /**
+     * @Route("/view/segments/{segmentId}/effort/{effortId}")
+     */
+    public function effort($segmentId, $effortId)
+    {
+        $segment = $this->getStravaClient()->getSegment($segmentId);
+        $efforts = $this->getStravaClient()->getSegmentEffort($segmentId);
+        $efforts = array_filter($efforts, function ($element) use ($effortId)  {
+            return ($element['id'] == $effortId);
+        });
+        $streams = $this->getStreams('segmenteffort', $effortId);
+
+        return $this->render('views/effort.html.twig', [
+            'segment' => $segment,
+            'effort' => $efforts[0],
+            'streams' => $streams,
         ]);
     }
 }

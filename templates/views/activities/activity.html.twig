@@ -116,7 +116,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5><i class="fa fa-arrow-up"></i> Hoogte:
+                    <h5><i class="fa fa-chart-line"></i> Grafieken:
                     </h5>
                 </div>
                 <div class="h-100">
@@ -154,13 +154,32 @@
                 ]
             });
 
-            var trace1 = {
-                x: {{ altitude.x }},
-                y: {{ altitude.y }},
-                type: 'scatter'
+            var data = [
+                {% for stream in streams %}
+                    {% if loop.first %}
+                    {% else %}
+                    {
+                        x: {{ streams.distance.data }},
+                        y: {{ stream.data }},
+                        xaxis: 'x' + {{ stream.index }},
+                        yaxis: 'y' + {{ stream.index }},
+                        type: 'scatter',
+                        name: '{{ stream.title }}'
+                    },
+                    {% endif %}
+                {% endfor %}
+            ];
+            var layout = {
+                legend: {traceorder: 'reversed'},
+                {% for stream in streams %}
+                    {% if loop.first %}
+                    {% else %}
+                        'xaxis{{ stream.index }}': {anchor: 'y1' },
+                        'yaxis{{ stream.index }}': {domain: [{{ (1 / (loop.length -1)) * (stream.index - 1) }}, {{ (1 /  (loop.length -1)) * (stream.index ) }}]},
+                    {% endif %}
+                {% endfor %}
             };
-            var data = [trace1];
-            Plotly.newPlot('altitudeDiv', data);
+            Plotly.newPlot('altitudeDiv', data, layout);
         } );
 
         var encoded = "{{ activity.map.summary_polyline|replace({'\\': '\\\\'}) }}";

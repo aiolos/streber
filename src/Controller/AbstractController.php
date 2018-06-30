@@ -39,4 +39,62 @@ class AbstractController extends Controller
         }
         return $this->client;
     }
+
+    protected function getStreams($type, $id)
+    {
+        /**
+         * allowed types for getStreams*()-method are (comma seperated):
+         * - time:  integer seconds
+         * - latlng:  floats [latitude, longitude]
+         * - distance:  float meters
+         * - altitude:  float meters
+         * - velocity_smooth:  float meters per second
+         * - heartrate:  integer BPM
+         * - cadence:  integer RPM
+         * - watts:  integer watts
+         * - temp:  integer degrees Celsius
+         * - moving:  boolean
+         * - grade_smooth:  float percent
+         */
+        if ($type === 'activity') {
+            $results = $this->getStravaClient()->getStreamsActivity($id, 'altitude,heartrate,velocity_smooth,cadence,temp', 'medium', 'distance');
+        } elseif ($type === 'segment') {
+            $results = $this->getStravaClient()->getStreamsSegment($id, 'altitude,heartrate,velocity_smooth,cadence,temp', 'medium', 'distance');
+        } elseif ($type === 'segmenteffort') {
+            $results = $this->getStravaClient()->getStreamsEffort($id, 'altitude,heartrate,velocity_smooth,cadence,temp', 'medium', 'distance');
+        } else {
+            throw new \Exception('Invalid stream type');
+        }
+
+        foreach ($results as $index => $result) {
+            /** Calculate speed to km/h */
+            if ($result['type'] == 'velocity_smooth') {
+                $result['data'] = array_map(function ($element) {
+                    return $element * 3.6;
+                },
+                    $result['data']);
+            }
+            $streams[$result['type']] = [
+                'data' => "[" . implode(",", $result['data']) . "]",
+                'title' => $this->mapTitle($result['type']),
+                'index' => $index
+            ];
+        }
+
+        return $streams;
+    }
+
+    private function mapTitle($title)
+    {
+        $titles = [
+            'distance' => 'Afstand',
+            'heartrate' => 'Hartslag',
+            'altitude' => 'Hoogte',
+            'velocity_smooth' => 'Snelheid',
+            'cadence' => 'Cadans',
+            'temp' => 'Temperatuur',
+        ];
+
+        return $titles[$title];
+    }
 }

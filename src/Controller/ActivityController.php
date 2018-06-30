@@ -26,15 +26,12 @@ class ActivityController extends AbstractController
     public function activity($activityId)
     {
         $activity = $this->getStravaClient()->getActivity($activityId);
-        $altitude = $this->getStravaClient()->getStreamsActivity($activityId, 'altitude', 'medium', 'distance');
+        $streams = $this->getStreams('activity', $activityId);
 
         return $this->render('views/activities/activity.html.twig', [
             'activity' => $activity,
             'kudos' => $this->getStravaClient()->getActivityKudos($activityId),
-            'altitude' => [
-                'x' => "[" . implode(",", $altitude[0]['data']) . "]",
-                'y' => "[" . implode(",", $altitude[1]['data']) . "]"
-            ],
+            'streams' => $streams,
         ]);
     }
 
