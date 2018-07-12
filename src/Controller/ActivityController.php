@@ -27,11 +27,13 @@ class ActivityController extends AbstractController
     {
         $activity = $this->getStravaClient()->getActivity($activityId);
         $streams = $this->getStreams('activity', $activityId);
+        $photos = $this->getStravaClient()->getActivityPhotos($activityId);
 
         return $this->render('views/activities/activity.html.twig', [
             'activity' => $activity,
             'kudos' => $this->getStravaClient()->getActivityKudos($activityId),
             'streams' => $streams,
+            'photos' => $photos,
         ]);
     }
 

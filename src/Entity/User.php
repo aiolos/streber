@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -59,13 +61,17 @@ class User implements UserInterface, \Serializable
      */
     private $isActive;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", orphanRemoval=true)
+     */
+    private $posts;
+
     public function __construct()
     {
         $this->isActive = true;
         $this->roles = array('ROLE_USER');
+        $this->posts = new ArrayCollection();
     }
-
-    // other properties and methods
 
     public function getEmail()
     {
@@ -129,6 +135,34 @@ class User implements UserInterface, \Serializable
         return $this->roles;
     }
 
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            // set the owning side to null (unless already changed)
+            if ($post->getUser() === $this) {
+                $post->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function eraseCredentials()
     {
     }
@@ -140,8 +174,6 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->password,
-            // see section on salt below
-            // $this->salt,
         ));
     }
 
@@ -152,8 +184,6 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->password,
-            // see section on salt below
-            // $this->salt
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

@@ -24,6 +24,11 @@
                     <h5>
                         <i class="fa fa-map-signs"></i>
                         Rit: {{ (activity.distance / 1000)|number_format(2, ',', '.') }} km
+                        <div class="float-right">
+                            <a href="/blog/add/{{ activity.id }}" class="btn btn-sm btn-outline-secondary">
+                                <i class="fa fa-file-alt"></i> Maak bericht
+                            </a>
+                        </div>
                     </h5>
                 </div>
                 <div class="card-body">
@@ -125,6 +130,25 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-images"></i> Foto's: {{ activity.total_photo_count }}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                    {% for photo in photos %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <img src="{{ photo.urls|first }}" class="img-fluid">
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block stylesheets %}
@@ -182,7 +206,7 @@
             Plotly.newPlot('altitudeDiv', data, layout);
         } );
 
-        var encoded = "{{ activity.map.summary_polyline|replace({'\\': '\\\\'}) }}";
+        var encoded = "{{ activity.map.polyline|replace({'\\': '\\\\'}) }}";
         var coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
 
         var map = L.map('map').fitBounds(coordinates);
