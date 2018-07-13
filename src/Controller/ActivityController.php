@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ActivityController extends AbstractController
 {
     /**
-     * @Route("/view/activities")
+     * @Route("/activities")
      */
     public function activities()
     {
@@ -21,7 +21,7 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * @Route("/view/activities/{activityId}")
+     * @Route("/activities/{activityId}")
      */
     public function activity($activityId)
     {
@@ -38,7 +38,7 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * @Route("/view/activities/{activityId}/map")
+     * @Route("/activities/{activityId}/map")
      */
     public function map($activityId)
     {
@@ -50,7 +50,7 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * @Route("/view/activities/{activityId}/svg")
+     * @Route("/activities/{activityId}/svg")
      */
     public function svg($activityId)
     {

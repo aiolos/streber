@@ -11,7 +11,7 @@ class IndexController extends AbstractController
 {
 
     /**
-     * @Route("/athlete/{athleteId}")
+     * @Route("/api/athlete/{athleteId}")
      */
     public function athlete($athleteId = null)
     {
@@ -30,7 +30,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/followers/{athleteId}")
+     * @Route("/api/followers/{athleteId}")
      */
     public function followers($athleteId = null)
     {
@@ -46,7 +46,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/stats/{athleteId}")
+     * @Route("/api/stats/{athleteId}")
      */
     public function stats($athleteId = null)
     {
@@ -62,7 +62,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/activities")
+     * @Route("/api/activities")
      */
     public function activities()
     {
@@ -78,7 +78,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/activities/{activityId}")
+     * @Route("/api/activities/{activityId}")
      */
     public function activity($activityId)
     {
@@ -95,7 +95,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/segments/{segmentId}")
+     * @Route("/api/segments/{segmentId}")
      */
     public function segment($segmentId)
     {
@@ -112,7 +112,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/club/{clubId}")
+     * @Route("/api/club/{clubId}")
      */
     public function club($clubId)
     {

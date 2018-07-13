@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MapsController extends AbstractController
 {
     /**
-     * @Route("/view/maps/{count}")
+     * @Route("/maps/{count}")
      */
     public function maps($count)
     {
@@ -18,7 +18,7 @@ class MapsController extends AbstractController
     }
 
     /**
-     * @Route("/view/svg/{count}")
+     * @Route("/svg/{count}")
      */
     public function multi($count = 10)
     {
@@ -38,7 +38,7 @@ class MapsController extends AbstractController
     }
 
     /**
-     * @Route("/view/year/{year}")
+     * @Route("/year/{year}")
      */
     public function year($year = null)
     {
@@ -50,7 +50,7 @@ class MapsController extends AbstractController
     }
 
     /**
-     * @Route("/view/svg/year/{year}")
+     * @Route("/svg/year/{year}")
      */
     public function yearSvg($year= null)
     {

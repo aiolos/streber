@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AthleteController extends AbstractController
 {
     /**
-     * @Route("/view/athlete/{athleteId}")
+     * @Route("/athlete/{athleteId}")
      */
     public function athlete($athleteId = null)
     {
@@ -27,7 +27,7 @@ class AthleteController extends AbstractController
     }
 
     /**
-     * @Route("/view/profile")
+     * @Route("/profile")
      */
     public function profile($athleteId = null)
     {

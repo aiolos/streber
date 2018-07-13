@@ -82,7 +82,7 @@
             {% for effort in efforts %}
                 <tr>
                     <td>{{ effort.pr_rank }}</td>
-                    <td><a href="/view/segments/{{ effort.segment.id }}/effort/{{ effort.id }}">{{ effort.start_date_local|date("Y-m-d H:i") }}</a></td>
+                    <td><a href="/segments/{{ effort.segment.id }}/effort/{{ effort.id }}">{{ effort.start_date_local|date("Y-m-d H:i") }}</a></td>
                     <td class="text-right">{{ (effort.distance / 1000)|number_format(2, ',', '.') }} km</td>
                     <td>{{ (effort.distance / 1000) }}</td>
                     <td class="text-right">{{ effort.elapsed_time|time_format_short }}</td>
@@ -93,7 +93,7 @@
                     <td class="text-right">{{ effort.average_watts is defined ? effort.average_watts|number_format : '-' }}</td>
                     <td class="text-right">{{ effort.average_heartrate is defined ? effort.average_heartrate|number_format : '-' }}</td>
                     <td class="text-right">{{ effort.max_heartrate is defined ? effort.max_heartrate|number_format : '-' }}</td>
-                    <td><a href="/view/activities/{{ effort.activity.id }}"><i class="fa fa-globe"></i></a></td>
+                    <td><a href="/activities/{{ effort.activity.id }}"><i class="fa fa-globe"></i></a></td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -65,10 +65,10 @@
                 <div class="card-header">
                     <h5><i class="fa fa-map"></i> Kaart:
                     <div class="float-right">
-                        <a href="/view/activities/{{ activity.id }}/map" class="btn btn-sm btn-outline-secondary">
+                        <a href="/activities/{{ activity.id }}/map" class="btn btn-sm btn-outline-secondary">
                             <i class="fa fa-map"></i> Kaart
                         </a>
-                        <a href="/view/activities/{{ activity.id }}/svg" class="btn btn-sm btn-outline-secondary">
+                        <a href="/activities/{{ activity.id }}/svg" class="btn btn-sm btn-outline-secondary">
                             <i class="fa fa-code"></i> SVG
                         </a>
                     </div>
@@ -101,7 +101,7 @@
             <tbody>
             {% for effort in activity.segment_efforts %}
                 <tr>
-                    <td><a href="/view/segments/{{ effort.segment.id }}">{{ effort.name }}</a></td>
+                    <td><a href="/segments/{{ effort.segment.id }}">{{ effort.name }}</a></td>
                     <td class="text-right">{{ (effort.distance / 1000)|number_format(2, ',', '.') }} km</td>
                     <td>{{ (effort.distance / 1000) }}</td>
                     <td class="text-right">{{ effort.elapsed_time|time_format_short }}</td>

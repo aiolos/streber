@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SegmentController extends AbstractController
 {
     /**
-     * @Route("/view/segments")
+     * @Route("/segments")
      */
     public function segments()
     {
@@ -19,7 +19,7 @@ class SegmentController extends AbstractController
     }
 
     /**
-     * @Route("/view/segments/{segmentId}")
+     * @Route("/segments/{segmentId}")
      */
     public function segment($segmentId)
     {
@@ -34,7 +34,7 @@ class SegmentController extends AbstractController
     }
 
     /**
-     * @Route("/view/segments/{segmentId}/effort/{effortId}")
+     * @Route("/segments/{segmentId}/effort/{effortId}")
      */
     public function effort($segmentId, $effortId)
     {

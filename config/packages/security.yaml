@@ -34,10 +34,11 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/view/athlete, roles: ROLE_USER }
-        - { path: ^/view/activities, roles: ROLE_USER }
-        - { path: ^/view/maps, roles: ROLE_USER }
-        - { path: ^/view/year, roles: ROLE_USER }
+        - { path: ^/athlete, roles: ROLE_USER }
+        - { path: ^/blog, roles: ROLE_USER }
+        - { path: ^/activities, roles: ROLE_USER }
+        - { path: ^/maps, roles: ROLE_USER }
+        - { path: ^/year, roles: ROLE_USER }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
