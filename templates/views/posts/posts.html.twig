@@ -11,14 +11,20 @@
             <thead>
             <tr>
                 <th>Titel</th>
+                <th>Datum</th>
+                <th>Status</th>
                 <th>Activiteit</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for post in posts %}
                 <tr>
                     <td><a href="/blog/view/{{ post.id }}">{{ post.title }}</a></td>
-                    <td>{{ post.activityId }}</td>
+                    <td>{{ post.date|date("d-m-Y") }}</td>
+                    <td>{{ post.status }}</td>
+                    <td><a href="/activities/{{ post.activityId }}">{{ post.activityId }}</a></td>
+                    <td class="text-right"><a href="/blog/edit/{{ post.id }}/map"><i class="fa fa-edit"></i></a></td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -33,7 +39,10 @@
             $('#postsTable').DataTable({
                 columns: [
                     { data: "title" },
-                    { data: "activityId" }
+                    { data: "status" },
+                    { data: "date" },
+                    { data: "activityId" },
+                    { data: "", sortable: false }
                 ]
             });
         } );

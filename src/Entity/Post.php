@@ -41,6 +41,11 @@ class Post implements \Serializable
     private $text;
 
     /**
+     * @ORM\Column(type="date")
+     */
+    private $date;
+
+    /**
      *  @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      */
     private $user;
@@ -108,6 +113,16 @@ class Post implements \Serializable
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 
     /** @see \Serializable::serialize() */

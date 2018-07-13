@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Helpers\SVGEncoder;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,6 +36,7 @@ class BlogController extends AbstractController
 
         return $this->render('views/posts/view.html.twig', [
             'post' => $post,
+            'activity' =>$this->getStravaClient()->getActivity($post->getActivityId())
         ]);
     }
 
@@ -92,6 +95,14 @@ class BlogController extends AbstractController
         $form = $this->createFormBuilder($post)
             ->add('title', TextType::class)
             ->add('text', TextareaType::class)
+            ->add('date', DateType::class, array('widget' => 'single_text'))
+            ->add('status', ChoiceType::class, array(
+                'choices'  => array(
+                    Post::STATUS_DRAFT => Post::STATUS_DRAFT,
+                    Post::STATUS_PUBLISHED => Post::STATUS_PUBLISHED,
+                    Post::STATUS_DELETED => Post::STATUS_DELETED,
+                ),
+            ))
             ->add('save', SubmitType::class, array('label' => 'Opslaan'))
             ->getForm();
 
