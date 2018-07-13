@@ -35,7 +35,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/athlete, roles: ROLE_USER }
-        - { path: ^/blog, roles: ROLE_USER }
+        - { path: ^/post, roles: ROLE_USER }
         - { path: ^/activities, roles: ROLE_USER }
         - { path: ^/maps, roles: ROLE_USER }
         - { path: ^/year, roles: ROLE_USER }

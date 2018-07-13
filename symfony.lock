@@ -101,11 +101,17 @@
     "jean85/pretty-package-versions": {
         "version": "1.1"
     },
+    "knplabs/knp-markdown-bundle": {
+        "version": "1.7.0"
+    },
     "league/geotools": {
         "version": "0.8.0"
     },
     "league/oauth2-client": {
         "version": "1.4.2"
+    },
+    "michelf/php-markdown": {
+        "version": "1.8.0"
     },
     "nette/bootstrap": {
         "version": "v2.4.5"
