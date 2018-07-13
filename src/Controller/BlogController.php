@@ -30,8 +30,7 @@ class BlogController extends AbstractController
      */
     public function view($postId)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $post = $entityManager->getRepository(Post::class)->find($postId);
+        $post = $this->getEntityManager()->getRepository(Post::class)->find($postId);
 
         return $this->render('views/posts/view.html.twig', [
             'post' => $post,
@@ -48,19 +47,13 @@ class BlogController extends AbstractController
         $post->setStatus(Post::STATUS_DRAFT);
         $post->setActivityId($activityId);
 
-        $form = $this->createFormBuilder($post)
-            ->add('title', TextType::class)
-            ->add('text', TextareaType::class)
-            ->add('save', SubmitType::class, array('label' => 'Opslaan'))
-            ->getForm();
-
+        $form = $this->buildForm($post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($post);
-            $entityManager->flush();
+            $this->getEntityManager()->persist($post);
+            $this->getEntityManager()->flush();
 
             return $this->redirect('/blog/posts');
         }
@@ -68,5 +61,40 @@ class BlogController extends AbstractController
         return $this->render('views/posts/add.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @Route("/blog/edit/{postId}")
+     */
+    public function edit(Request $request, $postId)
+    {
+        $post = $this->getEntityManager()->getRepository(Post::class)->find($postId);
+
+        $form = $this->buildForm($post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post = $form->getData();
+
+            $this->getEntityManager()->persist($post);
+            $this->getEntityManager()->flush();
+
+            return $this->redirect('/blog/view/' . $postId);
+        }
+
+        return $this->render('views/posts/edit.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    private function buildForm(&$post)
+    {
+        $form = $this->createFormBuilder($post)
+            ->add('title', TextType::class)
+            ->add('text', TextareaType::class)
+            ->add('save', SubmitType::class, array('label' => 'Opslaan'))
+            ->getForm();
+
+        return $form;
     }
 }

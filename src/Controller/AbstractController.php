@@ -14,10 +14,19 @@ class AbstractController extends Controller
 {
     protected $session;
     protected $client;
+    private $entityManager;
 
     public function __construct()
     {
         $this->session = new Session();
+    }
+
+    protected function getEntityManager()
+    {
+        if (is_null($this->entityManager)) {
+            $this->entityManager = $this->getDoctrine()->getManager();
+        }
+        return $this->entityManager;
     }
 
     protected function getOAuth()
