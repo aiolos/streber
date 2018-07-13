@@ -20,7 +20,7 @@ class BlogController extends AbstractController
      */
     public function posts()
     {
-        $posts = $this->getEntityManager()->getRepository(Post::class)->findBy(['status' => Post::STATUS_PUBLISHED]);
+        $posts = $this->getEntityManager()->getRepository(Post::class)->findBy(['status' => Post::STATUS_PUBLISHED], ['date' => 'desc', 'id' => 'desc']);
 
         return $this->render('views/blog/index.html.twig', [
             'posts' => $posts,
@@ -36,7 +36,9 @@ class BlogController extends AbstractController
 
         return $this->render('views/blog/view.html.twig', [
             'post' => $post,
-            'activity' =>$this->getStravaClient()->getActivity($post->getActivityId())
+            'activity' =>$this->getStravaClient()->getActivity($post->getActivityId()),
+            'streams' => $this->getStreams('activity', $post->getActivityId(), 'altitude'),
+            'photos' => $this->getStravaClient()->getActivityPhotos($post->getActivityId()),
         ]);
     }
 }

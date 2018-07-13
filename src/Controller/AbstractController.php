@@ -49,7 +49,7 @@ class AbstractController extends Controller
         return $this->client;
     }
 
-    protected function getStreams($type, $id)
+    protected function getStreams($type, $id, $streamResults = null)
     {
         /**
          * allowed types for getStreams*()-method are (comma seperated):
@@ -65,12 +65,16 @@ class AbstractController extends Controller
          * - moving:  boolean
          * - grade_smooth:  float percent
          */
+        if ($streamResults === null) {
+            $streamResults = 'altitude,heartrate,velocity_smooth,cadence,temp';
+        }
+
         if ($type === 'activity') {
-            $results = $this->getStravaClient()->getStreamsActivity($id, 'altitude,heartrate,velocity_smooth,cadence,temp', 'medium', 'distance');
+            $results = $this->getStravaClient()->getStreamsActivity($id, $streamResults, 'medium', 'distance');
         } elseif ($type === 'segment') {
-            $results = $this->getStravaClient()->getStreamsSegment($id, 'altitude,heartrate,velocity_smooth,cadence,temp', 'medium', 'distance');
+            $results = $this->getStravaClient()->getStreamsSegment($id, $streamResults, 'medium', 'distance');
         } elseif ($type === 'segmenteffort') {
-            $results = $this->getStravaClient()->getStreamsEffort($id, 'altitude,heartrate,velocity_smooth,cadence,temp', 'medium', 'distance');
+            $results = $this->getStravaClient()->getStreamsEffort($id, $streamResults, 'medium', 'distance');
         } else {
             throw new \Exception('Invalid stream type');
         }
