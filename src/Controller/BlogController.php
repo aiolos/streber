@@ -18,14 +18,21 @@ class BlogController extends AbstractController
     /**
      * @Route("/")
      */
-    public function posts()
+    public function posts(Request $request)
     {
-        $posts = $this->getEntityManager()
-            ->getRepository(Post::class)
-            ->findBy(['status' => Post::STATUS_PUBLISHED], ['date' => 'desc', 'id' => 'desc'], 5, 0);
+        $repository = $this->getEntityManager()->getRepository(Post::class);
+        $total = count($repository->findBy(['status' => Post::STATUS_PUBLISHED], ['date' => 'desc', 'id' => 'desc']));
+        $perPage = 5;
+        $maxPage = ceil($total / $perPage);
+        $currentPage = max(min($maxPage, $request->get('page', 1)), 1);
+        $offset = ($currentPage * $perPage) - $perPage;
+
+        $posts = $repository->findBy(['status' => Post::STATUS_PUBLISHED], ['date' => 'desc', 'id' => 'desc'], $perPage, $offset);
 
         return $this->render('views/blog/index.html.twig', [
             'posts' => $posts,
+            'pages' => $maxPage,
+            'currentPage' => $currentPage,
         ]);
     }
 

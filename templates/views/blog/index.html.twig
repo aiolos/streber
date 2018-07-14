@@ -23,4 +23,19 @@
         </div>
     </div>
 {% endfor %}
+<div class="row">
+    <div class="offset-lg-3 offset-md-2 col-lg-6 col-md-8 col-sm-12">
+        <div class="float-right mt-2">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item {% if currentPage <= 1 %}disabled{% endif %}"><a class="page-link" href="/?page={{ currentPage - 1 }}">Vorige</a></li>
+                    {% for page in 1..pages %}
+                    <li class="page-item {% if page == currentPage %}active{% endif %}"><a class="page-link" href="/?page={{ page }}">{{ page }}</a></li>
+                    {% endfor %}
+                    <li class="page-item {% if currentPage >= pages %}disabled{% endif %}"><a class="page-link" href="/?page={{ currentPage + 1 }}">Volgende</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
 {% endblock %}
