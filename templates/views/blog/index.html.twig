@@ -12,9 +12,9 @@
                             <h6 class="card-subtitle mb-2 text-muted">{{ post.date|date("d-m-Y") }}</h6>
                         </div>
                         <div class="card-body">
-                            {{ post.text|markdown }}<br>
-                        </div>
-                        <div class="card-footer">
+                            {{ post.text|markdown|split('</p>')|first|raw }}
+                            <br>
+                            <br>
                             <a href="/blog/{{ post.id }}">Lees verder</a>
                         </div>
                     </div>
