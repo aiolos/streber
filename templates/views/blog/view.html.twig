@@ -41,6 +41,19 @@
                         </div>
                     </div>
                     <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                {% for photo in photos %}
+                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <a href="{{ photo.urls|first }}" data-toggle="lightbox" data-gallery="activity-gallery" data-title="{{ photo.caption }}">
+                                            <img src="{{ photo.urls|first }}" class="img-fluid rounded m-0">
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
                         <div class="h-100">
                             <div id="altitudeDiv"></div>
                         </div>
@@ -52,60 +65,18 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="/assets/css/leaflet.css" />
+    <link rel="stylesheet" href="/assets/css/ekko-lightbox.css" />
 {% endblock %}
 
 {% block javascripts %}
-    <script src="/assets/js/leaflet.js"></script>
-    <script type="text/javascript" src="/assets/js/polyline.encoded.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    {% include 'partials/map.html.twig' %}
+    {% include 'partials/graphs.html.twig' %}
+
+    <script src="/assets/js/ekko-lightbox.min.js"></script>
     <script>
-        $(document).ready( function () {
-            var data = [
-                {% for stream in streams %}
-                {% if loop.first %}
-                {% else %}
-                {
-                    x: {{ streams.distance.data }},
-                    y: {{ stream.data }},
-                    xaxis: 'x' + {{ stream.index }},
-                    yaxis: 'y' + {{ stream.index }},
-                    type: 'scatter',
-                    name: '{{ stream.title }}'
-                },
-                {% endif %}
-                {% endfor %}
-            ];
-            var layout = {
-                legend: {traceorder: 'reversed'},
-                {% for stream in streams %}
-                {% if loop.first %}
-                {% else %}
-                'xaxis{{ stream.index }}': {anchor: 'y1' },
-                'yaxis{{ stream.index }}': {domain: [{{ (1 / (loop.length -1)) * (stream.index - 1) }}, {{ (1 /  (loop.length -1)) * (stream.index ) }}]},
-                {% endif %}
-                {% endfor %}
-            };
-            Plotly.newPlot('altitudeDiv', data, layout);
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
         });
-
-        var encoded = "{{ activity.map.polyline|replace({'\\': '\\\\'}) }}";
-        var coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
-
-        var map = L.map('map').fitBounds(coordinates);
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-            }).addTo(map);
-
-        L.polyline(
-            coordinates,
-            {
-                color: 'blue',
-                weight: 2,
-                opacity: .7,
-                lineJoin: 'round'
-            }
-        ).addTo(map);
     </script>
 {% endblock %}

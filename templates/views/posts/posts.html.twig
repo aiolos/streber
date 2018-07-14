@@ -24,7 +24,7 @@
                     <td>{{ post.date|date("d-m-Y") }}</td>
                     <td>{{ post.status }}</td>
                     <td><a href="/activities/{{ post.activityId }}">{{ post.activityId }}</a></td>
-                    <td class="text-right"><a href="/posts/edit/{{ post.id }}/map"><i class="fa fa-edit"></i></a></td>
+                    <td class="text-right"><a href="/posts/edit/{{ post.id }}"><i class="fa fa-edit"></i></a></td>
                 </tr>
             {% endfor %}
             </tbody>

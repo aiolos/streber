@@ -86,7 +86,7 @@
             <div class="card-header">
                 <h5><i class="fa fa-bicycle"></i> Laatste activiteit
                     <div class="float-right">
-                        <a href="/activities/{{ lastActivity.id }}" class="btn btn-sm btn-outline-secondary">
+                        <a href="/activities/{{ activity.id }}" class="btn btn-sm btn-outline-secondary">
                             <i class="fa fa-globe"></i> Bekijk
                         </a>
                     </div>
@@ -94,10 +94,10 @@
             </div>
             <div class="card-body">
                 <p class="card-text">
-                    Naam: {{ lastActivity.name }}<br>
-                    Afstand: {{ (lastActivity.distance/ 1000)|number_format(1, ',', '.') }} km<br>
-                    Hoogte: {{ (lastActivity.total_elevation_gain)|number_format(1, ',', '.') }} m<br>
-                    Gemiddelde snelheid: {{ (lastActivity.average_speed * 3.6)|number_format(2, ',', '.') }} km/h<br>
+                    Naam: {{ activity.name }}<br>
+                    Afstand: {{ (activity.distance/ 1000)|number_format(1, ',', '.') }} km<br>
+                    Hoogte: {{ (activity.total_elevation_gain)|number_format(0, ',', '.') }} m<br>
+                    Gemiddelde snelheid: {{ (activity.average_speed * 3.6)|number_format(1, ',', '.') }} km/h<br>
                 </p>
             </div>
         </div>
@@ -117,33 +117,6 @@
 </div>
 {% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="/assets/css/leaflet.css" />
-{% endblock %}
-
 {% block javascripts %}
-    <script src="/assets/js/leaflet.js"></script>
-    <script type="text/javascript" src="/assets/js/polyline.encoded.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script>
-
-        var encoded = "{{ lastActivity.map.summary_polyline|replace({'\\': '\\\\'}) }}";
-        var coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
-
-        var map = L.map('map').fitBounds(coordinates);
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-            }).addTo(map);
-
-        L.polyline(
-            coordinates,
-            {
-                color: 'blue',
-                weight: 2,
-                opacity: .7,
-                lineJoin: 'round'
-            }
-        ).addTo(map);
-    </script>
+    {% include 'partials/map.html.twig' %}
 {% endblock %}

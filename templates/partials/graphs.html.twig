@@ -1,0 +1,33 @@
+{% block javascripts %}
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            var data = [
+                {% for stream in streams %}
+                    {% if loop.first %}
+                    {% else %}
+                        {
+                            x: {{ streams.distance.data }},
+                            y: {{ stream.data }},
+                            xaxis: 'x' + {{ stream.index }},
+                            yaxis: 'y' + {{ stream.index }},
+                            type: 'scatter',
+                            name: '{{ stream.title }}'
+                        },
+                    {% endif %}
+                {% endfor %}
+            ];
+            var layout = {
+                legend: {traceorder: 'reversed'},
+                {% for stream in streams %}
+                    {% if loop.first %}
+                    {% else %}
+                        'xaxis{{ stream.index }}': {anchor: 'y1' },
+                        'yaxis{{ stream.index }}': {domain: [{{ (1 / (loop.length -1)) * (stream.index - 1) }}, {{ (1 /  (loop.length -1)) * (stream.index ) }}]},
+                    {% endif %}
+                {% endfor %}
+            };
+            Plotly.newPlot('altitudeDiv', data, layout);
+        } );
+    </script>
+{% endblock %}

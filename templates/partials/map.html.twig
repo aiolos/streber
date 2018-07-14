@@ -1,0 +1,29 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/leaflet.css" />
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/assets/js/leaflet.js"></script>
+    <script type="text/javascript" src="/assets/js/polyline.encoded.js"></script>
+    <script>
+
+        var encoded = "{{ activity.map.polyline|replace({'\\': '\\\\'}) }}";
+        var coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
+
+        var map = L.map('map').fitBounds(coordinates);
+        L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+            }).addTo(map);
+
+        L.polyline(
+            coordinates,
+            {
+                color: 'blue',
+                weight: 2,
+                opacity: .7,
+                lineJoin: 'round'
+            }
+        ).addTo(map);
+    </script>
+{% endblock %}

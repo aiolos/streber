@@ -73,14 +73,9 @@
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="/assets/css/leaflet.css" />
-{% endblock %}
-
 {% block javascripts %}
-    <script src="/assets/js/leaflet.js"></script>
-    <script type="text/javascript" src="/assets/js/polyline.encoded.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    {% include 'partials/map.html.twig' with {'activity': segment} only %}
+    {% include 'partials/graphs.html.twig' %}
     <script>
         $(document).ready( function () {
             $('#effortsTable').DataTable({
@@ -101,52 +96,6 @@
                     { data: "activity", sortable: false, searchable: false }
                 ]
             });
-
-            var data = [
-                {% for stream in streams %}
-                {% if loop.first %}
-                {% else %}
-                {
-                    x: {{ streams.distance.data }},
-                    y: {{ stream.data }},
-                    xaxis: 'x' + {{ stream.index }},
-                    yaxis: 'y' + {{ stream.index }},
-                    type: 'scatter',
-                    name: '{{ stream.title }}'
-                },
-                {% endif %}
-                {% endfor %}
-            ];
-            var layout = {
-                legend: {traceorder: 'reversed'},
-                {% for stream in streams %}
-                {% if loop.first %}
-                {% else %}
-                'xaxis{{ stream.index }}': {anchor: 'y1' },
-                'yaxis{{ stream.index }}': {domain: [{{ (1 / (loop.length -1)) * (stream.index - 1) }}, {{ (1 /  (loop.length -1)) * (stream.index ) }}]},
-                {% endif %}
-                {% endfor %}
-            };
-            Plotly.newPlot('altitudeDiv', data, layout);
         });
-
-        var encoded = "{{ segment.map.polyline|replace({'\\': '\\\\'}) }}";
-        var coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
-
-        var map = L.map('map').fitBounds(coordinates);
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-            }).addTo(map);
-
-        L.polyline(
-            coordinates,
-            {
-                color: 'blue',
-                weight: 2,
-                opacity: .7,
-                lineJoin: 'round'
-            }
-        ).addTo(map);
     </script>
 {% endblock %}

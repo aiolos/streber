@@ -23,7 +23,7 @@
                 <div class="card-header">
                     <h5>
                         <i class="fa fa-map-signs"></i>
-                        Rit: {{ (activity.distance / 1000)|number_format(2, ',', '.') }} km
+                        Rit: {{ (activity.distance / 1000)|number_format(1, ',', '.') }} km
                         <div class="float-right">
                             <a href="/posts/add/{{ activity.id }}" class="btn btn-sm btn-outline-secondary">
                                 <i class="fa fa-file-alt"></i> Maak bericht
@@ -33,11 +33,11 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">
-                        Hoogte: {{ activity.total_elevation_gain|number_format(1, ',', '.') }} m<br>
+                        Hoogte: {{ activity.total_elevation_gain|number_format(0, ',', '.') }} m<br>
                         Tijd bewogen: {{ activity.moving_time|time_format_long }}<br>
                         Tijd totaal: {{ activity.elapsed_time|time_format_long }}<br>
-                        Gemiddelde snelheid: {{ (activity.average_speed * 3.6)|number_format(2, ',', '.') }} km/h<br>
-                        Max snelheid: {{ (activity.max_speed * 3.6)|number_format(2, ',', '.') }} km/h<br>
+                        Gemiddelde snelheid: {{ (activity.average_speed * 3.6)|number_format(1, ',', '.') }} km/h<br>
+                        Max snelheid: {{ (activity.max_speed * 3.6)|number_format(1, ',', '.') }} km/h<br>
                         Gemiddelde Cadans: {{ activity.average_cadence is defined ? activity.average_cadence|number_format : '-' }} rpm<br>
                         Gemiddeld vermogen: {{ activity.average_watts is defined ? activity.average_watts|number_format : '-' }} W<br>
                         Gemiddelde hartslag: {{ activity.has_heartrate ? activity.average_heartrate|number_format : '-' }}<br>
@@ -151,14 +151,9 @@
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="/assets/css/leaflet.css" />
-{% endblock %}
-
 {% block javascripts %}
-    <script src="/assets/js/leaflet.js"></script>
-    <script type="text/javascript" src="/assets/js/polyline.encoded.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    {% include 'partials/map.html.twig' %}
+    {% include 'partials/graphs.html.twig' %}
     <script>
         $(document).ready( function () {
             $('#segmentsTable').DataTable({
@@ -177,52 +172,6 @@
                     { data: "datetime" }
                 ]
             });
-
-            var data = [
-                {% for stream in streams %}
-                    {% if loop.first %}
-                    {% else %}
-                    {
-                        x: {{ streams.distance.data }},
-                        y: {{ stream.data }},
-                        xaxis: 'x' + {{ stream.index }},
-                        yaxis: 'y' + {{ stream.index }},
-                        type: 'scatter',
-                        name: '{{ stream.title }}'
-                    },
-                    {% endif %}
-                {% endfor %}
-            ];
-            var layout = {
-                legend: {traceorder: 'reversed'},
-                {% for stream in streams %}
-                    {% if loop.first %}
-                    {% else %}
-                        'xaxis{{ stream.index }}': {anchor: 'y1' },
-                        'yaxis{{ stream.index }}': {domain: [{{ (1 / (loop.length -1)) * (stream.index - 1) }}, {{ (1 /  (loop.length -1)) * (stream.index ) }}]},
-                    {% endif %}
-                {% endfor %}
-            };
-            Plotly.newPlot('altitudeDiv', data, layout);
-        } );
-
-        var encoded = "{{ activity.map.polyline|replace({'\\': '\\\\'}) }}";
-        var coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
-
-        var map = L.map('map').fitBounds(coordinates);
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-            }).addTo(map);
-
-        L.polyline(
-            coordinates,
-            {
-                color: 'blue',
-                weight: 2,
-                opacity: .7,
-                lineJoin: 'round'
-            }
-        ).addTo(map);
+        });
     </script>
 {% endblock %}
