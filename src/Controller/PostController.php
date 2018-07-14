@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
 use App\Entity\Post;
 use App\Helpers\SVGEncoder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -36,7 +37,7 @@ class PostController extends AbstractController
 
         return $this->render('views/posts/view.html.twig', [
             'post' => $post,
-            'activity' =>$this->getStravaClient()->getActivity($post->getActivityId())
+            'activity' =>$this->getStravaClient()->getActivity($post->getActivity()->getId())
         ]);
     }
 
@@ -45,10 +46,12 @@ class PostController extends AbstractController
      */
     public function add(Request $request, $activityId)
     {
+        /** @var Activity $activity */
+        $activity = $this->getEntityManager()->getRepository(Activity::class)->find($activityId);
         $post = new Post();
         $post->setUser($this->getUser());
         $post->setStatus(Post::STATUS_DRAFT);
-        $post->setActivityId($activityId);
+        $post->setActivity($activity);
 
         $form = $this->buildForm($post);
         $form->handleRequest($request);
@@ -56,6 +59,9 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $post = $form->getData();
             $this->getEntityManager()->persist($post);
+            $this->getEntityManager()->flush();
+            $activity->setPost($post);
+            $this->getEntityManager()->persist($activity);
             $this->getEntityManager()->flush();
 
             return $this->redirect('/posts');

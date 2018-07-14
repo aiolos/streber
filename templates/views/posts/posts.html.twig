@@ -23,7 +23,7 @@
                     <td><a href="/posts/view/{{ post.id }}">{{ post.title }}</a></td>
                     <td>{{ post.date|date("d-m-Y") }}</td>
                     <td>{{ post.status }}</td>
-                    <td><a href="/activities/{{ post.activityId }}">{{ post.activityId }}</a></td>
+                    <td><a href="/activities/{{ post.activity.id }}">{{ post.activity.name }}</a></td>
                     <td class="text-right"><a href="/posts/edit/{{ post.id }}"><i class="fa fa-edit"></i></a></td>
                 </tr>
             {% endfor %}
@@ -41,7 +41,7 @@
                     { data: "title" },
                     { data: "status" },
                     { data: "date" },
-                    { data: "activityId" },
+                    { data: "activity" },
                     { data: "", sortable: false }
                 ]
             });

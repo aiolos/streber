@@ -31,11 +31,6 @@ class Post implements \Serializable
     private $title;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $activityId;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $text;
@@ -49,6 +44,11 @@ class Post implements \Serializable
      *  @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      */
     private $user;
+
+    /**
+     *  @ORM\OneToOne(targetEntity="App\Entity\Activity", inversedBy="post")
+     */
+    private $activity;
 
     /**
      * @ORM\Column(type="string", length=32)
@@ -73,16 +73,6 @@ class Post implements \Serializable
     public function setTitle($title)
     {
         $this->title = $title;
-    }
-
-    public function setActivityId($activityId)
-    {
-        $this->activityId = $activityId;
-    }
-
-    public function getActivityId()
-    {
-        return $this->activityId;
     }
 
     public function getText()
@@ -125,13 +115,23 @@ class Post implements \Serializable
         $this->date = $date;
     }
 
+    public function getActivity(): ?Activity
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(?Activity $activity)
+    {
+        $this->activity = $activity;
+    }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
         return serialize(array(
             $this->id,
             $this->title,
-            $this->activityId,
+            $this->activity,
             $this->text,
         ));
     }
@@ -142,7 +142,7 @@ class Post implements \Serializable
         list (
             $this->id,
             $this->title,
-            $this->activityId,
+            $this->activity,
             $this->text,
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }

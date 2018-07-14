@@ -66,11 +66,17 @@ class User implements UserInterface, \Serializable
      */
     private $posts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="user", orphanRemoval=false)
+     */
+    private $activities;
+
     public function __construct()
     {
         $this->isActive = true;
         $this->roles = array('ROLE_USER');
         $this->posts = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     public function getEmail()
@@ -157,6 +163,34 @@ class User implements UserInterface, \Serializable
             // set the owning side to null (unless already changed)
             if ($post->getUser() === $this) {
                 $post->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    public function addActivity(Activity $activity): self
+    {
+        if (!$this->activities->contains($activity)) {
+            $this->activities[] = $activity;
+            $activity->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivity(Activity $activity): self
+    {
+        if ($this->activities->contains($activity)) {
+            $this->activities->removeElement($activity);
+            // set the owning side to null (unless already changed)
+            if ($activity->getUser() === $this) {
+                $activity->setUser(null);
             }
         }
 

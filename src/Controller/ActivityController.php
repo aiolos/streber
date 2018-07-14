@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
 use App\Helpers\SVGEncoder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,8 +30,19 @@ class ActivityController extends AbstractController
         $streams = $this->getStreams('activity', $activityId);
         $photos = $this->getStravaClient()->getActivityPhotos($activityId);
 
+        $activityEntity = $this->getEntityManager()->getRepository(Activity::class)->find($activityId);
+        if ($activityEntity === null) {
+            $activityEntity = new Activity();
+            $activityEntity->setId($activityId);
+            $activityEntity->setUser($this->getUser());
+            $activityEntity->setName($activity['name']);
+            $this->getEntityManager()->persist($activityEntity);
+            $this->getEntityManager()->flush();
+        }
+
         return $this->render('views/activities/activity.html.twig', [
             'activity' => $activity,
+            'activityEntity' => $activityEntity,
             'kudos' => $this->getStravaClient()->getActivityKudos($activityId),
             'streams' => $streams,
             'photos' => $photos,

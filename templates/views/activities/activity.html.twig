@@ -25,9 +25,15 @@
                         <i class="fa fa-map-signs"></i>
                         Rit: {{ (activity.distance / 1000)|number_format(1, ',', '.') }} km
                         <div class="float-right">
+                            {% if activityEntity.post %}
+                            <a href="/posts/edit/{{ activityEntity.post.id }}" class="btn btn-sm btn-outline-secondary">
+                                <i class="fa fa-file-alt"></i> Wijzig bericht
+                            </a>
+                            {% else %}
                             <a href="/posts/add/{{ activity.id }}" class="btn btn-sm btn-outline-secondary">
                                 <i class="fa fa-file-alt"></i> Maak bericht
                             </a>
+                            {% endif %}
                         </div>
                     </h5>
                 </div>
