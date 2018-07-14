@@ -4,9 +4,11 @@
     <div class="row">
         <div class="offset-lg-2 col-lg-8 col-md-12 col-sm-12">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <a href="/" class="btn btn-sm btn-outline-secondary"><i class="fa fa-arrow-left"></i> Terug</a>
                 <h1 class="h2">
-                    <i class="fa fa-file-alt"></i> {{ post.title }}
+                    <i class="fa fa-comment"></i> {{ post.title }}
                 </h1>
+                <h4 class="text-muted">{{ post.date|date('d-m-Y') }}</h4>
             </div>
 
             <div class="row">
@@ -22,8 +24,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h5>
-                                <i class="fa fa-map-signs"></i>
-                                {{ activity.name }}
+                                <i class="fa fa-bicycle"></i>
+                                De rit:
                             </h5>
                         </div>
                         <div class="card-body">

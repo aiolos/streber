@@ -20,7 +20,9 @@ class BlogController extends AbstractController
      */
     public function posts()
     {
-        $posts = $this->getEntityManager()->getRepository(Post::class)->findBy(['status' => Post::STATUS_PUBLISHED], ['date' => 'desc', 'id' => 'desc']);
+        $posts = $this->getEntityManager()
+            ->getRepository(Post::class)
+            ->findBy(['status' => Post::STATUS_PUBLISHED], ['date' => 'desc', 'id' => 'desc'], 5, 0);
 
         return $this->render('views/blog/index.html.twig', [
             'posts' => $posts,
@@ -33,7 +35,10 @@ class BlogController extends AbstractController
     public function view($postId)
     {
         /** @var Post $post */
-        $post = $this->getEntityManager()->getRepository(Post::class)->find($postId);
+        $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy(['id' => $postId, 'status' => Post::STATUS_PUBLISHED]);
+        if (is_null($post)) {
+            return $this->redirect('/');
+        }
         $this->setStravaToken($post->getUser()->getStravaToken());
 
         return $this->render('views/blog/view.html.twig', [

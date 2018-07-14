@@ -15,7 +15,7 @@
                             {{ post.text|markdown|split('</p>')|first|raw }}
                             <br>
                             <br>
-                            <a href="/blog/{{ post.id }}">Lees verder</a>
+                            <a href="/blog/{{ post.id }}" class="btn btn-sm btn-outline-secondary">Lees verder <i class="fa fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
