@@ -15,6 +15,7 @@ class AbstractController extends Controller
     protected $session;
     protected $client;
     private $entityManager;
+    protected $stravaToken;
 
     public function __construct()
     {
@@ -43,10 +44,23 @@ class AbstractController extends Controller
     {
         if (is_null($this->client)) {
             $adapter = new Pest('https://www.strava.com/api/v3');
-            $service = new REST($this->getUser()->getStravaToken(), $adapter);
+            $service = new REST($this->getStravaToken(), $adapter);
             $this->client = new Client($service);
         }
         return $this->client;
+    }
+
+    protected function getStravaToken()
+    {
+        if ($this->stravaToken === null) {
+            $this->stravaToken = $this->getUser()->getStravaToken();
+        }
+        return $this->stravaToken;
+    }
+
+    protected function setStravaToken($token)
+    {
+        $this->stravaToken = $token;
     }
 
     protected function getStreams($type, $id, $streamResults = null)

@@ -13,7 +13,7 @@ class SegmentController extends AbstractController
     {
         $activity = $this->getStravaClient()->getAthleteStarredSegments();
 
-        return $this->render('views/segments.html.twig', [
+        return $this->render('views/segments/segments.html.twig', [
             'activity' => $activity,
         ]);
     }
@@ -26,7 +26,7 @@ class SegmentController extends AbstractController
         $segment = $this->getStravaClient()->getSegment($segmentId);
         $streams = $this->getStreams('segment', $segmentId);
 
-        return $this->render('views/segment.html.twig', [
+        return $this->render('views/segments/segment.html.twig', [
             'segment' => $segment,
             'efforts' => $this->getStravaClient()->getSegmentEffort($segmentId),
             'streams' => $streams,
@@ -45,7 +45,7 @@ class SegmentController extends AbstractController
         });
         $streams = $this->getStreams('segmenteffort', $effortId);
 
-        return $this->render('views/effort.html.twig', [
+        return $this->render('views/segments/effort.html.twig', [
             'segment' => $segment,
             'effort' => $efforts[0],
             'streams' => $streams,

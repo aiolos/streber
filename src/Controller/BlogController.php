@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/blog")
+     * @Route("/")
      */
     public function posts()
     {
@@ -32,7 +32,9 @@ class BlogController extends AbstractController
      */
     public function view($postId)
     {
+        /** @var Post $post */
         $post = $this->getEntityManager()->getRepository(Post::class)->find($postId);
+        $this->setStravaToken($post->getUser()->getStravaToken());
 
         return $this->render('views/blog/view.html.twig', [
             'post' => $post,
