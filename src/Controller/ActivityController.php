@@ -14,7 +14,7 @@ class ActivityController extends AbstractController
      */
     public function activities()
     {
-        $activities = $this->getStravaClient()->getAthleteActivities();
+        $activities = $this->getStravaClient()->getAthleteActivities(null, null, null, 50);
 
         return $this->render('views/activities/activities.html.twig', [
             'activities' => $activities,

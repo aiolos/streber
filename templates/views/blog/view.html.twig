@@ -6,7 +6,16 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
                 <a href="/" class="btn btn-sm btn-outline-secondary"><i class="fa fa-arrow-left"></i> Terug</a>
                 <h1 class="h2">
-                    <i class="fa fa-comment"></i> {{ post.title }}
+                    {% if activity.type == 'Ride' %}
+                        <i class="fa fa-bicycle"></i>
+                    {% elseif activity.type == 'Walk' %}
+                        <i class="fa fa-walking"></i>
+                    {% elseif activity.type == 'Snowboard' %}
+                        <i class="fa fa-snowflake"></i>
+                    {% else %}
+                        <i class="fa fa-comment"></i>
+                    {% endif %}
+                    {{ post.title }}
                 </h1>
                 <h4 class="text-muted">{{ post.date|date('d-m-Y') }}</h4>
             </div>
@@ -24,17 +33,35 @@
                     <div class="card">
                         <div class="card-header">
                             <h5>
-                                <i class="fa fa-bicycle"></i>
-                                De rit:
+                                <i class="fa fa-chart-area"></i>
+                                De cijfers:
                             </h5>
                         </div>
                         <div class="card-body">
-                            Afstand: {{ (activity.distance / 1000)|number_format(1, ',', '.') }} km<br>
-                            Hoogtemeters: {{ activity.total_elevation_gain|number_format(0, ',', '.') }} m<br>
-                            Tijd bewogen: {{ activity.moving_time|time_format_long }}<br>
-                            Tijd totaal: {{ activity.elapsed_time|time_format_long }}<br>
-                            Gemiddelde snelheid: {{ (activity.average_speed * 3.6)|number_format(1, ',', '.') }} km/h<br>
-                            Max snelheid: {{ (activity.max_speed * 3.6)|number_format(1, ',', '.') }} km/h<br>
+                            <dl class="row">
+                                <dt class="col-sm-7">Afstand:</dt>
+                                <dd class="col-sm-5">{{ (activity.distance / 1000)|number_format(1, ',', '.') }} km</dd>
+
+                                <dt class="col-sm-7">Hoogtemeters:</dt>
+                                <dd class="col-sm-5">{{ activity.total_elevation_gain|number_format(0, ',', '.') }} m</dd>
+
+                                <dt class="col-sm-7">Tijd bewogen:</dt>
+                                <dd class="col-sm-5">{{ activity.moving_time|time_format_long }}</dd>
+
+                                <dt class="col-sm-7">Tijd totaal:</dt>
+                                <dd class="col-sm-5">{{ activity.elapsed_time|time_format_long }}</dd>
+
+                                <dt class="col-sm-7">Gemiddeld:</dt>
+                                <dd class="col-sm-5">{{ (activity.average_speed * 3.6)|number_format(1, ',', '.') }} km/h</dd>
+
+                                <dt class="col-sm-7">Max:</dt>
+                                <dd class="col-sm-5">{{ (activity.max_speed * 3.6)|number_format(1, ',', '.') }} km/h</dd>
+
+                                {% if activity.gear_id %}
+                                <dt class="col-sm-7">Materiaal:</dt>
+                                <dd class="col-sm-5">{{ activity.gear.name }}</dd>
+                                {% endif %}
+                            </dl>
                         </div>
                     </div>
                     <div class="card">
