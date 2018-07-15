@@ -146,4 +146,15 @@ class Post implements \Serializable
             $this->text,
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
+
+    public static function getStatusName($status)
+    {
+        $statuses = [
+            self::STATUS_DRAFT => 'concept',
+            self::STATUS_PUBLISHED => 'gepubliceerd',
+            self::STATUS_DELETED => 'verwijderd',
+        ];
+
+        return $statuses[$status];
+    }
 }

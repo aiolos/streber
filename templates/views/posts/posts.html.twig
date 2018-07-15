@@ -12,6 +12,7 @@
             <tr>
                 <th>Titel</th>
                 <th>Datum</th>
+                <th>Datum</th>
                 <th>Status</th>
                 <th>Activiteit</th>
                 <th></th>
@@ -22,6 +23,7 @@
                 <tr>
                     <td><a href="/posts/view/{{ post.id }}">{{ post.title }}</a></td>
                     <td>{{ post.date|date("d-m-Y") }}</td>
+                    <td>{{ post.date|date("Y-m-d") }}</td>
                     <td>{{ post.status }}</td>
                     <td><a href="/activities/{{ post.activity.id }}">{{ post.activity.name }}</a></td>
                     <td class="text-right"><a href="/posts/edit/{{ post.id }}"><i class="fa fa-edit"></i></a></td>
@@ -37,10 +39,12 @@
     <script>
         $(document).ready( function () {
             $('#postsTable').DataTable({
+                order: [[ 1, 'desc' ]],
                 columns: [
                     { data: "title" },
+                    { data: "date", orderData: 2 },
+                    { data: "dateRaw", visible: false },
                     { data: "status" },
-                    { data: "date" },
                     { data: "activity" },
                     { data: "", sortable: false }
                 ]
