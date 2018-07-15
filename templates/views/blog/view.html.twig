@@ -2,9 +2,30 @@
 
 {% block body %}
     <div class="row">
-        <div class="offset-lg-2 col-lg-8 col-md-12 col-sm-12">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-                <a href="/" class="btn btn-sm btn-outline-secondary"><i class="fa fa-arrow-left"></i> Terug</a>
+        <div class="offset-xl-2 col-xl-8 col-12">
+            <div class="d-none d-md-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <div><a href="/" class="btn btn-sm btn-outline-secondary"><i class="fa fa-arrow-left"></i> Terug</a></div>
+                <div>
+                    <h1 class="h2">
+                        {% if activity.type == 'Ride' %}
+                            <i class="fa fa-bicycle"></i>
+                        {% elseif activity.type == 'Walk' %}
+                            <i class="fa fa-walking"></i>
+                        {% elseif activity.type == 'Snowboard' %}
+                            <i class="fa fa-snowflake"></i>
+                        {% else %}
+                            <i class="fa fa-comment"></i>
+                        {% endif %}
+                        {{ post.title }}
+                    </h1>
+                </div>
+                <div class="d-xs-none d-md-block"><h4 class="text-muted">{{ post.date|date('d-m-Y') }}</h4></div>
+            </div>
+            <div class="d-flex d-md-none justify-content-between flex-no-wrap align-items-center pt-1 pb-2 mb-0">
+                <div><a href="/" class="btn btn-sm btn-outline-secondary"><i class="fa fa-arrow-left"></i> Terug</a></div>
+                <div class=""><h4 class="text-muted">{{ post.date|date('d-m-Y') }}</h4></div>
+            </div>
+            <div class="d-flex d-md-none justify-content-between flex-wrap align-items-center">
                 <h1 class="h2">
                     {% if activity.type == 'Ride' %}
                         <i class="fa fa-bicycle"></i>
@@ -17,11 +38,10 @@
                     {% endif %}
                     {{ post.title }}
                 </h1>
-                <h4 class="text-muted">{{ post.date|date('d-m-Y') }}</h4>
             </div>
 
             <div class="row">
-                <div class="col-lg-7 col-md-7 col-sm-12 m-10">
+                <div class="col-md-7 col-12 m-10">
                     <div class="card">
                         <div class="card-body">
                             {{ post.text|markdown }}<br>
@@ -75,7 +95,7 @@
                         <div class="card-body">
                             <div class="row">
                                 {% for photo in photos %}
-                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="col-lg-4 col-6">
                                         <a href="{{ photo.urls|first }}" data-toggle="lightbox" data-gallery="activity-gallery" data-title="{{ photo.caption }}">
                                             <img src="{{ photo.urls|first }}" class="img-fluid rounded m-0">
                                         </a>
