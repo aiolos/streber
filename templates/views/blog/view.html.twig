@@ -38,6 +38,7 @@
                             </h5>
                         </div>
                         <div class="card-body">
+                            <small>
                             <dl class="row">
                                 <dt class="col-sm-7">Afstand:</dt>
                                 <dd class="col-sm-5">{{ (activity.distance / 1000)|number_format(1, ',', '.') }} km</dd>
@@ -58,10 +59,11 @@
                                 <dd class="col-sm-5">{{ (activity.max_speed * 3.6)|number_format(1, ',', '.') }} km/h</dd>
 
                                 {% if activity.gear_id %}
-                                <dt class="col-sm-7">Materiaal:</dt>
-                                <dd class="col-sm-5">{{ activity.gear.name }}</dd>
+                                    <dt class="col-sm-7">Materiaal:</dt>
+                                    <dd class="col-sm-5">{{ activity.gear.name }}</dd>
                                 {% endif %}
                             </dl>
+                            </small>
                         </div>
                     </div>
                     <div class="card">

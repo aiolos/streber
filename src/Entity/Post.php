@@ -46,6 +46,11 @@ class Post implements \Serializable
     private $user;
 
     /**
+     *  @ORM\ManyToOne(targetEntity="App\Entity\ActivityGroup", inversedBy="posts")
+     */
+    private $activityGroup;
+
+    /**
      *  @ORM\OneToOne(targetEntity="App\Entity\Activity", inversedBy="post")
      */
     private $activity;
@@ -123,6 +128,16 @@ class Post implements \Serializable
     public function setActivity(?Activity $activity)
     {
         $this->activity = $activity;
+    }
+
+    public function getActivityGroup(): ?ActivityGroup
+    {
+        return $this->activityGroup;
+    }
+
+    public function setActivityGroup(?ActivityGroup $activityGroup)
+    {
+        $this->activityGroup = $activityGroup;
     }
 
     /** @see \Serializable::serialize() */

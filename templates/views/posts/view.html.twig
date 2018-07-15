@@ -26,7 +26,8 @@
                     <div class="card">
                         <div class="card-body">
                             Status: {{ post.status }}<br>
-                            Datum: {{ post.date|date("d-m-Y") }}
+                            Datum: {{ post.date|date("d-m-Y") }}<br>
+                            Groep: {% if post.activityGroup %}{{ post.activityGroup.title }}{% endif %}
                         </div>
                     </div>
                 </div>

@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Entity\ActivityGroup;
 use App\Entity\Post;
 use App\Helpers\SVGEncoder;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -108,6 +110,11 @@ class PostController extends AbstractController
                     Post::STATUS_PUBLISHED => Post::STATUS_PUBLISHED,
                     Post::STATUS_DELETED => Post::STATUS_DELETED,
                 ),
+            ))
+            ->add('activityGroup', EntityType::class, array(
+                'class' => ActivityGroup::class,
+                'choice_label' => 'title',
+                'required' => false,
             ))
             ->add('save', SubmitType::class, array('label' => 'Opslaan'))
             ->getForm();

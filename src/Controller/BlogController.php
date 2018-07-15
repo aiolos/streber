@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ActivityGroup;
 use App\Entity\Post;
 use App\Helpers\SVGEncoder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,18 +22,26 @@ class BlogController extends AbstractController
     public function posts(Request $request)
     {
         $repository = $this->getEntityManager()->getRepository(Post::class);
-        $total = count($repository->findBy(['status' => Post::STATUS_PUBLISHED], ['date' => 'desc', 'id' => 'desc']));
+        $groups = $this->getEntityManager()->getRepository(ActivityGroup::class)->findAll();
+        $filter = ['status' => Post::STATUS_PUBLISHED];
+        $group = $request->get('group', null);
+        if ($group) {
+            $filter['activityGroup'] = $group;
+        }
+        $total = count($repository->findBy($filter, ['date' => 'desc', 'id' => 'desc']));
         $perPage = 5;
         $maxPage = ceil($total / $perPage);
         $currentPage = max(min($maxPage, $request->get('page', 1)), 1);
         $offset = ($currentPage * $perPage) - $perPage;
 
-        $posts = $repository->findBy(['status' => Post::STATUS_PUBLISHED], ['date' => 'desc', 'id' => 'desc'], $perPage, $offset);
+        $posts = $repository->findBy($filter, ['date' => 'desc', 'id' => 'desc'], $perPage, $offset);
 
         return $this->render('views/blog/index.html.twig', [
             'posts' => $posts,
             'pages' => $maxPage,
             'currentPage' => $currentPage,
+            'group' => $group,
+            'groups' => $groups,
         ]);
     }
 

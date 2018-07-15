@@ -40,7 +40,13 @@
             <li class="nav-item {% if app.request.attributes.get('_route') == 'app_post_posts' %}active{% endif %}">
                 <a class="nav-link {% if app.request.attributes.get('_route') == 'app_post_posts' %}active{% endif %}" href="/posts">
                     <span data-feather="file"></span>
-                    <i class="fa fa-edit"></i> Posts
+                    <i class="fa fa-edit"></i> Berichten
+                </a>
+            </li>
+            <li class="nav-item {% if app.request.attributes.get('_route') == 'app_post_groups' %}active{% endif %}">
+                <a class="nav-link {% if app.request.attributes.get('_route') == 'app_post_groups' %}active{% endif %}" href="/groups">
+                    <span data-feather="file"></span>
+                    <i class="fa fa-object-group"></i> Berichtgroepen
                 </a>
             </li>
             <li class="nav-item {% if app.request.attributes.get('_route') == 'app_blog_posts' %}active{% endif %}">
