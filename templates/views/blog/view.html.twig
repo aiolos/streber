@@ -43,9 +43,12 @@
             <div class="row">
                 <div class="col-md-7 col-12 m-10">
                     <div class="card">
-                        <div class="card-body">
-                            {{ post.text|markdown }}<br>
+                        <div class="card-body pb-0">
+                            {{ post.text|markdown }}
                         </div>
+                    </div>
+                    <div class="mt-2 d-none d-md-block">
+                        <a href="#" class="btn btn-sm btn-outline-secondary"><i class="fa fa-arrow-up"></i> Naar boven</a>
                     </div>
                 </div>
 
@@ -57,9 +60,9 @@
                                 De cijfers:
                             </h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body pb-0">
                             <small>
-                            <dl class="row">
+                            <dl class="row m-0">
                                 <dt class="col-sm-7">Afstand:</dt>
                                 <dd class="col-sm-5">{{ (activity.distance / 1000)|number_format(1, ',', '.') }} km</dd>
 
@@ -93,9 +96,9 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row p-0">
                                 {% for photo in photos %}
-                                    <div class="col-lg-4 col-6">
+                                    <div class="col-lg-4 col-6 m-0 p-1">
                                         <a href="{{ photo.urls|first }}" data-toggle="lightbox" data-gallery="activity-gallery" data-title="{{ photo.caption }}">
                                             <img src="{{ photo.urls|first }}" class="img-fluid rounded m-0">
                                         </a>
@@ -111,6 +114,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row m-1">
+        <div class="col-12 mt-2 d-block d-md-none">
+            <a href="#" class="btn btn-sm btn-outline-secondary"><i class="fa fa-arrow-up"></i> Naar boven</a>
         </div>
     </div>
 {% endblock %}

@@ -12,9 +12,6 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 m-10">
                 <div class="card">
-                    {#<div class="card-header">#}
-                        {#<h5><i class="fa fa-lock"></i> Login</h5>#}
-                    {#</div>#}
                     <div class="card-body">
                         {% if error %}
                             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -31,7 +28,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">Login</button>
-                            of <a href="/register">Registreer een account</a>
+                            {#of <a href="/register">Registreer een account</a>#}
                         </form>
                     </div>
                 </div>
