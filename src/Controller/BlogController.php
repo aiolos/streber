@@ -4,12 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ActivityGroup;
 use App\Entity\Post;
-use App\Helpers\SVGEncoder;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,9 +54,21 @@ class BlogController extends AbstractController
 
         return $this->render('views/blog/view.html.twig', [
             'post' => $post,
+            'stream' => ['type' => 'activity', 'id' => $post->getActivity()->getId()],
             'activity' =>$this->getStravaClient()->getActivity($post->getActivity()->getId()),
-            'streams' => $this->getStreams('activity', $post->getActivity()->getId(), 'altitude'),
             'photos' => $this->getStravaClient()->getActivityPhotos($post->getActivity()->getId()),
         ]);
+    }
+
+    /**
+     * @Route("/data/stream/{streamType}/{streamId}/{results}")
+     */
+    public function activityStreams($streamType, $streamId, $results)
+    {
+        $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy(['activity' => $streamId, 'status' => Post::STATUS_PUBLISHED]);
+        if (!is_null($post)) {
+            $this->setStravaToken($post->getUser()->getStravaToken());
+        }
+        return new JsonResponse($this->getStreams($streamType, $streamId, $results));
     }
 }

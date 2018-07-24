@@ -27,7 +27,6 @@ class ActivityController extends AbstractController
     public function activity($activityId)
     {
         $activity = $this->getStravaClient()->getActivity($activityId);
-        $streams = $this->getStreams('activity', $activityId);
         $photos = $this->getStravaClient()->getActivityPhotos($activityId);
 
         $activityEntity = $this->getEntityManager()->getRepository(Activity::class)->find($activityId);
@@ -44,7 +43,7 @@ class ActivityController extends AbstractController
             'activity' => $activity,
             'activityEntity' => $activityEntity,
             'kudos' => $this->getStravaClient()->getActivityKudos($activityId),
-            'streams' => $streams,
+            'stream' => ['type' => 'activity', 'id' => $activityId],
             'photos' => $photos,
         ]);
     }

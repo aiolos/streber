@@ -24,12 +24,11 @@ class SegmentController extends AbstractController
     public function segment($segmentId)
     {
         $segment = $this->getStravaClient()->getSegment($segmentId);
-        $streams = $this->getStreams('segment', $segmentId);
 
         return $this->render('views/segments/segment.html.twig', [
             'segment' => $segment,
             'efforts' => $this->getStravaClient()->getSegmentEffort($segmentId),
-            'streams' => $streams,
+            'stream' => ['type' => 'segment', 'id' => $segmentId],
         ]);
     }
 
@@ -43,12 +42,11 @@ class SegmentController extends AbstractController
         $efforts = array_filter($efforts, function ($element) use ($effortId)  {
             return ($element['id'] == $effortId);
         });
-        $streams = $this->getStreams('segmenteffort', $effortId);
 
         return $this->render('views/segments/effort.html.twig', [
             'segment' => $segment,
             'effort' => $efforts[0],
-            'streams' => $streams,
+            'stream' => ['type' => 'segmenteffort', 'id' => $effortId],
         ]);
     }
 }

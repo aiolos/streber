@@ -101,25 +101,44 @@ class AbstractController extends Controller
                 },
                     $result['data']);
             }
-            $streams[$result['type']] = [
-                'data' => "[" . implode(",", $result['data']) . "]",
-                'title' => $this->mapTitle($result['type']),
-                'index' => $index
+
+            if ($result['type'] == 'distance') {
+                $xData = array_map(
+                    function ($value) {
+                        return $value / 1000;
+                    },
+                    $result['data']
+                );
+                continue;
+            }
+
+            $units = $this->mapTitle($result['type']);
+
+            $streams[] = [
+                'data' => $result['data'],
+                'name' => $units['name'],
+                'index' => $index,
+                'unit' => $units['unit'],
+                'valueDecimals' => $units['decimals'],
+                'type' => $units['type'],
             ];
         }
 
-        return $streams;
+        return [
+            'xData' => $xData,
+            'datasets' => $streams,
+        ];
     }
 
     private function mapTitle($title)
     {
         $titles = [
-            'distance' => 'Afstand',
-            'heartrate' => 'Hartslag',
-            'altitude' => 'Hoogte',
-            'velocity_smooth' => 'Snelheid',
-            'cadence' => 'Cadans',
-            'temp' => 'Temperatuur',
+            'distance' => ['name' => 'Afstand', 'unit' => 'm', 'decimals' => 0, 'type' => 'line'],
+            'heartrate' => ['name' => 'Hartslag', 'unit' => 'bpm', 'decimals' => 0, 'type' => 'line'],
+            'altitude' => ['name' => 'Hoogte', 'unit' => 'm', 'decimals' => 0, 'type' => 'area'],
+            'velocity_smooth' => ['name' => 'Snelheid', 'unit' => 'km/h', 'decimals' => 1, 'type' => 'line'],
+            'cadence' => ['name' => 'Cadans', 'unit' => 'rpm', 'decimals' => 0, 'type' => 'line'],
+            'temp' => ['name' => 'Temperatuur', 'unit' => '°C', 'decimals' => 0, 'type' => 'line'],
         ];
 
         return $titles[$title];

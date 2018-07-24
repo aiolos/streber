@@ -107,7 +107,7 @@
                     </h5>
                 </div>
                 <div class="h-100">
-                    <div id="altitudeDiv"></div>
+                    <div id="graphDiv"></div>
                 </div>
             </div>
         </div>
@@ -116,7 +116,7 @@
 
 {% block javascripts %}
     {% include 'partials/map.html.twig' with {'activity': segment} only %}
-    {% include 'partials/graphs.html.twig' %}
+    {% include 'partials/highcharts.html.twig' %}
     <script>
         $(document).ready( function () {
             $('#effortsTable').DataTable({
