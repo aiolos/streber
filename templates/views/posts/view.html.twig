@@ -27,7 +27,13 @@
                         <div class="card-body">
                             Status: {{ post.status }}<br>
                             Datum: {{ post.date|date("d-m-Y") }}<br>
-                            Groep: {% if post.activityGroup %}{{ post.activityGroup.title }}{% endif %}
+                            Groep: {% if post.activityGroup %}{{ post.activityGroup.title }}{% endif %}<br>
+                            <br>
+                            <b>Grafieken:</b><br>
+                            Hoogte: {% if post.altitude %}<i class="fa fa-check"></i>{% endif %}<br>
+                            Hartslag: {% if post.heartrate %}<i class="fa fa-check"></i>{% endif %}<br>
+                            Cadans: {% if post.cadence %}<i class="fa fa-check"></i>{% endif %}<br>
+                            Temperatuur: {% if post.temperature %}<i class="fa fa-check"></i>{% endif %}
                         </div>
                     </div>
                 </div>

@@ -65,9 +65,11 @@ class BlogController extends AbstractController
      */
     public function activityStreams($streamType, $streamId, $results)
     {
+        /** @var Post $post */
         $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy(['activity' => $streamId, 'status' => Post::STATUS_PUBLISHED]);
         if (!is_null($post)) {
             $this->setStravaToken($post->getUser()->getStravaToken());
+            $results = strlen($post->getStreamTypes()) ? $post->getStreamTypes() : $results;
         }
         return new JsonResponse($this->getStreams($streamType, $streamId, $results));
     }

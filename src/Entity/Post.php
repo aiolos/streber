@@ -31,6 +31,26 @@ class Post implements \Serializable
     private $title;
 
     /**
+     * @ORM\Column(type="boolean", length=255)
+     */
+    private $altitude;
+
+    /**
+     * @ORM\Column(type="boolean", length=255)
+     */
+    private $heartrate;
+
+    /**
+     * @ORM\Column(type="boolean", length=255)
+     */
+    private $cadence;
+
+    /**
+     * @ORM\Column(type="boolean", length=255)
+     */
+    private $temperature;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $text;
@@ -120,6 +140,46 @@ class Post implements \Serializable
         $this->date = $date;
     }
 
+    public function getAltitude()
+    {
+        return $this->altitude;
+    }
+
+    public function setAltitude(bool $altitude)
+    {
+        $this->altitude = $altitude;
+    }
+
+    public function getHeartrate()
+    {
+        return $this->heartrate;
+    }
+
+    public function setHeartrate(bool $heartrate)
+    {
+        $this->heartrate = $heartrate;
+    }
+
+    public function getCadence()
+    {
+        return $this->cadence;
+    }
+
+    public function setCadence(bool $cadence)
+    {
+        $this->cadence = $cadence;
+    }
+
+    public function getTemperature()
+    {
+        return $this->temperature;
+    }
+
+    public function setTemperature(bool $temperature)
+    {
+        $this->temperature = $temperature;
+    }
+
     public function getActivity(): ?Activity
     {
         return $this->activity;
@@ -171,5 +231,16 @@ class Post implements \Serializable
         ];
 
         return $statuses[$status];
+    }
+
+    public function getStreamTypes(): string
+    {
+        $streamTypes = [];
+        $this->getAltitude() ? $streamTypes[] = 'altitude' : null;
+        $this->getCadence() ? $streamTypes[] = 'cadence' : null;
+        $this->getHeartrate() ? $streamTypes[] = 'heartrate' : null;
+        $this->getTemperature() ? $streamTypes[] = 'temp' : null;
+
+        return implode(',', $streamTypes);
     }
 }

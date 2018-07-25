@@ -7,6 +7,7 @@ use App\Entity\ActivityGroup;
 use App\Entity\Post;
 use App\Helpers\SVGEncoder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -114,6 +115,22 @@ class PostController extends AbstractController
             ->add('activityGroup', EntityType::class, array(
                 'class' => ActivityGroup::class,
                 'choice_label' => 'title',
+                'required' => false,
+            ))
+            ->add('altitude', CheckboxType::class, array(
+                'label'    => 'Hoogte',
+                'required' => false,
+            ))
+            ->add('heartrate', CheckboxType::class, array(
+                'label'    => 'Hartslag',
+                'required' => false,
+            ))
+            ->add('cadence', CheckboxType::class, array(
+                'label'    => 'Cadans',
+                'required' => false,
+            ))
+            ->add('temperature', CheckboxType::class, array(
+                'label'    => 'Temperatuur',
                 'required' => false,
             ))
             ->add('save', SubmitType::class, array('label' => 'Opslaan'))
