@@ -188,6 +188,9 @@
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
     },
+    "sibyx/phpgpx": {
+        "version": "1.0-rc5"
+    },
     "squizlabs/php_codesniffer": {
         "version": "3.2.3"
     },

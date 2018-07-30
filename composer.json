@@ -11,6 +11,7 @@
         "league/geotools": "@stable",
         "ramsey/uuid": "^3.7",
         "sensio/framework-extra-bundle": "^5.1",
+        "sibyx/phpgpx": "@RC",
         "squizlabs/php_codesniffer": "^3.2",
         "symfony/console": "^4.0",
         "symfony/flex": "^1.0",
