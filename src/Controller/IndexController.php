@@ -83,7 +83,7 @@ class IndexController extends AbstractController
     public function activity($activityId)
     {
         try {
-            $activity = $this->getStravaClient()->getActivity($activityId);
+            $activity = $this->getStravaActivity($activityId);
 
             return new JsonResponse([
                 'activity' => $activity,

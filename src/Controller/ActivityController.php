@@ -27,8 +27,8 @@ class ActivityController extends AbstractController
      */
     public function activity($activityId)
     {
-        $activity = $this->getStravaClient()->getActivity($activityId);
-        $photos = $this->getStravaClient()->getActivityPhotos($activityId);
+        $activity = $this->getStravaActivity($activityId);
+        $photos = $this->getStravaPhotos($activityId);
 
         $activityEntity = $this->getEntityManager()->getRepository(Activity::class)->find($activityId);
         if ($activityEntity === null) {
@@ -54,7 +54,7 @@ class ActivityController extends AbstractController
      */
     public function map($activityId)
     {
-        $activity = $this->getStravaClient()->getActivity($activityId);
+        $activity = $this->getStravaActivity($activityId);
 
         return $this->render('views/activities/map.html.twig', [
             'activity' => $activity,
@@ -66,7 +66,7 @@ class ActivityController extends AbstractController
      */
     public function svg($activityId)
     {
-        $activity = $this->getStravaClient()->getActivity($activityId);
+        $activity = $this->getStravaActivity($activityId);
 
         $svg = SVGEncoder::decodeToSVG($activity['map']['polyline'], '#445000', '#FFFFFF');
 
@@ -84,7 +84,7 @@ class ActivityController extends AbstractController
      */
     public function getGpx($activityId)
     {
-        $activity = $this->getStravaClient()->getActivity($activityId);
+        $activity = $this->getStravaActivity($activityId);
 
         $fileName = substr($activity['start_date_local'], 0 ,10) . '-' . str_replace([' ', ','], '', ucwords($activity['name']));
 

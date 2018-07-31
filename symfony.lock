@@ -113,6 +113,9 @@
     "michelf/php-markdown": {
         "version": "1.8.0"
     },
+    "monolog/monolog": {
+        "version": "1.23.0"
+    },
     "nette/bootstrap": {
         "version": "v2.4.5"
     },
@@ -276,6 +279,18 @@
             "branch": "master",
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
+    },
+    "symfony/monolog-bridge": {
+        "version": "v4.1.2"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.1",
+            "ref": "51b7a31438c8aeeda7931a0ece98a945c91e7f20"
         }
     },
     "symfony/options-resolver": {

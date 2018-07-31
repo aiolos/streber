@@ -55,8 +55,8 @@ class BlogController extends AbstractController
         return $this->render('views/blog/view.html.twig', [
             'post' => $post,
             'stream' => ['type' => 'activity', 'id' => $post->getActivity()->getId()],
-            'activity' => $this->getStravaClient()->getActivity($post->getActivity()->getId()),
-            'photos' => $this->getStravaClient()->getActivityPhotos($post->getActivity()->getId()),
+            'activity' => $this->getStravaActivity($post->getActivity()->getId()),
+            'photos' => $this->getStravaPhotos($post->getActivity()->getId()),
         ]);
     }
 

@@ -4,23 +4,29 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use Pest;
+use Psr\Log\LoggerInterface;
 use Strava\API\Client;
 use Strava\API\Exception;
 use Strava\API\OAuth;
 use Strava\API\Service\REST;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class AbstractController extends Controller
+abstract class AbstractController extends Controller
 {
     protected $session;
     protected $client;
+    protected $cache;
+    protected $logger;
     private $entityManager;
     protected $stravaToken;
 
-    public function __construct()
+    public function __construct(LoggerInterface $logger)
     {
         $this->session = new Session();
+        $this->cache = new FilesystemCache();
+        $this->logger = $logger;
     }
 
     protected function getEntityManager()
@@ -84,6 +90,11 @@ class AbstractController extends Controller
             $streamResults = 'altitude,heartrate,velocity_smooth,cadence,temp';
         }
 
+        if ($this->cache->has('strava.streams.' . $type . '.' . $id . '.' . $streamResults)) {
+            $this->logger->info('cache hit for streams');
+            return $this->cache->get('strava.streams.' . $type . '.' . $id . '.' . $streamResults);
+        }
+
         if ($type === 'activity') {
             $results = $this->getStravaClient()->getStreamsActivity($id, $streamResults, 'medium', 'distance');
         } elseif ($type === 'segment') {
@@ -125,10 +136,14 @@ class AbstractController extends Controller
             ];
         }
 
-        return [
+        $data = [
             'xData' => $xData,
             'datasets' => $streams,
         ];
+
+        $this->cache->set('strava.streams.' . $type . '.' . $id . '.' . $streamResults, $data);
+
+        return $data;
     }
 
     private function mapTitle($title)
@@ -152,7 +167,7 @@ class AbstractController extends Controller
      */
     protected function getActivityByPost(Post $post): array
     {
-        return $this->getStravaClient()->getActivity($post->getActivity()->getId());
+        return $this->getStravaActivity($post->getActivity()->getId());
     }
 
     /**
@@ -169,5 +184,27 @@ class AbstractController extends Controller
         }
 
         return $post;
+    }
+
+    protected function getStravaActivity(int $activityId)
+    {
+        if (!$this->cache->has('strava.activity.' . $activityId)) {
+            $this->logger->info('Cache miss for activity ' . $activityId);
+            $activity = $this->getStravaClient()->getActivity($activityId);
+            $this->cache->set('strava.activity.' . $activityId, $activity);
+        }
+
+        return $this->cache->get('strava.activity.' . $activityId);
+    }
+
+    protected function getStravaPhotos(int $activityId)
+    {
+        if (!$this->cache->has('strava.photos.' . $activityId)) {
+            $this->logger->info('Cache miss for photos of activity ' . $activityId);
+            $activityPhotos = $this->getStravaClient()->getActivityPhotos($activityId);
+            $this->cache->set('strava.photos.' . $activityId, $activityPhotos);
+        }
+
+        return $this->cache->get('strava.photos.' . $activityId);
     }
 }
