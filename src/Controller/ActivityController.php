@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Helpers\GPXEncoder;
 use App\Helpers\SVGEncoder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -71,6 +72,26 @@ class ActivityController extends AbstractController
 
         $response = new Response($svg);
         $response->headers->set('Content-Type', 'image/svg+xml');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/activities/{activityId}/gpx")
+     * @param integer $activityId
+     * @return Response
+     * @throws \Strava\API\Exception
+     */
+    public function getGpx($activityId)
+    {
+        $activity = $this->getStravaClient()->getActivity($activityId);
+
+        $fileName = substr($activity['start_date_local'], 0 ,10) . '-' . str_replace([' ', ','], '', ucwords($activity['name']));
+
+        $response = new Response();
+        $response->setContent(GPXEncoder::createGPX($activity['map']['polyline'], $activity['name']));
+        $response->headers->set('Content-Type', 'application/gpx+xml');
+        $response->headers->set('Content-Disposition', "attachment; filename=" . $fileName . ".gpx");
 
         return $response;
     }

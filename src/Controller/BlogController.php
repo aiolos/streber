@@ -4,17 +4,11 @@ namespace App\Controller;
 
 use App\Entity\ActivityGroup;
 use App\Entity\Post;
-use App\Helpers\PolylineEncoder;
+use App\Helpers\GPXEncoder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use phpGPX\Models\GpxFile;
-use phpGPX\Models\Link;
-use phpGPX\Models\Metadata;
-use phpGPX\Models\Point;
-use phpGPX\Models\Segment;
-use phpGPX\Models\Track;
 
 class BlogController extends AbstractController
 {
@@ -91,65 +85,13 @@ class BlogController extends AbstractController
         $post = $this->getPost($postId);
         $activity = $this->getActivityByPost($post);
 
-        $link = new Link();
-        $link->href = "https://spiritus-santos.nl";
-        $link->text = 'Blijven Trappen';
-        $gpx_file = new GpxFile();
-        $gpx_file->metadata = new Metadata();
-        $gpx_file->metadata->time = new \DateTime();
-        $gpx_file->metadata->description = "This file is generated from a blog on https://spiritus-santos.nl";
-        $gpx_file->metadata->links[] = $link;
-        $track = new Track();
-        $track->name = sprintf($post->getTitle());
-        $track->type = 'RIDE';
-        $track->source = sprintf("Garmin Edge 1000");
-        $segment = new Segment();
-
-        $coordinates = PolylineEncoder::decodeValue($activity['map']['polyline']);
-        array_map(function ($element) use ($segment) {
-            $point = new Point(Point::TRACKPOINT);
-            $point->latitude = $element['x'];
-            $point->longitude = $element['y'];
-
-            $segment->points[] = $point;
-        }, $coordinates);
-        $track->segments[] = $segment;
-        $track->recalculateStats();
-        $gpx_file->tracks[] = $track;
-
         $fileName = $post->getDate()->format('Y-m-d') . '-' . str_replace([' ', ','], '', ucwords($post->getTitle()));
 
         $response = new Response();
-        $response->setContent($gpx_file->toXML()->saveXML());
+        $response->setContent(GPXEncoder::createGPX($activity['map']['polyline'], $post->getTitle()));
         $response->headers->set('Content-Type', 'application/gpx+xml');
         $response->headers->set('Content-Disposition', "attachment; filename=" . $fileName . ".gpx");
 
         return $response;
-    }
-
-    /**
-     * @param Post $post
-     * @return array
-     * @throws \Strava\API\Exception
-     */
-    private function getActivityByPost(Post $post): array
-    {
-        return $this->getStravaClient()->getActivity($post->getActivity()->getId());
-    }
-
-    /**
-     * @param $postId
-     * @return Post
-     */
-    private function getPost(int $postId): Post
-    {
-        /** @var Post $post */
-        $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy(['id' => $postId, 'status' => Post::STATUS_PUBLISHED]);
-
-        if (!is_null($post)) {
-            $this->setStravaToken($post->getUser()->getStravaToken());
-        }
-
-        return $post;
     }
 }

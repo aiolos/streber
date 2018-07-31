@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use Pest;
 use Strava\API\Client;
 use Strava\API\Exception;
@@ -142,5 +143,31 @@ class AbstractController extends Controller
         ];
 
         return $titles[$title];
+    }
+
+    /**
+     * @param Post $post
+     * @return array
+     * @throws \Strava\API\Exception
+     */
+    protected function getActivityByPost(Post $post): array
+    {
+        return $this->getStravaClient()->getActivity($post->getActivity()->getId());
+    }
+
+    /**
+     * @param $postId
+     * @return Post
+     */
+    protected function getPost(int $postId): Post
+    {
+        /** @var Post $post */
+        $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy(['id' => $postId, 'status' => Post::STATUS_PUBLISHED]);
+
+        if (!is_null($post)) {
+            $this->setStravaToken($post->getUser()->getStravaToken());
+        }
+
+        return $post;
     }
 }

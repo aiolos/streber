@@ -36,7 +36,7 @@ class PostController extends AbstractController
      */
     public function view($postId)
     {
-        $post = $this->getEntityManager()->getRepository(Post::class)->find($postId);
+        $post = $this->getPost($postId);
 
         return $this->render('views/posts/view.html.twig', [
             'post' => $post,
@@ -80,7 +80,7 @@ class PostController extends AbstractController
      */
     public function edit(Request $request, $postId)
     {
-        $post = $this->getEntityManager()->getRepository(Post::class)->find($postId);
+        $post = $this->getPost($postId);
 
         $form = $this->buildForm($post);
         $form->handleRequest($request);
