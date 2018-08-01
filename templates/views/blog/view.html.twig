@@ -134,9 +134,9 @@
     </div>
     <div class="row m-1">
         <div class="col-12 mt-2 d-flex d-md-none justify-content-between flex-no-wrap align-items-center">
-            <a href="/blog/{{ link.previous.id is defined ? link.previous.id }}" title="{{ link.previous.title is defined ? link.previous.title }}" class="btn btn-sm btn-outline-secondary {{ link.previous.id is not defined ? 'disabled' }}"><i class="fa fa-arrow-left"></i> Vorig bericht</a>
+            <a href="/blog/{{ link.previous.id is defined ? link.previous.id }}" title="{{ link.previous.title is defined ? link.previous.title }}" class="btn btn-sm btn-outline-secondary {{ link.previous.id is not defined ? 'disabled' }}"><i class="fa fa-arrow-left"></i> Vorige</a>
             <a href="#" class="btn btn-sm btn-outline-secondary"><i class="fa fa-arrow-up"></i> Naar boven</a>
-            <a href="/blog/{{ link.next.id is defined ? link.next.id }}" title="{{ link.next.title is defined ? link.next.title }}" class="btn btn-sm btn-outline-secondary {{ link.next.id is not defined ? 'disabled' }}">Volgend bericht <i class="fa fa-arrow-right"></i></a>
+            <a href="/blog/{{ link.next.id is defined ? link.next.id }}" title="{{ link.next.title is defined ? link.next.title }}" class="btn btn-sm btn-outline-secondary {{ link.next.id is not defined ? 'disabled' }}">Volgende <i class="fa fa-arrow-right"></i></a>
         </div>
     </div>
 {% endblock %}
