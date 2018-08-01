@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ActivityGroup;
 use App\Entity\Post;
 use App\Helpers\GPXEncoder;
+use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,14 @@ class BlogController extends AbstractController
         $filter = ['status' => Post::STATUS_PUBLISHED];
         $group = $request->get('group', null);
         if ($group) {
-            $filter['activityGroup'] = $group;
+            if ($group === 'all') {
+                $this->session->remove('group');
+            } else {
+                $this->session->set('group', $group);
+            }
+        }
+        if ($this->session->has('group')) {
+            $filter['activityGroup'] = $this->session->get('group');
         }
         $total = count($repository->findBy($filter, ['date' => 'desc', 'id' => 'desc']));
         $perPage = 5;
@@ -36,7 +44,7 @@ class BlogController extends AbstractController
             'posts' => $posts,
             'pages' => $maxPage,
             'currentPage' => $currentPage,
-            'group' => $group,
+            'group' => $this->session->get('group'),
             'groups' => $groups,
         ]);
     }
@@ -51,12 +59,17 @@ class BlogController extends AbstractController
         if (is_null($post)) {
             return $this->redirect('/');
         }
+        /** @var PostRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Post::class);
+        $next = $repository->findNextPost($post);
+        $previous = $repository->findPreviousPost($post);
 
         return $this->render('views/blog/view.html.twig', [
             'post' => $post,
             'stream' => ['type' => 'activity', 'id' => $post->getActivity()->getId()],
             'activity' => $this->getStravaActivity($post->getActivity()->getId()),
             'photos' => $this->getStravaPhotos($post->getActivity()->getId()),
+            'link' => ['next' => $next, 'previous' => $previous],
         ]);
     }
 

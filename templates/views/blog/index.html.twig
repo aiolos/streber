@@ -36,7 +36,7 @@
                     </div>
                     <div class="card-body">
                         <small>
-                        <a href="/" class="{% if group == null %}font-weight-bold{% endif %}">Alle berichten</a><br>
+                        <a href="/?group=all" class="{% if group == null %}font-weight-bold{% endif %}">Alle berichten</a><br>
                         {% for groupFilter in groups %}
                             <a href="/?group={{ groupFilter.id }}" class="{% if group == groupFilter.id %}font-weight-bold{% endif %}">
                                 {{ groupFilter.title }}
@@ -52,13 +52,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="h6 card-title">Informatie:</h6>
+                        <h6 class="h6 card-title"><i>Spiritus <a href="https://www.santosbikes.com" target="_blank">Santos</a></i>:</h6>
                     </div>
                     <div class="card-body">
                         <small>
-                            <i>Spiritus <a href="https://www.santosbikes.com" target="_blank">Santos</a></i>:
-                            <br><br>
-                            Dit blog beschrijft tochten die Janneke en Henri, samen of alleen, fietsen (of wandelen). Gegroepeerd per reis of gewoon losse ritjes.
+                            Dit blog beschrijft tochten die Janneke en Henri, samen of alleen, fietsen (of wandelen, snowboarden, etc.). Gegroepeerd per reis of gewoon losse ritjes.
                             <br><br>
                             De ritgegevens (route, hoogtemeters, etc.) komen vanuit <a href="https://www.strava.com" target="_blank">Strava</a> en van alle tochten is ook een GPX-bestand te downloaden.
                             <br><br>
