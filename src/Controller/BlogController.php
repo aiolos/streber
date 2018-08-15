@@ -22,6 +22,7 @@ class BlogController extends AbstractController
         $groups = $this->getEntityManager()->getRepository(ActivityGroup::class)->findAll();
         $filter = ['status' => Post::STATUS_PUBLISHED];
         $group = $request->get('group', null);
+        $activeGroup = null;
         if ($group) {
             if ($group === 'all') {
                 $this->session->remove('group');
@@ -31,6 +32,7 @@ class BlogController extends AbstractController
         }
         if ($this->session->has('group')) {
             $filter['activityGroup'] = $this->session->get('group');
+            $activeGroup = $this->getEntityManager()->getRepository(ActivityGroup::class)->find($filter['activityGroup']);
         }
         $total = count($repository->findBy($filter, ['date' => 'desc', 'id' => 'desc']));
         $perPage = 5;
@@ -46,6 +48,7 @@ class BlogController extends AbstractController
             'currentPage' => $currentPage,
             'group' => $this->session->get('group'),
             'groups' => $groups,
+            'activeGroup' => $activeGroup,
         ]);
     }
 
