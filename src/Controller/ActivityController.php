@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Activity;
 use App\Helpers\GPXEncoder;
 use App\Helpers\SVGEncoder;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,10 +17,29 @@ class ActivityController extends AbstractController
      */
     public function activities()
     {
-        $activities = $this->getStravaClient()->getAthleteActivities(null, null, null, 200);
+        $athlete = $this->getStravaClient()->getAthlete();
+        $athleteStats = $this->getStravaClient()->getAthleteStats($athlete['id']);
+        $this->cache->set('strava.athlete.stats', $athleteStats);
 
-        return $this->render('views/activities/activities.html.twig', [
+        return $this->render('views/activities/activities.html.twig');
+    }
+
+    /**
+     * @Route("/activities/list")
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Strava\API\Exception
+     */
+    public function list(Request $request)
+    {
+        $perPage = 10;
+        $page = ($request->get('start', 0) / $perPage) + 1;
+        $activities = $this->getStravaClient()->getAthleteActivities(null, null, $page, $perPage);
+
+        return new JsonResponse([
             'activities' => $activities,
+            'recordsTotal' => $this->cache->get('strava.athlete.stats')['all_ride_totals']['count'],
+            'recordsFiltered' => $this->cache->get('strava.athlete.stats')['all_ride_totals']['count'],
         ]);
     }
 
