@@ -16,7 +16,7 @@ final class Version20180822200550 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE posts DROP FOREIGN KEY FK_885DBAFA5E5E6949');
-        $this->addSql('RENAME TABLE acitivityGoups TO activityGroups');
+        $this->addSql('RENAME TABLE activityGoups TO activityGroups');
         $this->addSql('ALTER TABLE posts ADD CONSTRAINT FK_885DBAFA5E5E6949 FOREIGN KEY (activity_group_id) REFERENCES activityGroups (id)');
     }
 
@@ -26,7 +26,7 @@ final class Version20180822200550 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE posts DROP FOREIGN KEY FK_885DBAFA5E5E6949');
-        $this->addSql('RENAME TABLE activityGroups TO acitivityGoups');
-        $this->addSql('ALTER TABLE posts ADD CONSTRAINT FK_885DBAFA5E5E6949 FOREIGN KEY (activity_group_id) REFERENCES acitivityGoups (id)');
+        $this->addSql('RENAME TABLE activityGroups TO activityGoups');
+        $this->addSql('ALTER TABLE posts ADD CONSTRAINT FK_885DBAFA5E5E6949 FOREIGN KEY (activity_group_id) REFERENCES activityGoups (id)');
     }
 }
