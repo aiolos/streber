@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Table(name="activityGoups")
+ * @ORM\Table(name="activityGroups")
  * @ORM\Entity(repositoryClass="App\Repository\ActivityGroupRepository")
  */
 class ActivityGroup implements \Serializable
@@ -36,6 +36,11 @@ class ActivityGroup implements \Serializable
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="activityGroup")
      */
     private $posts;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date;
 
     public function __construct()
     {
@@ -72,6 +77,16 @@ class ActivityGroup implements \Serializable
         return $this->description;
     }
 
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
     public function getPosts(): Collection
     {
         return $this->posts;
@@ -106,6 +121,7 @@ class ActivityGroup implements \Serializable
             $this->id,
             $this->title,
             $this->description,
+            $this->date,
         ));
     }
 
@@ -116,6 +132,7 @@ class ActivityGroup implements \Serializable
             $this->id,
             $this->title,
             $this->description,
+            $this->date,
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }
