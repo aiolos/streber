@@ -58,7 +58,7 @@ class BlogController extends AbstractController
     public function view($postId)
     {
         /** @var Post $post */
-        $post = $this->getPost($postId);
+        $post = $this->getPost($postId, Post::STATUS_PUBLISHED);
         if (is_null($post)) {
             return $this->redirect('/');
         }
@@ -98,7 +98,7 @@ class BlogController extends AbstractController
      */
     public function getGpx($postId)
     {
-        $post = $this->getPost($postId);
+        $post = $this->getPost($postId, Post::STATUS_PUBLISHED);
         $activity = $this->getActivityByPost($post);
 
         $fileName = $post->getDate()->format('Y-m-d') . '-' . str_replace([' ', ','], '', ucwords($post->getTitle()));

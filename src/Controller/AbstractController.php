@@ -171,13 +171,18 @@ abstract class AbstractController extends Controller
     }
 
     /**
-     * @param $postId
+     * @param int $postId
+     * @param null $status
      * @return Post
      */
-    protected function getPost(int $postId): Post
+    protected function getPost(int $postId, $status = null): Post
     {
+        $filter = ['id' => $postId];
+        if (!is_null($status)) {
+            $filter['status'] = $status;
+        }
         /** @var Post $post */
-        $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy(['id' => $postId, 'status' => Post::STATUS_PUBLISHED]);
+        $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy($filter);
 
         if (!is_null($post)) {
             $this->setStravaToken($post->getUser()->getStravaToken());
