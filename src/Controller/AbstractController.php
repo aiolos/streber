@@ -12,6 +12,7 @@ use Strava\API\Service\REST;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractController extends Controller
 {
@@ -186,6 +187,8 @@ abstract class AbstractController extends Controller
 
         if (!is_null($post)) {
             $this->setStravaToken($post->getUser()->getStravaToken());
+        } else {
+            throw new NotFoundHttpException('Post cannot be found');
         }
 
         return $post;
