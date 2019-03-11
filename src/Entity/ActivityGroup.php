@@ -28,6 +28,11 @@ class ActivityGroup implements \Serializable
     private $title;
 
     /**
+     * @ORM\Column(type="string", length=64, unique=true, nullable=true)
+     */
+    private $slug;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -65,6 +70,16 @@ class ActivityGroup implements \Serializable
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
     }
 
     public function setDescription($description)
@@ -122,6 +137,7 @@ class ActivityGroup implements \Serializable
             $this->title,
             $this->description,
             $this->date,
+            $this->slug,
         ));
     }
 
@@ -133,6 +149,7 @@ class ActivityGroup implements \Serializable
             $this->title,
             $this->description,
             $this->date,
+            $this->slug,
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

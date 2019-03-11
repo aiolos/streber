@@ -18,10 +18,27 @@ class BlogController extends AbstractController
      */
     public function posts(Request $request)
     {
+        $group = $request->get('group', null);
+
+        return $this->getPosts($request, $group);
+    }
+
+    /**
+     * @Route("/filter/{slug}")
+     */
+    public function filter(Request $request, $slug = null)
+    {
+        $activeGroup = $this->getEntityManager()->getRepository(ActivityGroup::class)->findOneBy(['slug' => $slug]);
+        $group = $activeGroup->getId();
+
+        return $this->getPosts($request, $group);
+    }
+
+    private function getPosts(Request $request, $group)
+    {
         $repository = $this->getEntityManager()->getRepository(Post::class);
         $groups = $this->getEntityManager()->getRepository(ActivityGroup::class)->findAll();
         $filter = ['status' => Post::STATUS_PUBLISHED];
-        $group = $request->get('group', null);
         $activeGroup = null;
         if ($group) {
             if ($group === 'all') {

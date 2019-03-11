@@ -17,6 +17,7 @@
             <tr>
                 <th>Titel</th>
                 <th>Aantal berichten</th>
+                <th>Slug</th>
                 <th>Datum</th>
                 <th></th>
             </tr>
@@ -26,6 +27,7 @@
                 <tr>
                     <td><a href="/groups/view/{{ group.id }}">{{ group.title }}</a></td>
                     <td>{{ group.posts|length }}</td>
+                    <td>{{ group.slug }}</td>
                     <td>{% if group.date %}{{ group.date|date("d-m-Y") }}{% endif %}</td>
                     <td class="text-right"><a href="/groups/edit/{{ group.id }}"><i class="fa fa-edit"></i></a></td>
                 </tr>
@@ -44,6 +46,7 @@
                 columns: [
                     { data: "title" },
                     { data: "post.posts" },
+                    { data: "slug" },
                     { data: "date" },
                     { data: "", sortable: false }
                 ]
