@@ -65,7 +65,7 @@
                         <small>
                         <a href="/?group=all" class="{% if group == null %}font-weight-bold{% endif %}">Alle berichten</a><br>
                         {% for groupFilter in groups %}
-                            <a href="{% if groupFilter.slug %}/filter/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"
+                            <a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"
                                class="{% if group == groupFilter.id %}font-weight-bold{% endif %}">
                                 {{ groupFilter.title }}
                             </a>
