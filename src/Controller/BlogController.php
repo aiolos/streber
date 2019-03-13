@@ -24,7 +24,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/filter/{slug}")
+     * @Route("/reis/{slug}")
      */
     public function filter(Request $request, $slug = null)
     {
