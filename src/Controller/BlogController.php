@@ -75,6 +75,23 @@ class BlogController extends AbstractController
     {
         /** @var Post $post */
         $post = $this->getPost($postId, Post::STATUS_PUBLISHED);
+
+        return $this->viewPost($post);
+    }
+
+    /**
+     * @Route("/reis/{groupSlug}/{postSlug}")
+     */
+    public function viewBySlug($groupSlug, $slug)
+    {
+        /** @var Post $post */
+        $post = $this->getPostBySlug($slug, Post::STATUS_PUBLISHED);
+
+        return $this->viewPost($post);
+    }
+
+    private function viewPost(Post $post)
+    {
         if (is_null($post)) {
             return $this->redirect('/');
         }
