@@ -39,6 +39,8 @@
                             <i class="fa fa-walking"></i>
                         {% elseif activity.type == 'Snowboard' %}
                             <i class="fa fa-snowflake"></i>
+                        {% elseif activity.type == 'IceSkate' %}
+                            <i class="fa fa-skating"></i>
                         {% else %}
                             <i class="fa fa-comment"></i>
                         {% endif %}
@@ -55,7 +57,7 @@
 
             <div class="row">
                 <div class="col-md-7 col-12 m-10">
-                    <div class="card">
+                    <div class="card border-top">
                         <div class="card-body pb-0">
                             {{ post.text|markdown }}
                         </div>

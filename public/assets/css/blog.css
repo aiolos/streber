@@ -1,0 +1,22 @@
+.card-header {
+    border: 0px;
+}
+
+.card {
+    border: 0px;
+}
+
+.card.no-border {
+    border: 0px;
+    /*border-radius: 0rem;*/
+}
+
+.card-body {
+    border-left: 1px solid rgba(0,0,0,.08);
+    border-right: 1px solid rgba(0,0,0,.08);
+    border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+.card.border-top {
+    border-top: 1px solid rgba(0,0,0,.08);
+}
