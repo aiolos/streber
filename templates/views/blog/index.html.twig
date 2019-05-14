@@ -20,7 +20,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">
                                 {{ post.date|date("d-m-Y") }}
                                 {% if post.activityGroup %}
-                                    - <a href="/?group={{ post.activityGroup.id }}" class="text-muted">{{ post.activityGroup.title }}</a>
+                                    - <a href="{% if post.activityGroup.slug %}/reis/{{ post.activityGroup.slug }}{% else %}/?group={{ post.activityGroup.id }}{% endif %}" class="text-muted">{{ post.activityGroup.title }}</a>
                                 {% endif %}
                             </h6>
                         </div>
