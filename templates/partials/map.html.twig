@@ -10,7 +10,7 @@
         var encoded = "{{ activity.map.polyline|replace({'\\': '\\\\'}) }}";
         var coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
 
-        var map = L.map('map').fitBounds(coordinates);
+        var map = L.map('{{ mapId }}').fitBounds(coordinates);
         L.tileLayer(
             'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18,

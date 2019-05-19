@@ -94,6 +94,22 @@ class BlogController extends AbstractController
     }
 
     /**
+     * @Route("/blog/map/{postId}")
+     */
+    public function map($postId)
+    {
+        /** @var Post $post */
+        $post = $this->getPost($postId, Post::STATUS_PUBLISHED);
+        if (is_null($post)) {
+            return $this->redirect('/');
+        }
+
+        return $this->render('views/blog/map.html.twig', [
+            'activity' => $this->getStravaActivity($post->getActivity()->getId()),
+        ]);
+    }
+
+    /**
      * @Route("/data/stream/{streamType}/{streamId}/{results}")
      */
     public function activityStreams($streamType, $streamId, $results)

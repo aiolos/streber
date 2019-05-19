@@ -109,7 +109,9 @@
                     </div>
                     <div class="card">
                         <div class="h-100">
-                            <div id="map" class="map" style="width: 100%; height: 22vh;"></div>
+                            <a href="/blog/map/{{ post.id }}" data-toggle="lightbox" data-gallery="activity-gallery" data-title="Route" data-width="2000" data-height="1000">
+                                <div id="map" class="map" style="width: 100%; height: 22vh;"></div>
+                            </a>
                         </div>
                     </div>
                     <div class="card">
@@ -148,7 +150,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% include 'partials/map.html.twig' %}
+    {% include 'partials/map.html.twig' with {'mapId': 'map'} %}
     {% include 'partials/highcharts.html.twig' %}
 
     <script src="/assets/js/ekko-lightbox.min.js"></script>
