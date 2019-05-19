@@ -14,11 +14,14 @@ class PostRepository extends EntityRepository
     public function findNextPost($post)
     {
         $qb = $this->createQueryBuilder('p')
-            ->andWhere('p.date > :date')
+            ->andWhere('p.date >= :date')
             ->andWhere('p.status = :status')
+            ->andWhere('p.id > :id')
             ->setParameter('date', $post->getDate())
             ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->setParameter('id', $post->getId())
             ->orderBy('p.date', 'ASC')
+            ->orderBy('p.id', 'ASC')
             ->getQuery();
 
         return $qb->setMaxResults(1)->getOneOrNullResult();
@@ -30,11 +33,14 @@ class PostRepository extends EntityRepository
     public function findPreviousPost($post)
     {
         $qb = $this->createQueryBuilder('p')
-            ->andWhere('p.date < :date')
+            ->andWhere('p.date <= :date')
             ->andWhere('p.status = :status')
+            ->andWhere('p.id < :id')
             ->setParameter('date', $post->getDate())
             ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->setParameter('id', $post->getId())
             ->orderBy('p.date', 'DESC')
+            ->orderBy('p.id', 'DESC')
             ->getQuery();
 
         return $qb->setMaxResults(1)->getOneOrNullResult();
