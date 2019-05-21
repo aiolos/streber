@@ -37,9 +37,8 @@ class BlogController extends AbstractController
     private function getPosts(Request $request, $group)
     {
         $repository = $this->getEntityManager()->getRepository(Post::class);
-        $groups = $this->getEntityManager()->getRepository(ActivityGroup::class)->findAll();
+        $groups = $this->getGroups();
         $filter = ['status' => Post::STATUS_PUBLISHED];
-        $activeGroup = null;
         if ($group) {
             if ($group === 'all') {
                 $this->session->remove('group');
@@ -49,8 +48,8 @@ class BlogController extends AbstractController
         }
         if ($this->session->has('group')) {
             $filter['activityGroup'] = $this->session->get('group');
-            $activeGroup = $this->getEntityManager()->getRepository(ActivityGroup::class)->find($filter['activityGroup']);
         }
+
         $total = count($repository->findBy($filter, ['date' => 'desc', 'id' => 'desc']));
         $perPage = 5;
         $maxPage = ceil($total / $perPage);
@@ -65,7 +64,7 @@ class BlogController extends AbstractController
             'currentPage' => $currentPage,
             'group' => $this->session->get('group'),
             'groups' => $groups,
-            'activeGroup' => $activeGroup,
+            'activeGroup' => $this->getActiveGroup(),
         ]);
     }
 
@@ -90,6 +89,9 @@ class BlogController extends AbstractController
             'activity' => $this->getStravaActivity($post->getActivity()->getId()),
             'photos' => $this->getStravaPhotos($post->getActivity()->getId()),
             'link' => ['next' => $next, 'previous' => $previous],
+            'group' => $this->session->get('group'),
+            'groups' => $this->getGroups(),
+            'activeGroup' => $this->getActiveGroup(),
         ]);
     }
 
@@ -142,5 +144,20 @@ class BlogController extends AbstractController
         $response->headers->set('Content-Disposition', "attachment; filename=" . $fileName . ".gpx");
 
         return $response;
+    }
+
+    private function getGroups()
+    {
+        return $this->getEntityManager()->getRepository(ActivityGroup::class)->findAll();
+    }
+
+    private function getActiveGroup()
+    {
+        $activeGroup = null;
+        if ($this->session->has('group')) {
+            $activeGroup = $this->getEntityManager()->getRepository(ActivityGroup::class)->find($this->session->get('group'));
+        }
+
+        return $activeGroup;
     }
 }
