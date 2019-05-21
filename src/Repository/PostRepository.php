@@ -21,7 +21,6 @@ class PostRepository extends EntityRepository
             ->setParameter('status', Post::STATUS_PUBLISHED)
             ->setParameter('id', $post->getId())
             ->orderBy('p.date', 'ASC')
-            ->orderBy('p.id', 'ASC')
             ->getQuery();
 
         return $qb->setMaxResults(1)->getOneOrNullResult();
@@ -40,7 +39,6 @@ class PostRepository extends EntityRepository
             ->setParameter('status', Post::STATUS_PUBLISHED)
             ->setParameter('id', $post->getId())
             ->orderBy('p.date', 'DESC')
-            ->orderBy('p.id', 'DESC')
             ->getQuery();
 
         return $qb->setMaxResults(1)->getOneOrNullResult();
