@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="row">
-    <div class="col-xl-8 col-lg-8 col-md-8 col-12">
+    <div class="col-12">
         {% if activeGroup %}
             <div class="row mt-3">
                 <div class="col-12">
@@ -11,9 +11,9 @@
                 </div>
             </div>
         {% endif %}
+        <div class="row">
         {% for post in posts %}
-            <div class="row mt-3">
-                <div class="col-12">
+                <div class="mt-3 col-md-6 col-12">
                     <div class="card">
                         <div class="card-header">
                             <h1 class="h2 card-title"><a href="/blog/{{ post.id }}" class="text-dark">{{ post.title }}</a></h1>
@@ -32,8 +32,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
         {% endfor %}
+        </div>
         {% if posts|length %}
             <div class="row m-0 mt-2">
                 <nav aria-label="Page navigation">
@@ -55,28 +55,29 @@
             </div>
         {% endif %}
     </div>
-    <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-        <div class="row mt-3">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title"><i class="fa fa-filter"></i> Filteren:</span>
-                    </div>
-                    <div class="card-body">
-                        <small>
-                        <a href="/?group=all" class="{% if group == null %}font-weight-bold{% endif %}">Alle berichten</a><br>
-                        {% for groupFilter in groups %}
-                            <a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"
-                               class="{% if group == groupFilter.id %}font-weight-bold{% endif %}">
-                                {{ groupFilter.title }}
-                            </a>
-                            <br>
-                        {% endfor %}
-                        </small>
-                    </div>
-                </div>
-            </div>
-        </div>
+    {#<div class="col-xl-4 col-lg-4 col-md-4 col-12">#}
+        {#<div class="row mt-3">#}
+            {#<div class="col-12">#}
+                {#<div class="card">#}
+                    {#<div class="card-header">#}
+                        {#<span class="card-title"><i class="fa fa-filter"></i> Filteren:</span>#}
+                    {#</div>#}
+                    {#<div class="card-body">#}
+                        {#<small>#}
+                        {#<a href="/?group=all" class="{% if group == null %}font-weight-bold{% endif %}">Alle berichten</a><br>#}
+                        {#{% for groupFilter in groups %}#}
+                            {#<a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"#}
+                               {#class="{% if group == groupFilter.id %}font-weight-bold{% endif %}">#}
+                                {#{{ groupFilter.title }}#}
+                            {#</a>#}
+                            {#<br>#}
+                        {#{% endfor %}#}
+                        {#</small>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    <div class="col-12">
         <div class="row mt-3">
             <div class="col-12">
                 <div class="card">

@@ -51,7 +51,7 @@ class BlogController extends AbstractController
         }
 
         $total = count($repository->findBy($filter, ['date' => 'desc', 'id' => 'desc']));
-        $perPage = 5;
+        $perPage = 4;
         $maxPage = ceil($total / $perPage);
         $currentPage = max(min($maxPage, $request->get('page', 1)), 1);
         $offset = ($currentPage * $perPage) - $perPage;

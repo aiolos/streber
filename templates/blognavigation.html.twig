@@ -1,32 +1,35 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/?group=all">Spiritus Santos</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="container">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            {#<li class="nav-item dropdown">#}
-                {#<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-                    {#Vakanties#}
-                {#</a>#}
-                {#<div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
-                    {#{% for groupFilter in groups %}#}
-                        {#<a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"#}
-                           {#class="dropdown-item">#}
-                            {#{{ groupFilter.title }}#}
-                        {#</a>#}
-                    {#{% endfor %}#}
-                {#</div>#}
-            {#</li>#}
-            {% for groupFilter in groups %}
-                <li class="nav-item">
-                    <a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"
-                       class="nav-link {% if group == groupFilter.id %}active{% endif %}">
-                        {{ groupFilter.title }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+        <a class="navbar-brand" href="/?group=all">Spiritus Santos</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {#<li class="nav-item dropdown">#}
+                    {#<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+                        {#Vakanties#}
+                    {#</a>#}
+                    {#<div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+                        {#{% for groupFilter in groups %}#}
+                            {#<a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"#}
+                               {#class="dropdown-item">#}
+                                {#{{ groupFilter.title }}#}
+                            {#</a>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                {#</li>#}
+                {% for groupFilter in groups %}
+                    <li class="nav-item">
+                        <a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"
+                           class="nav-link {% if group == groupFilter.id %}active{% endif %}">
+                            {{ groupFilter.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </nav>

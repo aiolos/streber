@@ -12,15 +12,15 @@
     </head>
 
     <body>
-        <div class="container">
-            <div class="row">
-                <main role="main" class="">
-                    {% include 'header.html.twig' %}
-                    {% include 'blognavigation.html.twig' %}
+        <header>
+            {% include 'header.html.twig' %}
+            {% include 'blognavigation.html.twig' %}
+        </header>
 
-                    {% block body %}{% endblock %}
-                </main>
-            </div>
+        <div class="container">
+            <main role="main" class="">
+                {% block body %}{% endblock %}
+            </main>
         </div>
 
         <footer class="footer container mt-3 border-top p-2">
