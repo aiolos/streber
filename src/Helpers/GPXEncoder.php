@@ -45,4 +45,48 @@ class GPXEncoder
 
         return $gpx_file->toXML()->saveXML();
     }
+
+    public static function createGPXfromCoordinates(string $title, array $features): string
+    {
+        $link = new Link();
+        $link->href = "https://spiritus-santos.nl";
+        $gpx_file = new GpxFile();
+        $gpx_file->metadata = new Metadata();
+        $gpx_file->metadata->time = new \DateTime();
+        $gpx_file->metadata->description = "This file is generated from a blog on https://spiritus-santos.nl";
+        $gpx_file->metadata->links[] = $link;
+        foreach ($features as $feature) {
+            $track = new Track();
+            $track->name = sprintf($title);
+            $track->type = 'RIDE';
+            $track->source = sprintf("");
+            $segment = new Segment();
+
+            array_map(function ($element) use ($segment, $feature) {
+                $point = new Point(Point::TRACKPOINT);
+                if (is_array($element[0])) {
+                    foreach ($element as $arrayElement) {
+                        $point = new Point(Point::TRACKPOINT);
+                        $point->longitude = $arrayElement[0];
+                        $point->latitude = $arrayElement[1];
+
+                        $segment->points[] = $point;
+                    }
+                } else {
+                    $point->longitude = $element[0];
+                    $point->latitude = $element[1];
+
+                    if (strlen($point->latitude) && strlen($point->longitude)) {
+                        $segment->points[] = $point;
+                    }
+                }
+            }, $feature['geometry']['coordinates']);
+            $track->segments[] = $segment;
+
+            $track->recalculateStats();
+            $gpx_file->tracks[] = $track;
+        }
+
+        return $gpx_file->toXML()->saveXML();
+    }
 }

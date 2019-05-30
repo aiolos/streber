@@ -3,22 +3,26 @@
 {% block body %}
     <div class="row">
         <div class="col-12">
-            <div class="row">
-                <div class="col-7">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-0 mb-0">
-                        <div class=""><h2 class="text-muted">Voies vertes</h2></div>
-                    </div>
-                </div>
+            <h2 class="text-muted">Voies vertes</h2>
+        </div>
+            <div class="col-4">
+                Deze pagina bevat alle Routes / Voies Vertes zoals die te vinden zijn op
+                <a href="https://umap.openstreetmap.fr/fr/map/carte-des-veloroutes-et-voies-vertes-de-france_45562#9/44.0354/5.9385">deze pagina</a>.
+                (op 30-05-2019)
             </div>
-
+            <div class="col-8">
+                Deze lijst is slechts een simpele poging om de routes als gpx downloadbaar te maken. Zoekmogelijkheden zijn beperkt en
+                er is geen garantie dat alle routes vlekkeloos werken. Alle routes zijn over het algemeen bij elkaar geplakte delen (de bron levert nou
+                eenmaal losse stukjes route aan). Er is getracht deze onderdelen per route samen te voegen. Voor het maken van een navigeerbare route
+                is zeker nog werk in een GPX editor vereist.
+            </div>
             <div class="table-responsive col-12">
                 <table class="table table-striped table-sm" id="voiesTable">
                     <thead>
                     <tr>
                         <th>Naam</th>
-                        <th>Itineraire</th>
-                        <th>QRC</th>
-                        <th>Kaart</th>
+                        <th>Route</th>
+                        <th>Kaart&nbsp;/&nbsp;GPX</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,22 +40,43 @@
             $('#voiesTable').DataTable({
                 processing: true,
                 ajax: {
-                    url: "/voies/list",
+                    url: "/voies-vertes/list",
                     dataSrc: "features"
                 },
                 order: [[ 0, 'asc' ]],
                 columns: [
                     { data: "name", sortable: true },
                     { data: "itineraire", sortable: true, render: function (data) {
-                            return '<a href="/voies/itineraire/' + data + '">' + data + '</a>';
-                        } },
-                    { data: "qrc", sortable: true, render: function (data) {
-                            return data;
+                            return '<a href="/voies-vertes/itineraire/' + data + '">' + data + '</a>';
                         } },
                     { name: "id", sortable: false, render: function (data, type, row) {
-                            return '<a href="/voies/map/' + row.itineraire + '"><i class="fa fa-map"></i></a>';
+                            return '<a href="/voies-vertes/map/' + row.itineraire + '"><i class="fa fa-map"></i></a>&nbsp;'
+                            + '<a href="/voies-vertes/gpx/' + row.itineraire + '"><i class="fa fa-globe"></i></a>';
                         }}
-                ]
+                ],
+                "language": {
+                    "sProcessing": "Bezig...",
+                    "sLengthMenu": "_MENU_ resultaten weergeven",
+                    "sZeroRecords": "Geen resultaten gevonden",
+                    "sInfo": "_START_ tot _END_ van _TOTAL_ resultaten",
+                    "sInfoEmpty": "Geen resultaten om weer te geven",
+                    "sInfoFiltered": " (gefilterd uit _MAX_ resultaten)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Zoeken:",
+                    "sEmptyTable": "Geen resultaten aanwezig in de tabel",
+                    "sInfoThousands": ".",
+                    "sLoadingRecords": "Een moment geduld aub - bezig met laden...",
+                    "oPaginate": {
+                        "sFirst": "Eerste",
+                        "sLast": "Laatste",
+                        "sNext": "Volgende",
+                        "sPrevious": "Vorige"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": activeer om kolom oplopend te sorteren",
+                        "sSortDescending": ": activeer om kolom aflopend te sorteren"
+                    }
+                }
             });
         } );
     </script>

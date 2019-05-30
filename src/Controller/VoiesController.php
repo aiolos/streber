@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VoiesController extends AbstractController
 {
     /**
-     * @Route("/voies")
+     * @Route("/voies-vertes")
      */
     public function index(Request $request)
     {
@@ -22,7 +22,7 @@ class VoiesController extends AbstractController
     }
 
     /**
-     * @Route("/voies/map/{itineraire}")
+     * @Route("/voies-vertes/map/{itineraire}")
      */
     public function map(Request $request, string $itineraire)
     {
@@ -38,7 +38,26 @@ class VoiesController extends AbstractController
     }
 
     /**
-     * @Route("/voies/itineraire/{itineraire}")
+     * @Route("/voies-vertes/gpx/{itineraire}")
+     */
+    public function gpx(Request $request, string $itineraire)
+    {
+        $features = $this->getAllFeatures();
+
+        $featuresFiltered = $this->filterFeatures($features, $itineraire);
+
+        $fileName = $itineraire;
+
+        $response = new Response();
+        $response->setContent(GPXEncoder::createGPXfromCoordinates($itineraire, $featuresFiltered));
+        $response->headers->set('Content-Type', 'application/gpx+xml');
+        $response->headers->set('Content-Disposition', "attachment; filename=" . $fileName . ".gpx");
+
+        return $response;
+    }
+
+    /**
+     * @Route("/voies-vertes/itineraire/{itineraire}")
      */
     public function itineraire(Request $request, string $itineraire)
     {
@@ -53,7 +72,7 @@ class VoiesController extends AbstractController
     }
 
     /**
-     * @Route("/voies/list")
+     * @Route("/voies-vertes/list")
      * @param Request $request
      * @return JsonResponse
      */
@@ -86,7 +105,7 @@ class VoiesController extends AbstractController
     }
 
     /**
-     * @Route("/voies/list/{itineraire}")
+     * @Route("/voies-vertes/list/{itineraire}")
      * @param Request $request
      * @return JsonResponse
      */
