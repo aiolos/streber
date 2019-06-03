@@ -18,7 +18,10 @@ class VoiesController extends AbstractController
      */
     public function index(Request $request)
     {
-        return $this->render('views/voies/index.html.twig');
+        return $this->render('views/voies/index.html.twig', [
+            'groups' => $this->getGroups(),
+            'group' => 'voies',
+        ]);
     }
 
     /**
@@ -34,6 +37,8 @@ class VoiesController extends AbstractController
             'features' => json_encode($featuresFiltered),
             'feature' => json_encode(array_pop($featuresFiltered)),
             'itineraire' => $itineraire,
+            'groups' => $this->getGroups(),
+            'group' => 'voies',
         ]);
     }
 
@@ -68,6 +73,8 @@ class VoiesController extends AbstractController
         return $this->render('views/voies/itineraire.html.twig', [
             'features' => $featuresFiltered,
             'itineraire' => $itineraire,
+            'groups' => $this->getGroups(),
+            'group' => 'voies',
         ]);
     }
 
@@ -158,5 +165,10 @@ class VoiesController extends AbstractController
                 return true;
             }
         });
+    }
+
+    private function getGroups()
+    {
+        return $this->getEntityManager()->getRepository(ActivityGroup::class)->findAll();
     }
 }

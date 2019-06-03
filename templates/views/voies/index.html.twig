@@ -1,10 +1,13 @@
-{% extends 'voies.html.twig' %}
+{% extends 'blog.html.twig' %}
 
 {% block body %}
     <div class="row">
-        <div class="col-12">
-            <h2 class="text-muted">Voies vertes</h2>
+        <div class="row mt-3">
+            <div class="col-12">
+                <h2 class="text-muted">Voies vertes</h2>
+            </div>
         </div>
+        <div class="row">
             <div class="col-4">
                 Deze pagina bevat alle Routes / Voies Vertes zoals die te vinden zijn op
                 <a href="https://umap.openstreetmap.fr/fr/map/carte-des-veloroutes-et-voies-vertes-de-france_45562#9/44.0354/5.9385">deze pagina</a>.
@@ -15,9 +18,6 @@
                 er is geen garantie dat alle routes vlekkeloos werken. Alle routes zijn over het algemeen bij elkaar geplakte delen (de bron levert nou
                 eenmaal losse stukjes route aan). Er is getracht deze onderdelen per route samen te voegen. Voor het maken van een navigeerbare route
                 is zeker nog werk in een GPX editor vereist.
-                <p>
-                    Alle rechten horen toe aan
-                </p>
             </div>
             <div class="table-responsive col-12">
                 <table class="table table-striped table-sm" id="voiesTable">
