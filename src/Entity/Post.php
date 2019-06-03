@@ -17,6 +17,12 @@ class Post implements \Serializable
     const STATUS_PUBLISHED = 'published';
     const STATUS_DELETED = 'deleted';
 
+    const TYPE_RIDE = 'Ride';
+    const TYPE_WALK = 'Walk';
+    const TYPE_SNOWBOARD = 'Snowboard';
+    const TYPE_ICESKATE = 'IceSkate';
+    const TYPE_COMMENT = 'Comment';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -59,6 +65,11 @@ class Post implements \Serializable
      * @ORM\Column(type="date")
      */
     private $date;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $type;
 
     /**
      *  @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
@@ -140,6 +151,16 @@ class Post implements \Serializable
         $this->date = $date;
     }
 
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
     public function getAltitude()
     {
         return $this->altitude;
@@ -208,6 +229,7 @@ class Post implements \Serializable
             $this->title,
             $this->activity,
             $this->text,
+            $this->type,
         ));
     }
 
@@ -219,6 +241,7 @@ class Post implements \Serializable
             $this->title,
             $this->activity,
             $this->text,
+            $this->type,
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 

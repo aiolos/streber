@@ -20,3 +20,24 @@
 .card.border-top {
     border-top: 1px solid rgba(0,0,0,.08);
 }
+
+.blog .card-footer {
+    border-top: 0px !important;
+}
+.blog .card-body {
+    border-bottom: 0px !important;
+}
+
+.header-icon-div {
+    margin:0px;
+    margin-top: -15px;
+    margin-left: -90px;
+    overflow:hidden;
+}
+
+.header-icon-i {
+    overflow:hidden;
+    font-size: 5.5rem;
+    color:rgba(0,0,0,.08);
+    margin-bottom: -10px;
+}

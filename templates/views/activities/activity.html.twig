@@ -161,7 +161,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% include 'partials/map.html.twig' %}
+    {% include 'partials/map.html.twig' with {'mapId': 'map'} %}
     {% include 'partials/highcharts.html.twig' %}
     <script>
         $(document).ready( function () {
