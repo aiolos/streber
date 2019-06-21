@@ -106,7 +106,7 @@ class Post implements \Serializable
         $this->id = $id;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
