@@ -3,16 +3,8 @@
 {% block body %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <h1 class="h2">
-            {% if activity.type == "Ride" %}
-                <i class="fa fa-bicycle"></i>
-            {% elseif activity.type == "Snowboard" %}
-                <i class="fa fa-snowflake"></i>
-            {% elseif activity.type == "Walk" %}
-                <i class="fa fa-walking"></i>
-            {% else %}
-                <i class="fa fa-globe"></i>
-            {% endif %}
-             Activiteit: {{ activity.name }}<br>
+            <i class="{% include 'partials/icon.html.twig' with {type: activity.type} %}"></i>
+            Activiteit: {{ activity.name }}<br>
             <small>{{ activity.start_date_local|date("Y-m-d H:i") }}</small>
         </h1>
     </div>
@@ -161,7 +153,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% include 'partials/map.html.twig' %}
+    {% include 'partials/map.html.twig' with {'mapId': 'map'} %}
     {% include 'partials/highcharts.html.twig' %}
     <script>
         $(document).ready( function () {

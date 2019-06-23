@@ -15,7 +15,7 @@ class Activity implements \Serializable
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="bigint", unique=true)
      */
     private $id;
 

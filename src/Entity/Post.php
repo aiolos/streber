@@ -17,6 +17,12 @@ class Post implements \Serializable
     const STATUS_PUBLISHED = 'published';
     const STATUS_DELETED = 'deleted';
 
+    const TYPE_RIDE = 'Ride';
+    const TYPE_WALK = 'Walk';
+    const TYPE_SNOWBOARD = 'Snowboard';
+    const TYPE_ICESKATE = 'IceSkate';
+    const TYPE_COMMENT = 'Comment';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -29,6 +35,11 @@ class Post implements \Serializable
      * @Assert\NotBlank()
      */
     private $title;
+
+    /**
+     * @ORM\Column(type="string", length=64, unique=true, nullable=true)
+     */
+    private $slug;
 
     /**
      * @ORM\Column(type="boolean", length=255)
@@ -61,6 +72,11 @@ class Post implements \Serializable
     private $date;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $type;
+
+    /**
      *  @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      */
     private $user;
@@ -80,24 +96,34 @@ class Post implements \Serializable
      */
     private $status;
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
 
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
         $this->title = $title;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug)
+    {
+        $this->slug = $slug;
     }
 
     public function getText()
@@ -138,6 +164,16 @@ class Post implements \Serializable
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     public function getAltitude()
@@ -208,6 +244,8 @@ class Post implements \Serializable
             $this->title,
             $this->activity,
             $this->text,
+            $this->type,
+            $this->slug,
         ));
     }
 
@@ -219,6 +257,8 @@ class Post implements \Serializable
             $this->title,
             $this->activity,
             $this->text,
+            $this->type,
+            $this->slug,
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 

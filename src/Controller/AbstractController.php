@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
-use Pest;
+//use Pest;
 use Psr\Log\LoggerInterface;
 use Strava\API\Client;
 use Strava\API\Exception;
@@ -51,7 +51,7 @@ abstract class AbstractController extends Controller
     protected function getStravaClient()
     {
         if (is_null($this->client)) {
-            $adapter = new Pest('https://www.strava.com/api/v3');
+            $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
             $service = new REST($this->getStravaToken(), $adapter);
             $this->client = new Client($service);
         }

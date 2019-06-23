@@ -18,32 +18,14 @@
             </div>
             <div class="d-flex d-md-none justify-content-between flex-wrap align-items-center">
                 <h1 class="h2">
-                    {% if activity.type == 'Ride' %}
-                        <i class="fa fa-bicycle"></i>
-                    {% elseif activity.type == 'Walk' %}
-                        <i class="fa fa-walking"></i>
-                    {% elseif activity.type == 'Snowboard' %}
-                        <i class="fa fa-snowflake"></i>
-                    {% else %}
-                        <i class="fa fa-comment"></i>
-                    {% endif %}
+                    <i class="{% include 'partials/icon.html.twig' with {type: post.type} %}"></i>
                     {{ post.title }}
                 </h1>
             </div>
             <div class="d-none d-md-flex row">
                 <div class="col-md-7">
                     <h1 class="h2">
-                        {% if activity.type == 'Ride' %}
-                            <i class="fa fa-bicycle"></i>
-                        {% elseif activity.type == 'Walk' %}
-                            <i class="fa fa-walking"></i>
-                        {% elseif activity.type == 'Snowboard' %}
-                            <i class="fa fa-snowflake"></i>
-                        {% elseif activity.type == 'IceSkate' %}
-                            <i class="fa fa-skating"></i>
-                        {% else %}
-                            <i class="fa fa-comment"></i>
-                        {% endif %}
+                        <i class="{% include 'partials/icon.html.twig' with {type: post.type} %}"></i>
                         {{ post.title }}
                     </h1>
                 </div>

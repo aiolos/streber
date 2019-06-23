@@ -74,7 +74,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% include 'partials/map.html.twig' with {'activity': segment} only %}
+    {% include 'partials/map.html.twig' with {'activity': segment, 'mapId': 'map'} only %}
     {% include 'partials/highcharts.html.twig' %}
     <script>
         $(document).ready( function () {

@@ -112,6 +112,15 @@ class PostController extends AbstractController
                     Post::STATUS_DELETED => Post::STATUS_DELETED,
                 ),
             ))
+            ->add('type', ChoiceType::class, array(
+                'choices'  => array(
+                    Post::TYPE_RIDE => Post::TYPE_RIDE,
+                    Post::TYPE_WALK => Post::TYPE_WALK,
+                    Post::TYPE_SNOWBOARD => Post::TYPE_SNOWBOARD,
+                    Post::TYPE_ICESKATE => Post::TYPE_ICESKATE,
+                    Post::TYPE_COMMENT => Post::TYPE_COMMENT,
+                ),
+            ))
             ->add('activityGroup', EntityType::class, array(
                 'class' => ActivityGroup::class,
                 'choice_label' => 'title',

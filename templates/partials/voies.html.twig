@@ -1,0 +1,17 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/leaflet.css" />
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/assets/js/leaflet.js"></script>
+    <script type="text/javascript" src="/assets/js/polyline.encoded.js"></script>
+    <script>
+        var feature = L.geoJson({{ feature|raw }});
+
+        var map = L.map('map').fitBounds(feature.getBounds());
+        L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        feature.addTo(map);
+    </script>
+{% endblock %}
