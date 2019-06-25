@@ -58,47 +58,5 @@
             </div>
         {% endif %}
     </div>
-    {#<div class="col-xl-4 col-lg-4 col-md-4 col-12">#}
-        {#<div class="row mt-3">#}
-            {#<div class="col-12">#}
-                {#<div class="card">#}
-                    {#<div class="card-header">#}
-                        {#<span class="card-title"><i class="fa fa-filter"></i> Filteren:</span>#}
-                    {#</div>#}
-                    {#<div class="card-body">#}
-                        {#<small>#}
-                        {#<a href="/?group=all" class="{% if group == null %}font-weight-bold{% endif %}">Alle berichten</a><br>#}
-                        {#{% for groupFilter in groups %}#}
-                            {#<a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"#}
-                               {#class="{% if group == groupFilter.id %}font-weight-bold{% endif %}">#}
-                                {#{{ groupFilter.title }}#}
-                            {#</a>#}
-                            {#<br>#}
-                        {#{% endfor %}#}
-                        {#</small>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-    <div class="col-12">
-        <div class="row mt-3">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title"><i class="fa fa-bicycle"></i> <em>Spiritus <a href="https://www.santosbikes.com" target="_blank">Santos</a>:</em></span>
-                    </div>
-                    <div class="card-body">
-                        <small>
-                            Dit blog beschrijft tochten die Janneke en Henri, samen of alleen, fietsen (of wandelen, snowboarden, etc.). Gegroepeerd per reis of gewoon losse ritjes.
-                            <br><hr>
-                            De ritgegevens (route, hoogtemeters, etc.) komen vanuit <a href="https://www.strava.com" target="_blank">Strava</a> en van alle tochten is ook een GPX-bestand te downloaden.
-                            <br><hr>
-                            Benieuwd naar de broncode van de Strava-integratie?<br>Check <a href="https://www.github.com/aiolos/streber" target="_blank">Github</a>
-                        </small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock %}

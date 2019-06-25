@@ -163,6 +163,18 @@ class BlogController extends AbstractController
         return $response;
     }
 
+    /**
+     * @Route("/over")
+     */
+    public function about()
+    {
+        return $this->render('views/blog/about.html.twig', [
+            'group' => $this->session->get('group'),
+            'groups' => $this->getGroups(),
+            'activeGroup' => $this->getActiveGroup(),
+        ]);
+    }
+
     private function getGroups()
     {
         return $this->getEntityManager()->getRepository(ActivityGroup::class)->findAll();
