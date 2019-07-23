@@ -2,7 +2,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^7.2.19",
+        "php": "^7.2.15",
         "ext-iconv": "*",
         "ext-dom": "*",
         "basvandorst/stravaphp": "^1.2",

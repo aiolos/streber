@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd8b6da969b96bf17b83a7734f9b7892",
+    "content-hash": "0b00df7a141eb364c7aa2d6d52eddc02",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -7241,7 +7241,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2.19",
+        "php": "^7.2.15",
         "ext-iconv": "*",
         "ext-dom": "*"
     },
