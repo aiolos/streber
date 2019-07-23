@@ -89,9 +89,10 @@ class ActivityController extends AbstractController
     {
         $activity = $this->getStravaActivity($activityId);
 
-        $svg = SVGEncoder::decodeToSVG($activity['map']['polyline'], '#445000', '#FFFFFF');
+        $svg = new SVGEncoder('#445000', '#FFFFFF');
+        $svg->addElements([$activity['map']['polyline']]);
 
-        $response = new Response($svg);
+        $response = new Response($svg->draw());
         $response->headers->set('Content-Type', 'image/svg+xml');
 
         return $response;

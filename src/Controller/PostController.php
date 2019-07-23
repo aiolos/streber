@@ -70,9 +70,9 @@ class PostController extends AbstractController
             return $this->redirect('/posts');
         }
 
-        return $this->render('views/posts/add.html.twig', array(
+        return $this->render('views/posts/add.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -94,9 +94,9 @@ class PostController extends AbstractController
             return $this->redirect('/posts/view/' . $postId);
         }
 
-        return $this->render('views/posts/edit.html.twig', array(
+        return $this->render('views/posts/edit.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     private function buildForm(&$post)
@@ -106,47 +106,47 @@ class PostController extends AbstractController
             ->add('text', TextareaType::class, ['attr' => ['rows' => 10]])
             ->add('date', DateType::class, array('widget' => 'single_text'))
             ->add('status', ChoiceType::class, array(
-                'choices'  => array(
+                'choices'  => [
                     Post::STATUS_DRAFT => Post::STATUS_DRAFT,
                     Post::STATUS_PUBLISHED => Post::STATUS_PUBLISHED,
                     Post::STATUS_DELETED => Post::STATUS_DELETED,
-                ),
+                ],
             ))
-            ->add('type', ChoiceType::class, array(
-                'choices'  => array(
+            ->add('type', ChoiceType::class, [
+                'choices'  => [
                     Post::TYPE_RIDE => Post::TYPE_RIDE,
                     Post::TYPE_WALK => Post::TYPE_WALK,
                     Post::TYPE_SNOWBOARD => Post::TYPE_SNOWBOARD,
                     Post::TYPE_ICESKATE => Post::TYPE_ICESKATE,
                     Post::TYPE_COMMENT => Post::TYPE_COMMENT,
-                ),
-            ))
-            ->add('activityGroup', EntityType::class, array(
+                ],
+            ])
+            ->add('activityGroup', EntityType::class, [
                 'class' => ActivityGroup::class,
                 'choice_label' => 'title',
                 'required' => false,
-            ))
-            ->add('altitude', CheckboxType::class, array(
+            ])
+            ->add('altitude', CheckboxType::class, [
                 'label'    => 'Hoogte',
                 'required' => false,
-            ))
-            ->add('heartrate', CheckboxType::class, array(
+            ])
+            ->add('heartrate', CheckboxType::class, [
                 'label'    => 'Hartslag',
                 'required' => false,
-            ))
-            ->add('cadence', CheckboxType::class, array(
+            ])
+            ->add('cadence', CheckboxType::class, [
                 'label'    => 'Cadans',
                 'required' => false,
-            ))
-            ->add('temperature', CheckboxType::class, array(
+            ])
+            ->add('temperature', CheckboxType::class, [
                 'label'    => 'Temperatuur',
                 'required' => false,
-            ))
-            ->add('watts', CheckboxType::class, array(
+            ])
+            ->add('watts', CheckboxType::class, [
                 'label'    => 'Vermogen',
                 'required' => false,
-            ))
-            ->add('save', SubmitType::class, array('label' => 'Opslaan'))
+            ])
+            ->add('save', SubmitType::class, ['label' => 'Opslaan'])
             ->getForm();
 
         return $form;

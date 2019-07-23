@@ -1,0 +1,20 @@
+language: php
+
+php:
+- 7.1
+- 7.2
+- 7.3
+- nightly
+
+sudo: false
+
+install:
+- mysql -u root -e 'create database streber;'
+- composer self-update
+- composer install --no-interaction
+- cp .env.dist .env
+- ./bin/console doctrine:migrations:execute
+
+script:
+- vendor/bin/phpcs  --standard=phpcs.xml -n
+- vendor/bin/phpstan analyse

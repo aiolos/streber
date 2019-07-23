@@ -195,6 +195,28 @@ abstract class AbstractController extends Controller
         return $post;
     }
 
+    /**
+     * @param string $slug
+     * @param null $status
+     * @return Post
+     */
+    protected function getPostBySlug(string $slug, $status = null): Post
+    {
+        $filter = ['slug' => $slug];
+        if (!is_null($status)) {
+            $filter['status'] = $status;
+        }
+        /** @var Post $post */
+        $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy($filter);
+
+        if (is_null($post)) {
+            throw new NotFoundHttpException('Post cannot be found');
+        }
+        $this->setStravaToken($post->getUser()->getStravaToken());
+
+        return $post;
+    }
+
     protected function getStravaActivity(int $activityId)
     {
         if (!$this->cache->has('strava.activity.' . $activityId)) {
