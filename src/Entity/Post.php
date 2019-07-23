@@ -62,6 +62,11 @@ class Post implements \Serializable
     private $temperature;
 
     /**
+     * @ORM\Column(type="boolean", length=255)
+     */
+    private $watts;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $text;
@@ -216,6 +221,16 @@ class Post implements \Serializable
         $this->temperature = $temperature;
     }
 
+    public function getWatts()
+    {
+        return $this->watts;
+    }
+
+    public function setWatts(bool $watts)
+    {
+        $this->watts = $watts;
+    }
+
     public function getActivity(): ?Activity
     {
         return $this->activity;
@@ -280,6 +295,7 @@ class Post implements \Serializable
         $this->getCadence() ? $streamTypes[] = 'cadence' : null;
         $this->getHeartrate() ? $streamTypes[] = 'heartrate' : null;
         $this->getTemperature() ? $streamTypes[] = 'temp' : null;
+        $this->getWatts() ? $streamTypes[] = 'watts' : null;
 
         return implode(',', $streamTypes);
     }

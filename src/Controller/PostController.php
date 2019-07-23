@@ -142,6 +142,10 @@ class PostController extends AbstractController
                 'label'    => 'Temperatuur',
                 'required' => false,
             ))
+            ->add('watts', CheckboxType::class, array(
+                'label'    => 'Vermogen',
+                'required' => false,
+            ))
             ->add('save', SubmitType::class, array('label' => 'Opslaan'))
             ->getForm();
 

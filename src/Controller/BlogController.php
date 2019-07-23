@@ -139,6 +139,7 @@ class BlogController extends AbstractController
             $this->setStravaToken($post->getUser()->getStravaToken());
             $results = strlen($post->getStreamTypes()) ? $post->getStreamTypes() : $results;
         }
+
         return new JsonResponse($this->getStreams($streamType, $streamId, $results));
     }
 

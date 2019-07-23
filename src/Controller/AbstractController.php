@@ -156,6 +156,7 @@ abstract class AbstractController extends Controller
             'velocity_smooth' => ['name' => 'Snelheid', 'unit' => 'km/h', 'decimals' => 1, 'type' => 'line'],
             'cadence' => ['name' => 'Cadans', 'unit' => 'rpm', 'decimals' => 0, 'type' => 'line'],
             'temp' => ['name' => 'Temperatuur', 'unit' => '°C', 'decimals' => 0, 'type' => 'line'],
+            'watts' => ['name' => 'Vermogen', 'unit' => 'W', 'decimals' => 0, 'type' => 'line'],
         ];
 
         return $titles[$title];
