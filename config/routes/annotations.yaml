@@ -1,5 +1,5 @@
 controllers:
-    resource: ../../src/Controller/
-    type: annotation
+    resource: '../../src/Controller/'
+    type: 'annotation'
 logout:
-    path: /logout
+    path: '/logout'
