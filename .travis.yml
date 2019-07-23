@@ -4,6 +4,15 @@ php:
 - 7.2
 - 7.3
 - 7.4snapshot
+- nightly
+
+matrix:
+  include:
+  - php: 7.2
+  - php: 7.3
+  allow_failures:
+  - php: nightly
+  - php: 7.4snapshot
 
 services:
 - mysql
