@@ -15,7 +15,7 @@ install:
 - composer self-update
 - composer install --no-interaction
 - cp .env.travis .env
-- ./bin/console doctrine:migrations:execute
+- ./bin/console doctrine:migrations:migrate -n
 
 script:
 - vendor/bin/phpcs  --standard=phpcs.xml -n
