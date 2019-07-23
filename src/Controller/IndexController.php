@@ -24,7 +24,7 @@ class IndexController extends AbstractController
                 'athlete' => $athlete,
                 'athleteStats' => $athleteStats
             ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             print $e->getMessage();
         }
     }
@@ -40,7 +40,7 @@ class IndexController extends AbstractController
             return new JsonResponse([
                 'athlete' => $athlete,
             ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             print $e->getMessage();
         }
     }
@@ -56,7 +56,7 @@ class IndexController extends AbstractController
             return new JsonResponse([
                 'stats' => $stats,
             ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             print $e->getMessage();
         }
     }
@@ -72,7 +72,7 @@ class IndexController extends AbstractController
             return new JsonResponse([
                 'activities' => $activities,
             ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             print $e->getMessage();
         }
     }
@@ -89,7 +89,7 @@ class IndexController extends AbstractController
                 'activity' => $activity,
                 'kudos' => $this->getStravaClient()->getActivityKudos($activityId),
             ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             print $e->getMessage();
         }
     }
@@ -106,7 +106,7 @@ class IndexController extends AbstractController
                 'segment' => $segment,
                 'efforts' => $this->getStravaClient()->getSegmentEffort($segmentId),
             ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             print $e->getMessage();
         }
     }
@@ -122,7 +122,7 @@ class IndexController extends AbstractController
             return new JsonResponse([
                 'club' => $club,
             ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             print $e->getMessage();
         }
     }

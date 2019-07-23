@@ -108,7 +108,7 @@ class ActivityController extends AbstractController
     {
         $activity = $this->getStravaActivity($activityId);
 
-        $fileName = substr($activity['start_date_local'], 0 ,10) . '-' . str_replace([' ', ','], '', ucwords($activity['name']));
+        $fileName = substr($activity['start_date_local'], 0, 10) . '-' . str_replace([' ', ','], '', ucwords($activity['name']));
 
         $response = new Response();
         $response->setContent(GPXEncoder::createGPX($activity['map']['polyline'], $activity['name']));

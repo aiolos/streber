@@ -39,7 +39,7 @@ class SegmentController extends AbstractController
     {
         $segment = $this->getStravaClient()->getSegment($segmentId);
         $efforts = $this->getStravaClient()->getSegmentEffort($segmentId);
-        $efforts = array_filter($efforts, function ($element) use ($effortId)  {
+        $efforts = array_filter($efforts, function ($element) use ($effortId) {
             return ($element['id'] == $effortId);
         });
 

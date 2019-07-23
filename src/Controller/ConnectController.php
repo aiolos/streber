@@ -41,7 +41,7 @@ class ConnectController extends AbstractController
 
                 return $this->render('views/dashboard/success.html.twig');
             }
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return new Response($e->getMessage());
         }
     }

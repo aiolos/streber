@@ -24,7 +24,7 @@ class PolylineEncoder
      * @param string $value
      * @return array
      */
-    static public function decodeValue($value)
+    public static function decodeValue($value)
     {
         $index = 0;
         $points = array();

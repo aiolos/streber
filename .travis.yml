@@ -19,4 +19,4 @@ install:
 
 script:
 - vendor/bin/phpcs  --standard=phpcs.xml -n
-- vendor/bin/phpstan analyse
+- vendor/bin/phpstan analyse ./src

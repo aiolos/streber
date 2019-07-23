@@ -52,7 +52,7 @@ class MapsController extends AbstractController
     /**
      * @Route("/svg/year/{year}")
      */
-    public function yearSvg($year= null)
+    public function yearSvg($year = null)
     {
         if (is_null($year)) {
             $year = date('Y');
