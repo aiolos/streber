@@ -6,13 +6,16 @@ php:
 - 7.3
 - nightly
 
+services:
+- mysql
+
 sudo: false
 
 install:
 - mysql -u root -e 'create database streber;'
 - composer self-update
 - composer install --no-interaction
-- cp .env.dist .env
+- cp .env.travis .env
 - ./bin/console doctrine:migrations:execute
 
 script:
