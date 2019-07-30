@@ -40,7 +40,7 @@ class PostController extends AbstractController
 
         return $this->render('views/posts/view.html.twig', [
             'post' => $post,
-            'activity' =>$this->getStravaActivity($post->getActivity()->getId())
+            'activity' => $post->getActivity() !== null ? $this->getStravaActivity($post->getActivity()->getId()) : ''
         ]);
     }
 

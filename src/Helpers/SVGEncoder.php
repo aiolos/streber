@@ -39,7 +39,7 @@ class SVGEncoder extends \Polyline
      * Depending on your data set, you may need to adjust signing to match
      * hemispheres.
      *
-     * @param array &$points - Reference to list
+     * @param array $points - Reference to list
      *
      * @return array - Tuple of (x, y)
      */
@@ -124,7 +124,7 @@ class SVGEncoder extends \Polyline
     /**
      * Decode the Polyline to coordinate SVG path
      *
-     * @param $encoded
+     * @param string $encoded
      * @return array
      */
     private static function decodeElement($encoded)

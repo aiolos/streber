@@ -28,7 +28,7 @@ class MapsController extends AbstractController
             $count -= 200;
             $newActivities = $this->getStravaClient()->getAthleteActivities(null, null, $page, 200);
             if ($count < 0) {
-                $newActivities = array_slice($newActivities, 0, 200 + $count);
+                $newActivities = array_slice($newActivities, 0, (int) (200 + $count));
             }
             $activities = array_merge($activities, $newActivities);
             $page++;
@@ -60,6 +60,9 @@ class MapsController extends AbstractController
 
         $beginYearTimestamp = DateTime::createFromFormat('Y-m-d', $year . '-01-01');
         $endYearTimestamp = DateTime::createFromFormat('Y-m-d', $year + 1 . '-01-01');
+        if ($beginYearTimestamp === false || $endYearTimestamp === false) {
+            throw new \Exception('Something went wrong in creating the begin/end year timestamp');
+        }
         $activities = $this->getStravaClient()->getAthleteActivities(
             $endYearTimestamp->getTimestamp(),
             $beginYearTimestamp->getTimestamp(),

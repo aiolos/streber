@@ -27,8 +27,8 @@ class TimeFormatExtension extends AbstractExtension
         $seconds = $inputSeconds % 60;
         return ($days !== 0.0 ? $days . 'd ' : '')
             . ($days || $hours ? $hours . 'u ' : '')
-            . str_pad($minutes, 2, '0', STR_PAD_LEFT) . 'm '
-            . str_pad($seconds, 2, '0', STR_PAD_LEFT) . 's';
+            . str_pad((string) $minutes, 2, '0', STR_PAD_LEFT) . 'm '
+            . str_pad((string) $seconds, 2, '0', STR_PAD_LEFT) . 's';
     }
 
     public function timeFormatShortFilter($inputSeconds)
@@ -37,7 +37,7 @@ class TimeFormatExtension extends AbstractExtension
         $minutes = floor(($inputSeconds % 3600) / 60);
         $seconds = $inputSeconds % 60;
         return ($hours !== 0.0 ? $hours . ':' : '')
-            . str_pad($minutes, 2, '0', STR_PAD_LEFT) . ':'
-            . str_pad($seconds, 2, '0', STR_PAD_LEFT);
+            . str_pad((string) $minutes, 2, '0', STR_PAD_LEFT) . ':'
+            . str_pad((string) $seconds, 2, '0', STR_PAD_LEFT);
     }
 }

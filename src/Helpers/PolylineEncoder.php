@@ -31,7 +31,7 @@ class PolylineEncoder
         $lat = 0;
         $lng = 0;
         while ($index < strlen($value)) {
-            $b;
+            $b = null;
             $shift = 0;
             $result = 0;
             do {
