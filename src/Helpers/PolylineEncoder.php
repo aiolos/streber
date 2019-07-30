@@ -39,7 +39,7 @@ class PolylineEncoder
                 $result |= ($b & 0x1f) << $shift;
                 $shift += 5;
             } while ($b > 31);
-            $dlat = (($result & 1) ? ~($result >> 1) : ($result >> 1));
+            $dlat = ((($result & 1) !== 0) ? ~($result >> 1) : ($result >> 1));
             $lat += $dlat;
             $shift = 0;
             $result = 0;
@@ -48,7 +48,7 @@ class PolylineEncoder
                 $result |= ($b & 0x1f) << $shift;
                 $shift += 5;
             } while ($b > 31);
-            $dlng = (($result & 1) ? ~($result >> 1) : ($result >> 1));
+            $dlng = ((($result & 1) !== 0) ? ~($result >> 1) : ($result >> 1));
             $lng += $dlng;
             $points[] = array('x' => $lat / 100000, 'y' => $lng / 100000);
         }
@@ -92,8 +92,7 @@ class PolylineEncoder
             $r >>= 5;
         }
         $lastVal = $r + 63;
-        $encoded .= chr($lastVal);
-        return $encoded;
+        return $encoded . chr($lastVal);
     }
 
     /**

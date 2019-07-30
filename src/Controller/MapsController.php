@@ -25,7 +25,7 @@ class MapsController extends AbstractController
         $activities = [];
         $page = 1;
         while ($count > 0) {
-            $count = $count - 200;
+            $count -= 200;
             $newActivities = $this->getStravaClient()->getAthleteActivities(null, null, $page, 200);
             if ($count < 0) {
                 $newActivities = array_slice($newActivities, 0, 200 + $count);

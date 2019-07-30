@@ -113,6 +113,9 @@
     "jean85/pretty-package-versions": {
         "version": "1.2"
     },
+    "jetbrains/phpstorm-stubs": {
+        "version": "v2019.2"
+    },
     "knplabs/knp-markdown-bundle": {
         "version": "1.7.0"
     },
@@ -196,6 +199,12 @@
     },
     "react/promise": {
         "version": "v2.5.1"
+    },
+    "rector/rector": {
+        "version": "v0.5.8"
+    },
+    "sebastian/diff": {
+        "version": "3.0.2"
     },
     "sensio/framework-extra-bundle": {
         "version": "4.0",
@@ -329,6 +338,9 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"
     },
+    "symfony/process": {
+        "version": "v4.3.3"
+    },
     "symfony/property-access": {
         "version": "v4.0.11"
     },
@@ -398,6 +410,9 @@
     },
     "symfony/yaml": {
         "version": "v4.0.3"
+    },
+    "symplify/package-builder": {
+        "version": "v6.0.5"
     },
     "twig/twig": {
         "version": "v2.4.8"

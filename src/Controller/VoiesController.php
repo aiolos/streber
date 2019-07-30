@@ -160,7 +160,7 @@ class VoiesController extends AbstractController
         return array_filter($features, function ($element) use ($itineraire) {
             if (array_key_exists('ITINERAIRE', $element['properties'])
                 && array_key_exists('QRC', $element['properties'])
-                && strtolower($element['properties']['ITINERAIRE']) == strtolower($itineraire)
+                && strtolower($element['properties']['ITINERAIRE']) === strtolower($itineraire)
             ) {
                 return true;
             }

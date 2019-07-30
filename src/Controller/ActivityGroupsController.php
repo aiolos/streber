@@ -91,14 +91,12 @@ class ActivityGroupsController extends AbstractController
 
     private function buildForm(&$group)
     {
-        $form = $this->createFormBuilder($group)
+        return $this->createFormBuilder($group)
             ->add('title', TextType::class)
             ->add('slug', TextType::class)
             ->add('description', TextareaType::class, ['attr' => ['rows' => 10]])
             ->add('date', DateType::class, ['widget' => 'single_text'])
             ->add('save', SubmitType::class, array('label' => 'Opslaan'))
             ->getForm();
-
-        return $form;
     }
 }

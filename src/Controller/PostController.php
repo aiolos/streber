@@ -101,7 +101,7 @@ class PostController extends AbstractController
 
     private function buildForm(&$post)
     {
-        $form = $this->createFormBuilder($post)
+        return $this->createFormBuilder($post)
             ->add('title', TextType::class)
             ->add('text', TextareaType::class, ['attr' => ['rows' => 10]])
             ->add('date', DateType::class, array('widget' => 'single_text'))
@@ -148,7 +148,5 @@ class PostController extends AbstractController
             ])
             ->add('save', SubmitType::class, ['label' => 'Opslaan'])
             ->getForm();
-
-        return $form;
     }
 }
