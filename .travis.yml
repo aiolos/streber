@@ -28,5 +28,5 @@ install:
 
 script:
 - vendor/bin/phpcs  --standard=phpcs.xml -n
-- vendor/bin/phpstan analyse ./src
+- vendor/bin/phpstan analyse --level=max ./src
 - vendor/bin/rector process ./src/ --level code-quality
