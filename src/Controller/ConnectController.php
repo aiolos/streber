@@ -21,9 +21,9 @@ class ConnectController extends AbstractController
                     [
                         'url' => $this->getOAuth()->getAuthorizationUrl([
                             'scope' => [
-                                'public',
-                                // 'write',
-                                // 'view_private',
+                                'read_all',
+                                'profile:read_all',
+                                'activity:read_all',
                             ]
                         ])
                     ]

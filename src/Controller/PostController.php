@@ -146,6 +146,14 @@ class PostController extends AbstractController
                 'label'    => 'Vermogen',
                 'required' => false,
             ])
+            ->add('numbers', CheckboxType::class, [
+                'label'    => 'Toon cijfers',
+                'required' => false,
+            ])
+            ->add('map', CheckboxType::class, [
+                'label'    => 'Toon kaart',
+                'required' => false,
+            ])
             ->add('save', SubmitType::class, ['label' => 'Opslaan'])
             ->getForm();
     }

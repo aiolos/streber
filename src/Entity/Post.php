@@ -67,6 +67,16 @@ class Post implements \Serializable
     private $watts;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $numbers;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $map;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $text;
@@ -229,6 +239,26 @@ class Post implements \Serializable
     public function setWatts(bool $watts)
     {
         $this->watts = $watts;
+    }
+
+    public function getNumbers(): bool
+    {
+        return $this->numbers;
+    }
+
+    public function setNumbers(bool $numbers): void
+    {
+        $this->numbers = $numbers;
+    }
+
+    public function getMap(): bool
+    {
+        return $this->map;
+    }
+
+    public function setMap(bool $map): void
+    {
+        $this->map = $map;
     }
 
     public function getActivity(): ?Activity

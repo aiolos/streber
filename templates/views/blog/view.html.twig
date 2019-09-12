@@ -50,6 +50,7 @@
                 </div>
 
                 <div class="col-lg-5 col-md-5 col-sm-12 m-10">
+                    {% if post.numbers %}
                     <div class="card">
                         <div class="card-header">
                             <h5>
@@ -89,6 +90,8 @@
                             </small>
                         </div>
                     </div>
+                    {% endif %}
+                    {% if post.map %}
                     <div class="card">
                         <div class="h-100">
                             <a href="/blog/map/{{ post.id }}" data-toggle="lightbox" data-gallery="activity-gallery" data-title="Route" data-width="2000" data-height="1000">
@@ -96,6 +99,7 @@
                             </a>
                         </div>
                     </div>
+                    {% endif %}
                     <div class="card">
                         <div class="card-body">
                             <div class="row p-0">

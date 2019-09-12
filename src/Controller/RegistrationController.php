@@ -35,7 +35,7 @@ class RegistrationController extends Controller
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
 
-            return $this->redirect('/view/athlete');
+            return $this->redirect('/athlete');
         }
 
         return $this->render(

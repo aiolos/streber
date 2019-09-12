@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2"><i class="fa fa-link"></i> Verbind met Strava</h1>
+<div class="row">
+    <div class="offset-xl-2 col-xl-8 col-12">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2"><i class="fa fa-link"></i> Verbind met Strava</h1>
+        </div>
+        Om de gegevens uit Strava te halen moet er verbinding gemaakt worden. Hiervoor wordt je doorgelinkt naar Strava om
+        daar toestemming te geven aan deze applicatie. Je kunt de toestemming altijd weer intrekken.
+        <br>
+        <br>
+        Klik op onderstaande link om te verbinden met Strava. Je komt daarna hier weer terug.<br>
+        <a href="{{ url }}" class="btn btn-success"><i class="fa fa-link"></i> Verbinden</a>
     </div>
-    Om de gegevens uit Strava te halen moet er verbinding gemaakt worden. Hiervoor wordt je doorgelinkt naar Strava om
-    daar toestemming te geven aan deze applicatie. Je kunt de toestemming altijd weer intrekken.
-<br>
-<br>
-    Klik op onderstaande link om te verbinden met Strava. Je komt daarna hier weer terug.<br>
-    <a href="{{ url }}" class="btn btn-success"><i class="fa fa-link"></i> Verbinden</a>
+</div>
 {% endblock %}

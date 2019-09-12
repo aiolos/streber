@@ -243,4 +243,9 @@ abstract class AbstractController extends Controller
 
         return $this->cache->get('strava.photos.' . $activityId);
     }
+
+    protected function clearCache(): bool
+    {
+        return $this->cache->clear();
+    }
 }
