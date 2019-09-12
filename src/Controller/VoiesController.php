@@ -6,6 +6,7 @@ use App\Entity\ActivityGroup;
 use App\Entity\Post;
 use App\Helpers\GPXEncoder;
 use App\Repository\PostRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -142,11 +143,14 @@ class VoiesController extends AbstractController
         if (!$this->cache->has('features')) {
             $features = [];
             $files = scandir(__DIR__ . '/../../data/voies-vertes/');
+            if ($files === false) {
+                throw new Exception('Cannot read directory with files');
+            }
             foreach ($files as $file) {
                 if ($file === '.' || $file === '..') {
                     continue;
                 }
-                $json = json_decode(file_get_contents(__DIR__ . '/../../data/voies-vertes/' . $file), true);
+                $json = json_decode($this->getFileContents(__DIR__ . '/../../data/voies-vertes/' . $file), true);
                 $features = array_merge($features, $json['features']);
             }
             $this->cache->set('features', $features);
@@ -160,7 +164,7 @@ class VoiesController extends AbstractController
         return array_filter($features, function ($element) use ($itineraire) {
             if (array_key_exists('ITINERAIRE', $element['properties'])
                 && array_key_exists('QRC', $element['properties'])
-                && strtolower($element['properties']['ITINERAIRE']) == strtolower($itineraire)
+                && strtolower($element['properties']['ITINERAIRE']) === strtolower($itineraire)
             ) {
                 return true;
             }
@@ -170,5 +174,15 @@ class VoiesController extends AbstractController
     private function getGroups()
     {
         return $this->getEntityManager()->getRepository(ActivityGroup::class)->findAll();
+    }
+
+    private function getFileContents($file): string
+    {
+        $fileContents = file_get_contents($file);
+        if ($fileContents === false) {
+            throw new Exception('Cannot read file ' . $file);
+        }
+
+        return $fileContents;
     }
 }

@@ -62,7 +62,7 @@ class GPXEncoder
             $track->source = sprintf("");
             $segment = new Segment();
 
-            array_map(function ($element) use ($segment, $feature) {
+            array_map(function ($element) use ($segment) {
                 $point = new Point(Point::TRACKPOINT);
                 if (is_array($element[0])) {
                     foreach ($element as $arrayElement) {

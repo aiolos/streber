@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 //use Pest;
+use Doctrine\Common\Persistence\ObjectManager;
 use Psr\Log\LoggerInterface;
 use Strava\API\Client;
 use Strava\API\Exception;
@@ -30,7 +31,7 @@ abstract class AbstractController extends Controller
         $this->logger = $logger;
     }
 
-    protected function getEntityManager()
+    protected function getEntityManager(): ObjectManager
     {
         if (is_null($this->entityManager)) {
             $this->entityManager = $this->getDoctrine()->getManager();
@@ -38,7 +39,7 @@ abstract class AbstractController extends Controller
         return $this->entityManager;
     }
 
-    protected function getOAuth()
+    protected function getOAuth(): OAuth
     {
         $options = [
             'clientId'     => getenv('CLIENT_ID'),
@@ -71,7 +72,7 @@ abstract class AbstractController extends Controller
         $this->stravaToken = $token;
     }
 
-    protected function getStreams($type, $id, $streamResults = null)
+    protected function getStreams($type, $id, $streamResults = null): array
     {
         /**
          * allowed types for getStreams*()-method are (comma seperated):
@@ -106,6 +107,8 @@ abstract class AbstractController extends Controller
             throw new \Exception('Invalid stream type');
         }
 
+        $xData = [];
+        $streams = [];
         foreach ($results as $index => $result) {
             /** Calculate speed to km/h */
             if ($result['type'] == 'velocity_smooth') {
@@ -147,7 +150,7 @@ abstract class AbstractController extends Controller
         return $data;
     }
 
-    private function mapTitle($title)
+    private function mapTitle($title): array
     {
         $titles = [
             'distance' => ['name' => 'Afstand', 'unit' => 'm', 'decimals' => 0, 'type' => 'line'],
@@ -156,6 +159,7 @@ abstract class AbstractController extends Controller
             'velocity_smooth' => ['name' => 'Snelheid', 'unit' => 'km/h', 'decimals' => 1, 'type' => 'line'],
             'cadence' => ['name' => 'Cadans', 'unit' => 'rpm', 'decimals' => 0, 'type' => 'line'],
             'temp' => ['name' => 'Temperatuur', 'unit' => '°C', 'decimals' => 0, 'type' => 'line'],
+            'watts' => ['name' => 'Vermogen', 'unit' => 'W', 'decimals' => 0, 'type' => 'line'],
         ];
 
         return $titles[$title];
@@ -168,12 +172,15 @@ abstract class AbstractController extends Controller
      */
     protected function getActivityByPost(Post $post): array
     {
+        if ($post->getActivity() === null) {
+            throw new \Exception('Activity not found for post');
+        }
         return $this->getStravaActivity($post->getActivity()->getId());
     }
 
     /**
      * @param int $postId
-     * @param null $status
+     * @param string|null $status
      * @return Post
      */
     protected function getPost(int $postId, $status = null): Post
@@ -182,14 +189,35 @@ abstract class AbstractController extends Controller
         if (!is_null($status)) {
             $filter['status'] = $status;
         }
-        /** @var Post $post */
+        /** @var Post|null $post */
         $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy($filter);
 
-        if (!is_null($post)) {
-            $this->setStravaToken($post->getUser()->getStravaToken());
-        } else {
+        if (is_null($post) || is_null($post->getUser())) {
             throw new NotFoundHttpException('Post cannot be found');
         }
+        $this->setStravaToken($post->getUser()->getStravaToken());
+
+        return $post;
+    }
+
+    /**
+     * @param string $slug
+     * @param string|null $status
+     * @return Post
+     */
+    protected function getPostBySlug(string $slug, $status = null): Post
+    {
+        $filter = ['slug' => $slug];
+        if (!is_null($status)) {
+            $filter['status'] = $status;
+        }
+        /** @var Post|null $post */
+        $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy($filter);
+
+        if (is_null($post) || is_null($post->getUser())) {
+            throw new NotFoundHttpException('Post cannot be found');
+        }
+        $this->setStravaToken($post->getUser()->getStravaToken());
 
         return $post;
     }
@@ -205,7 +233,7 @@ abstract class AbstractController extends Controller
         return $this->cache->get('strava.activity.' . $activityId);
     }
 
-    protected function getStravaPhotos(int $activityId)
+    protected function getStravaPhotos(int $activityId): array
     {
         if (!$this->cache->has('strava.photos.' . $activityId)) {
             $this->logger->info('Cache miss for photos of activity ' . $activityId);

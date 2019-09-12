@@ -27,17 +27,16 @@ class AppAddUserCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setDescription('Add a short description for your command');
-        ;
-        $this->addArgument('email', InputArgument::REQUIRED, 'The email of the user.')
-        ;
+        $this->setDescription('Add a short description for your command');
+
+        $this->addArgument('email', InputArgument::REQUIRED, 'The email of the user.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Username: ' . $input->getArgument('email'));
-
+        /** @var string $userName */
+        $userName = $input->getArgument('email');
+        $output->writeln('Username: ' . $userName);
 
         $io = new SymfonyStyle($input, $output);
         $password = $io->ask('Password:');

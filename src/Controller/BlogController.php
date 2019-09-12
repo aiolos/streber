@@ -28,6 +28,7 @@ class BlogController extends AbstractController
      */
     public function filter(Request $request, $slug = null)
     {
+        /** @var ActivityGroup $activeGroup */
         $activeGroup = $this->getEntityManager()->getRepository(ActivityGroup::class)->findOneBy(['slug' => $slug]);
         $group = $activeGroup->getId();
 
@@ -54,7 +55,7 @@ class BlogController extends AbstractController
         $perPage = 4;
         $maxPage = ceil($total / $perPage);
         $currentPage = max(min($maxPage, $request->get('page', 1)), 1);
-        $offset = ($currentPage * $perPage) - $perPage;
+        $offset = (int) ($currentPage * $perPage) - $perPage;
 
         $posts = $repository->findBy($filter, ['date' => 'desc', 'id' => 'desc'], $perPage, $offset);
 
@@ -90,7 +91,7 @@ class BlogController extends AbstractController
         return $this->viewPost($post);
     }
 
-    private function viewPost(Post $post)
+    private function viewPost(Post $post = null)
     {
         if (is_null($post)) {
             return $this->redirect('/');
@@ -99,6 +100,9 @@ class BlogController extends AbstractController
         $repository = $this->getEntityManager()->getRepository(Post::class);
         $next = $repository->findNextPost($post);
         $previous = $repository->findPreviousPost($post);
+        if ($post->getActivity() === null) {
+            throw new \Exception("No activity found");
+        }
 
         return $this->render('views/blog/view.html.twig', [
             'post' => $post,
@@ -117,10 +121,9 @@ class BlogController extends AbstractController
      */
     public function map($postId)
     {
-        /** @var Post $post */
         $post = $this->getPost($postId, Post::STATUS_PUBLISHED);
-        if (is_null($post)) {
-            return $this->redirect('/');
+        if ($post->getActivity() === null) {
+            throw new \Exception("No activity found");
         }
 
         return $this->render('views/blog/map.html.twig', [
@@ -133,12 +136,17 @@ class BlogController extends AbstractController
      */
     public function activityStreams($streamType, $streamId, $results)
     {
-        /** @var Post $post */
+        /** @var Post|null $post */
         $post = $this->getEntityManager()->getRepository(Post::class)->findOneBy(['activity' => $streamId, 'status' => Post::STATUS_PUBLISHED]);
         if (!is_null($post)) {
-            $this->setStravaToken($post->getUser()->getStravaToken());
-            $results = strlen($post->getStreamTypes()) ? $post->getStreamTypes() : $results;
+            $user = $post->getUser();
+            if ($user === null) {
+                throw new \Exception('User not found for post');
+            }
+            $this->setStravaToken($user->getStravaToken());
+            $results = strlen($post->getStreamTypes()) !== 0 ? $post->getStreamTypes() : $results;
         }
+
         return new JsonResponse($this->getStreams($streamType, $streamId, $results));
     }
 
@@ -153,10 +161,10 @@ class BlogController extends AbstractController
         $post = $this->getPost($postId, Post::STATUS_PUBLISHED);
         $activity = $this->getActivityByPost($post);
 
-        $fileName = $post->getDate()->format('Y-m-d') . '-' . str_replace([' ', ','], '', ucwords($post->getTitle()));
+        $fileName = $post->getDate()->format('Y-m-d') . '-' . str_replace([' ', ','], '', ucwords((string) $post->getTitle()));
 
         $response = new Response();
-        $response->setContent(GPXEncoder::createGPX($activity['map']['polyline'], $post->getTitle()));
+        $response->setContent(GPXEncoder::createGPX($activity['map']['polyline'], (string) $post->getTitle()));
         $response->headers->set('Content-Type', 'application/gpx+xml');
         $response->headers->set('Content-Disposition', "attachment; filename=" . $fileName . ".gpx");
 

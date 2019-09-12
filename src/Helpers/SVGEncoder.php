@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Source: https://github.com/emcconville/google-map-polyline-encoding-tool/blob/master/examples/EncodedToSVG/EncodedToSVG.php
  */
@@ -26,7 +26,7 @@ class SVGEncoder extends \Polyline
         $this->dom->formatOutput = true;
 
         $this->root = $this->dom->createElementNS('http://www.w3.org/2000/svg', 'svg');
-        $this->root->setAttributeNS('http://www.w3.org/2000/xmlns/' ,'xmlns:xlink', 'http://www.w3.org/1999/xlink');
+        $this->root->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink');
         $this->root->appendChild(new DomAttr('version', '1.2'));
         $this->root->appendChild(new DomAttr('viewport-fill', $this->backgroundColor));
         $this->root->appendChild(new DomAttr('style', 'background-color:' . $this->backgroundColor . ';'));
@@ -39,15 +39,15 @@ class SVGEncoder extends \Polyline
      * Depending on your data set, you may need to adjust signing to match
      * hemispheres.
      *
-     * @param array &$points - Reference to list
+     * @param array $points - Reference to list
      *
      * @return array - Tuple of (x, y)
      */
-    private static function _shiftPoint( &$points )
+    private static function _shiftPoint(&$points)
     {
         $y = array_shift($points);
         $x = array_shift($points);
-        return array( $x, $y * -1 );
+        return array($x, $y * -1);
     }
 
     /**
@@ -109,7 +109,7 @@ class SVGEncoder extends \Polyline
             $use->appendChild(new DomAttr('xlink:href', '#' . $definition['id']));
 
             $use->appendChild(new DomAttr('x', ($count % $cols) * self::DEF_SIZE . 'px'));
-            $use->appendChild(new DomAttr('y', floor($count / $cols ) * self::DEF_SIZE .'px'));
+            $use->appendChild(new DomAttr('y', floor($count / $cols) * self::DEF_SIZE .'px'));
             $count++;
             $this->root->appendChild($use);
         }
@@ -124,7 +124,7 @@ class SVGEncoder extends \Polyline
     /**
      * Decode the Polyline to coordinate SVG path
      *
-     * @param $encoded
+     * @param string $encoded
      * @return array
      */
     private static function decodeElement($encoded)
