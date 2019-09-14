@@ -35,6 +35,8 @@ class ConnectController extends AbstractController
 
                 $user = $this->getUser();
                 $user->setStravaToken($token->getToken());
+                $user->setRefreshToken($token->getRefreshToken());
+                $user->setTokenExpires($token->getExpires());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();

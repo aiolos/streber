@@ -45,11 +45,19 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * The strava token to connect
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $stravaToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $refreshToken;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $tokenExpires;
 
     /**
      * @ORM\Column(type="array")
@@ -127,6 +135,31 @@ class User implements UserInterface, \Serializable
     public function setStravaToken($stravaToken)
     {
         $this->stravaToken = $stravaToken;
+    }
+
+    public function getRefreshToken()
+    {
+        return $this->refreshToken;
+    }
+
+    public function setRefreshToken($refreshToken)
+    {
+        $this->refreshToken = $refreshToken;
+    }
+
+    public function getTokenExpires()
+    {
+        return $this->tokenExpires;
+    }
+
+    public function setTokenExpires(int $tokenExpires)
+    {
+        $this->tokenExpires = $tokenExpires;
+    }
+
+    public function isTokenExpired(): bool
+    {
+        return $this->tokenExpires < time();
     }
 
     public function getSalt()

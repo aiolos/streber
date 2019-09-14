@@ -62,6 +62,15 @@ abstract class AbstractController extends Controller
     protected function getStravaToken()
     {
         if ($this->stravaToken === null) {
+            if ($this->getUser()->isTokenExpired()) {
+                $user = $this->getUser();
+                $token = $this->getOAuth()->getAccessToken('refresh_token', [$user->getRefreshToken()]);
+                $user->setStravaToken($token->getToken());
+                $user->setRefreshToken($token->getRefreshToken());
+                $user->setTokenExpires($token->getExpires());
+                $this->getEntityManager()->persist($user);
+                $this->getEntityManager()->flush();
+            }
             $this->stravaToken = $this->getUser()->getStravaToken();
         }
         return $this->stravaToken;
@@ -75,7 +84,7 @@ abstract class AbstractController extends Controller
     protected function getStreams($type, $id, $streamResults = null): array
     {
         /**
-         * allowed types for getStreams*()-method are (comma seperated):
+         * allowed types for getStreams*()-method are (comma separated):
          * - time:  integer seconds
          * - latlng:  floats [latitude, longitude]
          * - distance:  float meters

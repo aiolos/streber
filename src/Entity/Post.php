@@ -67,12 +67,12 @@ class Post implements \Serializable
     private $watts;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default":1})
      */
     private $numbers;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default":1})
      */
     private $map;
 
