@@ -64,7 +64,7 @@ abstract class AbstractController extends Controller
         if ($this->stravaToken === null) {
             if ($this->getUser()->isTokenExpired()) {
                 $user = $this->getUser();
-                $token = $this->getOAuth()->getAccessToken('refresh_token', [$user->getRefreshToken()]);
+                $token = $this->getOAuth()->getAccessToken('refresh_token', ['refresh_token' => $user->getRefreshToken()]);
                 $user->setStravaToken($token->getToken());
                 $user->setRefreshToken($token->getRefreshToken());
                 $user->setTokenExpires($token->getExpires());
