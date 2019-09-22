@@ -241,7 +241,7 @@ class Post implements \Serializable
         $this->watts = $watts;
     }
 
-    public function getNumbers(): bool
+    public function getNumbers(): ?bool
     {
         return $this->numbers;
     }
@@ -251,7 +251,7 @@ class Post implements \Serializable
         $this->numbers = $numbers;
     }
 
-    public function getMap(): bool
+    public function getMap(): ?bool
     {
         return $this->map;
     }
