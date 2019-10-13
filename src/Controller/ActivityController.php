@@ -117,4 +117,18 @@ class ActivityController extends AbstractController
 
         return $response;
     }
+
+    /**
+     * @Route("/activities/{activityId}/flush")
+     * @param integer $activityId
+     * @return Response
+     * @throws \Strava\API\Exception
+     */
+    public function clearActivityCache($activityId)
+    {
+        $this->cache->deleteItem('strava.photos.' . $activityId);
+        $this->cache->deleteItem('strava.activity.' . $activityId);
+
+        return $this->redirect('/activities/' . $activityId);
+    }
 }

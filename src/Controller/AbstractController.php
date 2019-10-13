@@ -242,7 +242,7 @@ abstract class AbstractController extends Controller
         return $this->cache->get('strava.activity.' . $activityId);
     }
 
-    protected function getStravaPhotos(int $activityId): array
+    protected function getStravaPhotos(int $activityId)
     {
         if (!$this->cache->has('strava.photos.' . $activityId)) {
             $this->logger->info('Cache miss for photos of activity ' . $activityId);
