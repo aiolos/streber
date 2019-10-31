@@ -17,7 +17,7 @@
                         <i class="fa fa-map-signs"></i>
                         Rit: {{ (activity.distance / 1000)|number_format(1, ',', '.') }} km
                         <div class="float-right">
-                            <a href="/activities/{{ activity.id }}/flush" class="btn btn-sm btn-outline-secondary">
+                            <a href="/activities/{{ activityId }}/flush" class="btn btn-sm btn-outline-secondary">
                                 <i class="fa fa-trash-alt"></i> Cache legen
                             </a>
                             {% if activityEntity.post %}
