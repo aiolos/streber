@@ -61,7 +61,7 @@ class SVGEncoder extends \Polyline
             $decoded = self::decodeElement($encodedElement);
 
             $svg = $this->dom->createElement('svg');
-            $svg->appendChild(new DomAttr('id', $id));
+            $svg->appendChild(new DomAttr('id', (string) $id));
             $svg->appendChild(new DomAttr('width', self::DEF_SIZE . 'px'));
             $svg->appendChild(new DomAttr('height', self::DEF_SIZE . 'px'));
             $svg->appendChild(new DomAttr('viewBox', $decoded['viewbox']));
