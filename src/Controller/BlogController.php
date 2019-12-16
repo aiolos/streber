@@ -107,8 +107,8 @@ class BlogController extends AbstractController
         return $this->render('views/blog/view.html.twig', [
             'post' => $post,
             'stream' => ['type' => 'activity', 'id' => $post->getActivity()->getId()],
-            'activity' => $this->getStravaActivity($post->getActivity()->getId()),
-            'photos' => $this->getStravaPhotos($post->getActivity()->getId()),
+            'activity' => $this->getActivity($post->getActivity()->getId())->getResponse(),
+            'photos' => $post->getActivity()->getPhotos(),
             'link' => ['next' => $next, 'previous' => $previous],
             'group' => $this->session->get('group'),
             'groups' => $this->getGroups(),
@@ -127,7 +127,7 @@ class BlogController extends AbstractController
         }
 
         return $this->render('views/blog/map.html.twig', [
-            'activity' => $this->getStravaActivity($post->getActivity()->getId()),
+            'activity' => $post->getActivity()->getResponse(),
         ]);
     }
 

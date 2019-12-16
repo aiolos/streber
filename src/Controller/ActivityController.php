@@ -17,10 +17,6 @@ class ActivityController extends AbstractController
      */
     public function activities()
     {
-        $athlete = $this->getStravaClient()->getAthlete();
-        $athleteStats = $this->getStravaClient()->getAthleteStats($athlete['id']);
-        $this->cache->set('strava.athlete.stats', $athleteStats);
-
         return $this->render('views/activities/activities.html.twig');
     }
 
@@ -38,8 +34,8 @@ class ActivityController extends AbstractController
 
         return new JsonResponse([
             'activities' => $activities,
-            'recordsTotal' => $this->cache->get('strava.athlete.stats')['all_ride_totals']['count'],
-            'recordsFiltered' => $this->cache->get('strava.athlete.stats')['all_ride_totals']['count'],
+            'recordsTotal' => $this->getAthleteStats()['all_ride_totals']['count'],
+            'recordsFiltered' => $this->getAthleteStats()['all_ride_totals']['count'],
         ]);
     }
 
@@ -48,26 +44,14 @@ class ActivityController extends AbstractController
      */
     public function activity($activityId)
     {
-        $activity = $this->getStravaActivity($activityId);
-        $photos = $this->getStravaPhotos($activityId);
-
-        $activityEntity = $this->getEntityManager()->getRepository(Activity::class)->find($activityId);
-        if ($activityEntity === null) {
-            $activityEntity = new Activity();
-            $activityEntity->setId($activityId);
-            $activityEntity->setUser($this->getUser());
-            $activityEntity->setName($activity['name']);
-            $this->getEntityManager()->persist($activityEntity);
-            $this->getEntityManager()->flush();
-        }
-
+        $activity = $this->getActivity($activityId);
         return $this->render('views/activities/activity.html.twig', [
-            'activity' => $activity,
+            'activity' => $activity->getResponse(),
             'activityId' => $activityId,
-            'activityEntity' => $activityEntity,
+            'activityEntity' => $activity,
             'kudos' => $this->getStravaClient()->getActivityKudos($activityId),
             'stream' => ['type' => 'activity', 'id' => $activityId],
-            'photos' => $photos,
+            'photos' => $activity->getPhotos(),
         ]);
     }
 
@@ -131,5 +115,13 @@ class ActivityController extends AbstractController
         $this->cache->deleteItem('strava.activity.' . $activityId);
 
         return $this->redirect('/activities/' . $activityId);
+    }
+
+    private function getAthleteStats(): array
+    {
+        return $this->cache->get('strava.athlete.stats', function () {
+            $athlete = $this->getStravaClient()->getAthlete();
+            return $this->getStravaClient()->getAthleteStats($athlete['id']);
+        });
     }
 }

@@ -140,7 +140,7 @@ class VoiesController extends AbstractController
 
     private function getAllFeatures()
     {
-        if (!$this->cache->has('features')) {
+        return $this->cache->get('features', function () {
             $features = [];
             $files = scandir(__DIR__ . '/../../data/voies-vertes/');
             if ($files === false) {
@@ -153,10 +153,7 @@ class VoiesController extends AbstractController
                 $json = json_decode($this->getFileContents(__DIR__ . '/../../data/voies-vertes/' . $file), true);
                 $features = array_merge($features, $json['features']);
             }
-            $this->cache->set('features', $features);
-        }
-
-        return $this->cache->get('features');
+        });
     }
 
     private function filterFeatures($features, $itineraire)

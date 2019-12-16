@@ -26,6 +26,18 @@ class Activity implements \Serializable
     private $name;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     * @var array|null
+     */
+    private $response;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     * @var array|null
+     */
+    private $photos;
+
+    /**
      *  @ORM\OneToOne(targetEntity="App\Entity\Post", inversedBy="activity")
      */
     private $post;
@@ -91,5 +103,35 @@ class Activity implements \Serializable
             $this->id,
             $this->name,
         ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function hasResponse()
+    {
+        return $this->response !== false;
+    }
+
+    public function getResponse(): ?array
+    {
+        return $this->response;
+    }
+
+    public function setResponse(array $response): void
+    {
+        $this->response = $response;
+    }
+
+    public function hasPhotos()
+    {
+        return $this->photos !== false;
+    }
+
+    public function getPhotos(): ?array
+    {
+        return $this->photos;
+    }
+
+    public function setPhotos(array $photos): void
+    {
+        $this->photos = $photos;
     }
 }
