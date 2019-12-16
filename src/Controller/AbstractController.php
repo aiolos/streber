@@ -241,7 +241,7 @@ abstract class AbstractController extends Controller
 
     protected function getActivity(int $activityId, bool $forceReload = false): Activity
     {
-        /** @var Activity $activityEntity */
+        /** @var ?Activity $activityEntity */
         $activityEntity = $this->getEntityManager()->getRepository(Activity::class)->find($activityId);
         if ($activityEntity === null || !$activityEntity->hasResponse() || !$activityEntity->hasPhotos() || $forceReload) {
             $activity = $this->getStravaActivity($activityId);
