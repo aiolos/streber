@@ -111,8 +111,8 @@ class ActivityController extends AbstractController
      */
     public function clearActivityCache($activityId)
     {
-        $this->cache->deleteItem('strava.photos.' . $activityId);
-        $this->cache->deleteItem('strava.activity.' . $activityId);
+        $this->cache->delete('strava.photos.' . $activityId);
+        $this->cache->delete('strava.activity.' . $activityId);
 
         return $this->redirect('/activities/' . $activityId);
     }
