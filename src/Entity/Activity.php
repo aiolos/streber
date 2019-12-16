@@ -107,7 +107,7 @@ class Activity implements \Serializable
 
     public function hasResponse()
     {
-        return $this->response !== false;
+        return $this->response !== false && $this->response !== null;
     }
 
     public function getResponse(): ?array
@@ -122,7 +122,7 @@ class Activity implements \Serializable
 
     public function hasPhotos()
     {
-        return $this->photos !== false;
+        return $this->photos !== false && $this->photos !== null;
     }
 
     public function getPhotos(): ?array
