@@ -253,6 +253,7 @@ abstract class AbstractController extends Controller
                 $activityEntity->setUser($this->getUser());
                 $activityEntity->setName($activity['name']);
             }
+            unset($activity['segment_efforts']);
             $activityEntity->setResponse($activity);
             $activityEntity->setPhotos($photos);
             $this->getEntityManager()->persist($activityEntity);
