@@ -175,11 +175,9 @@ abstract class AbstractController extends Controller
     }
 
     /**
-     * @param Post $post
-     * @return array
-     * @throws \Strava\API\Exception
+     * @throws \Exception
      */
-    protected function getActivityByPost(Post $post): array
+    protected function getActivityByPost(Post $post): ?array
     {
         if ($post->getActivity() === null) {
             throw new \Exception('Activity not found for post');
@@ -243,6 +241,7 @@ abstract class AbstractController extends Controller
 
     protected function getActivity(int $activityId, bool $forceReload = false): Activity
     {
+        /** @var Activity $activityEntity */
         $activityEntity = $this->getEntityManager()->getRepository(Activity::class)->find($activityId);
         if ($activityEntity === null || !$activityEntity->hasResponse() || !$activityEntity->hasPhotos() || $forceReload) {
             $activity = $this->getStravaActivity($activityId);
