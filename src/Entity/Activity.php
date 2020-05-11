@@ -47,6 +47,11 @@ class Activity implements \Serializable
      */
     private $user;
 
+    /**
+     *  @ORM\ManyToOne(targetEntity="App\Entity\ActivityMap", inversedBy="activities")
+     */
+    private $activityMap;
+
     public function getId()
     {
         return $this->id;
@@ -85,6 +90,16 @@ class Activity implements \Serializable
     public function setUser(?User $user)
     {
         $this->user = $user;
+    }
+
+    public function setActivityMap(?ActivityMap $activityMap)
+    {
+        $this->activityMap = $activityMap;
+    }
+
+    public function getActivityMap(): ?ActivityMap
+    {
+        return $this->activityMap;
     }
 
     /** @see \Serializable::serialize() */

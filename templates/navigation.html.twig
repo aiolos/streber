@@ -49,6 +49,12 @@
                     <i class="fa fa-object-group"></i> Berichtgroepen
                 </a>
             </li>
+            <li class="nav-item {% if app.request.attributes.get('_route') == 'app_post_groups' %}active{% endif %}">
+                <a class="nav-link {% if app.request.attributes.get('_route') == 'app_post_groups' %}active{% endif %}" href="/maps">
+                    <span data-feather="file"></span>
+                    <i class="fa fa-map"></i> Activiteiten Kaart
+                </a>
+            </li>
             <li class="nav-item {% if app.request.attributes.get('_route') == 'app_blog_posts' %}active{% endif %}">
                 <a class="nav-link {% if app.request.attributes.get('_route') == 'app_blog_posts' %}active{% endif %}" href="/" target="_blank">
                     <span data-feather="file"></span>

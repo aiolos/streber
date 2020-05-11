@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Entity\ActivityMap;
 use App\Helpers\GPXEncoder;
 use App\Helpers\SVGEncoder;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,6 +57,38 @@ class ActivityController extends AbstractController
             'stream' => ['type' => 'activity', 'id' => $activityId],
             'photos' => $activity->getPhotos(),
         ]);
+    }
+
+    /**
+     * @Route("/activities/{activityId}/edit")
+     */
+    public function edit(Request $request, $activityId)
+    {
+        $activity = $this->getActivity($activityId);
+
+        $form = $this->createFormBuilder($activity)
+            ->add('activityMap', EntityType::class, [
+                'class' => ActivityMap::class,
+                'choice_label' => 'name',
+                'required' => false,
+            ])
+            ->add('save', SubmitType::class, array('label' => 'Opslaan'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $activity = $form->getData();
+
+            $this->getEntityManager()->persist($activity);
+            $this->getEntityManager()->flush();
+
+            return $this->redirect('/activities/' . $activityId);
+        }
+
+        return $this->render('views/activities/edit.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     /**

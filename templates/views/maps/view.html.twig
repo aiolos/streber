@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="offset-lg-2 offset-md-1 col-lg-8 col-md-10 col-sm-12">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <h1 class="h2">
+                    <i class="fa fa-file-alt"></i> {{ map.name }}
+                </h1>
+                <div class="float-right">
+                    <a href="/maps/edit/{{ map.id }}" class="btn btn-sm btn-outline-secondary">
+                        <i class="fa fa-edit"></i> Wijzig kaart
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-9 col-md-9 col-sm-12 m-10">
+                    <div class="card">
+                        <div class="card-body">
+                            Activiteiten: {{ map.activities|length }}<br>
+                            Url: /filter/{{ map.slug }}<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
