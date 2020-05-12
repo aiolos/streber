@@ -1,25 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'blog.html.twig' %}
 
 {% block body %}
     <div class="row">
-        <div class="offset-lg-2 offset-md-1 col-lg-8 col-md-10 col-sm-12">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-                <h1 class="h2">
-                    <i class="fa fa-file-alt"></i> {{ map.name }}: {{ map.activities|length }} activiteiten
-                </h1>
-                <div class="float-right">
-                    <a href="/maps/edit/{{ map.id }}" class="btn btn-sm btn-outline-secondary">
-                        <i class="fa fa-edit"></i> Wijzig kaart
-                    </a>
-                    <a href="/kaart/{{ map.slug }}" class="btn btn-sm btn-outline-secondary">
-                        <i class="fa fa-eye"></i> Bekijk kaart
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="offset-lg-2 offset-md-1 col-lg-8 col-md-10 col-sm-12">
+        <div class="col-12">
             <div class="h-100">
                 <div id="activityMap" class="map" style="width: 100%; height: 72vh;"></div>
             </div>
@@ -43,7 +26,7 @@
             }).addTo(map);
         var encoded = "";
         var coordinates = "";
-        {% for activity in map.activities %}
+        {% for activity in activities %}
             encoded = "{{ activity.response.map.polyline|replace({'\\': '\\\\'}) }}";
             coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
 
@@ -57,7 +40,5 @@
                 }
             ).addTo(map);
         {% endfor %}
-
-
     </script>
 {% endblock %}

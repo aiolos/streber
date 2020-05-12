@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ActivityGroup;
+use App\Entity\ActivityMap;
 use App\Entity\Post;
 use App\Helpers\GPXEncoder;
 use App\Repository\PostRepository;
@@ -128,6 +129,23 @@ class BlogController extends AbstractController
 
         return $this->render('views/blog/map.html.twig', [
             'activity' => $post->getActivity()->getResponse(),
+        ]);
+    }
+
+    /**
+     * @Route("/kaart/{slug}")
+     */
+    public function activityMap($slug)
+    {
+        /** @var ActivityMap $activityMap */
+        $activityMap = $this->getEntityManager()->getRepository(ActivityMap::class)->findOneBy(['slug' => $slug]);
+        if ($activityMap === null) {
+            throw new \Exception("No activity map found");
+        }
+
+        return $this->render('views/blog/kaart.html.twig', [
+            'activities' => $activityMap->getActivities(),
+            'groups' => $this->getGroups(),
         ]);
     }
 
