@@ -8,53 +8,6 @@
             </div>
         </div>
     </div>
+    {% include 'partials/activityMap.html.twig' with {'mapId': 'activityMap'} %}
 {% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="/assets/css/leaflet.css" />
-{% endblock %}
-
-{% block javascripts %}
-    <script src="/assets/js/leaflet.js"></script>
-    <script type="text/javascript" src="/assets/js/polyline.encoded.js"></script>
-    <script>
-        var map = L.map('activityMap').setView([52.005, 5.09], 9);
-
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-            }).addTo(map);
-        var encoded = "";
-        var coordinates = [];
-        var colors = [
-            '#004f0b', '#182bcc',
-            '#80087e', '#b31515',
-            '#991AFF', '#E666FF',
-            '#4DB3FF', '#1AB399',
-            '#E666B3', '#33991A',
-            '#CC9999', '#B3B31A',
-            '#00E680', '#4D8066',
-            '#809980', '#E6FF80',
-            '#1AFF33', '#999933',
-            '#FF3380', '#CCCC00',
-            '#66E64D', '#4D80CC',
-            '#9900B3', '#E64D66',
-            '#4DB380', '#FF4D4D',
-            '#99E6E6', '#6666FF'
-        ];
-        {% for activity in activities %}
-            encoded = "{{ activity.response.map.polyline|replace({'\\': '\\\\'}) }}";
-            coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
-
-            L.polyline(
-                coordinates,
-                {
-                    color: colors[{{ loop.index0 }}],
-                    weight: 4,
-                    opacity: .8,
-                    lineJoin: 'round'
-                }
-            ).addTo(map);
-        {% endfor %}
-    </script>
-{% endblock %}

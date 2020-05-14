@@ -25,39 +25,5 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block stylesheets %}
-    <link rel="stylesheet" href="/assets/css/leaflet.css" />
-{% endblock %}
-
-{% block javascripts %}
-    <script src="/assets/js/leaflet.js"></script>
-    <script type="text/javascript" src="/assets/js/polyline.encoded.js"></script>
-    <script>
-        var map = L.map('activityMap').setView([52.005, 5.09], 9);
-
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-            }).addTo(map);
-        var encoded = "";
-        var coordinates = "";
-        {% for activity in map.activities %}
-            encoded = "{{ activity.response.map.polyline|replace({'\\': '\\\\'}) }}";
-            coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
-
-        L.polyline(
-                coordinates,
-                {
-                    color: 'blue',
-                    weight: 2,
-                    opacity: .7,
-                    lineJoin: 'round'
-                }
-            ).addTo(map);
-        {% endfor %}
-
-
-    </script>
+    {% include 'partials/activityMap.html.twig' with {'mapId': 'activityMap', 'activities': map.activities} %}
 {% endblock %}
