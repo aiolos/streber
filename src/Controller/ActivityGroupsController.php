@@ -6,6 +6,7 @@ use App\Entity\Activity;
 use App\Entity\ActivityGroup;
 use App\Entity\Post;
 use App\Helpers\SVGEncoder;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -96,6 +97,7 @@ class ActivityGroupsController extends AbstractController
             ->add('slug', TextType::class)
             ->add('description', TextareaType::class, ['attr' => ['rows' => 10]])
             ->add('date', DateType::class, ['widget' => 'single_text'])
+            ->add('visible', CheckboxType::class, ['label' => 'Zichtbaar in navigatiebalk', 'required' => false])
             ->add('save', SubmitType::class, array('label' => 'Opslaan'))
             ->getForm();
     }

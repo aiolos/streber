@@ -27,7 +27,8 @@
                         <div class="card-body">
                             Datum: {{ group.date|date("d-m-Y") }}<br>
                             Berichten: {{ group.posts|length }}<br>
-                            Url: /filter/{{ group.slug }}<br>
+                            Url: <a href="/reis/{{ group.slug }}">/reis/{{ group.slug }}</a><br>
+                            Zichtbaar: {% if group.visible %}Ja{% else %}Nee{% endif %}<br>
                         </div>
                     </div>
                 </div>

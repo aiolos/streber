@@ -19,6 +19,7 @@
                 <th>Aantal berichten</th>
                 <th>Slug</th>
                 <th>Datum</th>
+                <th>Zichtbaar</th>
                 <th></th>
             </tr>
             </thead>
@@ -29,6 +30,7 @@
                     <td>{{ group.posts|length }}</td>
                     <td>{{ group.slug }}</td>
                     <td>{% if group.date %}{{ group.date|date("d-m-Y") }}{% endif %}</td>
+                    <td>{% if group.visible %}<i class="fa fa-check"></i>{% endif %}</td>
                     <td class="text-right"><a href="/groups/edit/{{ group.id }}"><i class="fa fa-edit"></i></a></td>
                 </tr>
             {% endfor %}
@@ -48,6 +50,7 @@
                     { data: "post.posts" },
                     { data: "slug" },
                     { data: "date" },
+                    { data: "visible" },
                     { data: "", sortable: false }
                 ]
             });

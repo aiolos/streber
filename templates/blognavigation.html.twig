@@ -22,12 +22,14 @@
                     {#</div>#}
                 {#</li>#}
                 {% for groupFilter in groups %}
-                    <li class="nav-item">
-                        <a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"
-                           class="nav-link {% if group == groupFilter.id %}active{% endif %}">
-                            {{ groupFilter.title }}
-                        </a>
-                    </li>
+                    {% if groupFilter.visible %}
+                        <li class="nav-item">
+                            <a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"
+                               class="nav-link {% if group is defined and group == groupFilter.id %}active{% endif %}">
+                                {{ groupFilter.title }}
+                            </a>
+                        </li>
+                    {% endif %}
                 {% endfor %}
 
                 {#<li class="nav-item">#}

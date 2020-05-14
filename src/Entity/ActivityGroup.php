@@ -47,6 +47,11 @@ class ActivityGroup implements \Serializable
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default":1})
+     */
+    private $visible;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -100,6 +105,16 @@ class ActivityGroup implements \Serializable
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible)
+    {
+        $this->visible = $visible;
     }
 
     public function getPosts(): Collection
