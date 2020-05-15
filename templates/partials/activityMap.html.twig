@@ -45,7 +45,7 @@
             }
         ).addTo(map);
         polyline.bindPopup(
-            "<b>{{ activity.response.start_date_local|date("d-m-Y H:i") }}</b><br>"
+            "<b>{{ activity.response.start_date_local|format_datetime(pattern="EEEE d MMMM yyyy H:m", locale='nl') }}</b><br>"
             + "{{ (activity.response.distance / 1000)|number_format(1, ',', '.') }} km"
         );
         {% endfor %}
