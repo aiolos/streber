@@ -8,19 +8,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                {#<li class="nav-item dropdown">#}
-                    {#<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-                        {#Vakanties#}
-                    {#</a>#}
-                    {#<div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
-                        {#{% for groupFilter in groups %}#}
-                            {#<a href="{% if groupFilter.slug %}/reis/{{ groupFilter.slug }}{% else %}/?group={{ groupFilter.id }}{% endif %}"#}
-                               {#class="dropdown-item">#}
-                                {#{{ groupFilter.title }}#}
-                            {#</a>#}
-                        {#{% endfor %}#}
-                    {#</div>#}
-                {#</li>#}
                 {% for groupFilter in groups %}
                     {% if groupFilter.visible %}
                         <li class="nav-item">
@@ -31,6 +18,22 @@
                         </li>
                     {% endif %}
                 {% endfor %}
+
+                {% if activityMaps is defined %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Kaarten
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for activityMap in activityMaps %}
+                                <a href="/kaart/{{ activityMap.slug }}"
+                                   class="dropdown-item">
+                                    {{ activityMap.name }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% endif %}
 
                 {#<li class="nav-item">#}
                     {#<a href="/voies-vertes" class="nav-link {% if group == 'voies' %}active{% endif %}">#}

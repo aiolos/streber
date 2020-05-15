@@ -66,6 +66,7 @@ class BlogController extends AbstractController
             'currentPage' => $currentPage,
             'group' => $this->session->get('group'),
             'groups' => $groups,
+            'activityMaps' => $this->getActivityMaps(),
             'activeGroup' => $this->getActiveGroup(),
         ]);
     }
@@ -113,6 +114,7 @@ class BlogController extends AbstractController
             'link' => ['next' => $next, 'previous' => $previous],
             'group' => $this->session->get('group'),
             'groups' => $this->getGroups(),
+            'activityMaps' => $this->getActivityMaps(),
             'activeGroup' => $this->getActiveGroup(),
         ]);
     }
@@ -146,6 +148,7 @@ class BlogController extends AbstractController
         return $this->render('views/blog/kaart.html.twig', [
             'activities' => $activityMap->getActivities(),
             'groups' => $this->getGroups(),
+            'activityMaps' => $this->getActivityMaps(),
         ]);
     }
 
@@ -197,6 +200,7 @@ class BlogController extends AbstractController
         return $this->render('views/blog/about.html.twig', [
             'group' => $this->session->get('group'),
             'groups' => $this->getGroups(),
+            'activityMaps' => $this->getActivityMaps(),
             'activeGroup' => $this->getActiveGroup(),
         ]);
     }
@@ -204,6 +208,11 @@ class BlogController extends AbstractController
     private function getGroups()
     {
         return $this->getEntityManager()->getRepository(ActivityGroup::class)->findAll();
+    }
+
+    private function getActivityMaps()
+    {
+        return $this->getEntityManager()->getRepository(ActivityMap::class)->findAll();
     }
 
     private function getActiveGroup()
