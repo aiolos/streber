@@ -14,6 +14,7 @@
             }).addTo(map);
         var encoded = "";
         var coordinates = [];
+        var polyline;
         var colors = [
             '#004f0b', '#182bcc',
             '#80087e', '#b31515',
@@ -34,7 +35,7 @@
         encoded = "{{ activity.response.map.polyline|replace({'\\': '\\\\'}) }}";
         coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
 
-        L.polyline(
+        polyline = L.polyline(
             coordinates,
             {
                 color: colors[{{ loop.index0 }}],
@@ -43,6 +44,10 @@
                 lineJoin: 'round'
             }
         ).addTo(map);
+        polyline.bindPopup(
+            "<b>{{ activity.response.start_date_local|date("d-m-Y H:i") }}</b><br>"
+            + "{{ (activity.response.distance / 1000)|number_format(1, ',', '.') }} km"
+        );
         {% endfor %}
     </script>
 {% endblock %}
