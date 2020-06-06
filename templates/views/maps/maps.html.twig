@@ -17,15 +17,21 @@
             <tr>
                 <th>Titel</th>
                 <th>Aantal activiteiten</th>
+                <th>Totaal km's</th>
                 <th>Slug</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             {% for map in maps %}
+                {% set sum = 0 %}
+                {% for activity in map.activities %}
+                    {% set sum = sum + activity.response.distance %}
+                {% endfor %}
                 <tr>
                     <td><a href="/maps/view/{{ map.id }}">{{ map.name }}</a></td>
                     <td>{{ map.activities|length }}</td>
+                    <td>{{ (sum / 1000)|number_format(1, ',', '.') }} km</td>
                     <td>{{ map.slug }}</td>
                     <td class="text-right"><a href="/maps/edit/{{ map.id }}"><i class="fa fa-edit"></i></a></td>
                 </tr>
